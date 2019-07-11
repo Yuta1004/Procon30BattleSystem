@@ -15,3 +15,10 @@ class Board:
         self.height = height
         self.points = points
         self.tiled = tiled
+
+
+class ActionInfo:
+    def __init__(self, dx, dy, panel):
+        self.dx = dx
+        self.dy = dy
+        self.panel = panel
