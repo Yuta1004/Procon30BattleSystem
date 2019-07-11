@@ -1,4 +1,4 @@
-class Pos:
+class Agent:
     def __init__(self, team, _id, x, y):
         self.team = team
         self._id = _id
