@@ -140,8 +140,8 @@ class Game:
 
     def cal_mx_my(self, agent):
         action = ACTION[agent.action]
-        mx = agent.x + n.dx
-        my = agent.y
+        mx = agent.x + action.dx
+        my = agent.y + action.dy
         return mx, my
 
 
