@@ -28,12 +28,12 @@ PANEL_LEFT_UP = 15
 STAY = 16
 
 # Actions
-ACTION = [] * 16
+ACTION = [None] * 17
 
 ACTION[MOVE_UP] = ActionInfo(0, -1, 0)
 ACTION[MOVE_RIGHT_UP] = ActionInfo(1, -1, 0)
 ACTION[MOVE_RIGHT] = ActionInfo(1, 0, 0)
-ACTION[MOVE_RIGHT_DOON] = ActionInfo(1, 1, 0)
+ACTION[MOVE_RIGHT_DOWN] = ActionInfo(1, 1, 0)
 ACTION[MOVE_DOWN] = ActionInfo(0, 1, 0)
 ACTION[MOVE_LEFT_DOWN] = ActionInfo(-1, 1, 0)
 ACTION[MOVE_LEFT] = ActionInfo(-1, 0, 0)
@@ -42,7 +42,7 @@ ACTION[MOVE_LEFT_UP] = ActionInfo(-1, -1, 0)
 ACTION[PANEL_UP] = ActionInfo(0, -1, 1)
 ACTION[PANEL_RIGHT_UP] = ActionInfo(1, -1, 1)
 ACTION[PANEL_RIGHT] = ActionInfo(1, 0, 1)
-ACTION[PANEL_RIGHT_DOON] = ActionInfo(1, 1, 1)
+ACTION[PANEL_RIGHT_DOWN] = ActionInfo(1, 1, 1)
 ACTION[PANEL_DOWN] = ActionInfo(0, 1, 1)
 ACTION[PANEL_LEFT_DOWN] = ActionInfo(-1, 1, 1)
 ACTION[PANEL_LEFT] = ActionInfo(-1, 0, 1)
