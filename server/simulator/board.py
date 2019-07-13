@@ -21,15 +21,14 @@ def _generate_line_symmetry_half_A(width, height, point_upper, point_lower):
 
     # 基準となる点配置を作成
     base_width = (width + 1) / 2
-    base_height = (height + 1) / 2
-    for y in range(base_height):
+    for y in range(height):
         for x in range(base_width):
             board[y][x] = randint(point_lower, point_upper)
 
     # 対象となるように点を配置していく
-    for y in range(base_height - 1, height):
-        for x in range(base_width - 1, width):
-            board[y][x] = board[y][width - x - 1]
+    start_idx = base_width - (1 if len(board) % 2 == 0 else 0)
+    for y in range(height):
+        board[y][start_idx:] = board[y][:base_width][::-1]
 
     return board
 
