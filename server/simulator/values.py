@@ -1,4 +1,9 @@
-from server.simulator.data import ActionInfo
+class ActionInfo:
+    def __init__(self, dx, dy, panel):
+        self.dx = dx
+        self.dy = dy
+        self.panel = panel
+
 
 # MOVE and PANEL : upper, lower
 ACTION_ID_UPPER = 16
