@@ -24,3 +24,15 @@ def dotest(name, func):
         print("pass")
     except AssertionError as e:
         print("failed")
+
+
+def transpositon_2d_list(target):
+    width = len(target[0])
+    height = len(target)
+    ret_list = gen_2d_list(len(target[0]), len(target))
+
+    for y in range(height):
+        for x in range(width):
+            ret_list[x][y] = target[y][x]
+
+    return ret_list
