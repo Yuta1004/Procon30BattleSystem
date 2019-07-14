@@ -1,6 +1,6 @@
 from server.simulator.game import Game
 from server.simulator.board import Board, _generate_line_symmetry_half_A,\
-    _generate_line_symmetry_half_B, _generate_line_symmetry_quarter
+    _generate_line_symmetry_half_B, _generate_line_symmetry_quarter, _generate_point_symmetry
 from server.common.functions import dotest, transpositon_2d_list
 
 def simulation_test():
@@ -17,6 +17,7 @@ def simulation_test():
     dotest("GenerateBoardTest4", generate_board_test_4)
     dotest("GenerateBoardTest5", generate_board_test_5)
     dotest("GenerateBoardTest6", generate_board_test_6)
+    dotest("GenerateBoardTest7", generate_board_test_7)
 
 
 # Score Calculate Test
@@ -207,3 +208,23 @@ def _is_line_symmetry_half_y(target):
 
 def _is_line_symmetry_half_x(target):
     return _is_line_symmetry_half_y(transpositon_2d_list(target))
+
+# Board Generate Test(Pont Symmetry)
+def generate_board_test_7():
+    points = _generate_point_symmetry(10, 7, 0, 9)
+    assert _is_point_symmetry(points), "Test Failed"
+
+
+def generate_board_test_8():
+    points = _generate_point_symmetry(9, 8, 0, 9)
+    assert _is_point_symmetry(points), "Test Failed"
+
+
+def _is_point_symmetry(target):
+    width = len(target[0])
+    height = len(target)
+    result = True
+    for y in range(height):
+        for x in range(width):
+            result &= (target[height - y - 1][width - x - 1] == target[y][x])
+    return result

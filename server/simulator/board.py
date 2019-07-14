@@ -60,3 +60,20 @@ def _generate_line_symmetry_quarter(width, height, point_lower, point_upper):
             points[height - y - 1][x] = points[y][x]
 
     return deepcopy(points)
+
+
+def _generate_point_symmetry(width, height, point_lower, point_upper):
+    points = gen_2d_list(height, width)
+
+    # 基準となる点を設定する
+    base_width = int((width + 1) / 2)
+    for y in range(height):
+        for x in range(base_width):
+            points[y][x] = randint(point_lower, point_upper)
+
+    # 点対称に得点を配置していく
+    for x in range(width):
+        for y in range(height):
+            points[height - y - 1][width - x - 1] = points[y][x]
+
+    return deepcopy(points)
