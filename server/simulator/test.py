@@ -159,7 +159,7 @@ def score_test_6():
     assert (game.cal_score([1]) == {1: 54}), "Test Failed"
 
 
-# Board Generate Test
+# Board Generate Test(Line Sysmmetry)
 def generate_board_test_1():
     points = _generate_line_symmetry_half_A(10, 6, 0, 16)
     assert _is_line_symmetry_half_y(points), "Test Failed"

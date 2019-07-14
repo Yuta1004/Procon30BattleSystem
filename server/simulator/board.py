@@ -34,7 +34,7 @@ def _generate_line_symmetry_half_A(width, height, point_lower, point_upper):
     return deepcopy(points)
 
 
-def _generate_line_symmetry_half_B(width, height, point_upper, point_lower):
+def _generate_line_symmetry_half_B(width, height, point_lower, point_upper):
     return transpositon_2d_list(
-        _generate_line_symmetry_half_A(width, height, point_upper, point_lower)
+        _generate_line_symmetry_half_A(width, height, point_lower, point_upper)
     )
