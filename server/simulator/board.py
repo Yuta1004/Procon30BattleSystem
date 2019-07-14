@@ -4,6 +4,7 @@ from server.simulator.values import *
 from server.common.functions import gen_2d_list, transpositon_2d_list
 
 
+# Public
 class Board:
     def __init__(self, turn, width, height, points, tiled):
         self.turn = turn
@@ -13,10 +14,57 @@ class Board:
         self.tiled = tiled
 
 
-def generate_board(width, height, point_upper, point_lower, generate_type=LINE_SYMMETRY_HALF):
-    pass
+def generate_board(turn, width, height, point_upper, point_lower,\
+                   player_num, generate_type=LINE_SYMMETRY_HALF):
+    """
+    指定された条件で盤面を生成し、そのデータを返す
+
+    Params
+    ----------
+    turn : int
+        ターン数
+    width : int
+        生成する盤面のサイズ(幅)
+    height : int
+        生成する盤面のサイズ(高さ)
+    point_lower : int
+        配置する得点の下限
+    point_upper : int
+        配置する得点の上限
+    player_num : int
+        配置するプレイヤーの数
+    generate_type : int
+        生成する盤面のタイプ、value.pyにある定数で指定すること
+
+    Return
+    ----------
+    Board
+        盤面情報
+    """
+
+    points = None
+    tiled = None
+
+    if generate_type == LINE_SYMMETRY_HALF:
+        if randint(0, 1) == 0:
+            points = _generate_line_symmetry_half_A(width, height, point_lower, point_upper)
+            tiled = _put_player_line_symmetry_hq_A(width, height, player_num)
+        else:
+            points = _generate_line_symmetry_half_B(width, height, point_lower, point_upper)
+            tiled = _put_player_line_symmetry_half_B(width, height, player_num)
+
+    if generate_type == LINE_SYMMETRY_QUOTER:
+        points = _generate_line_symmetry_quarter(width, height, point_lower, point_upper)
+        tiled = _put_player_line_symmetry_hq_A(width, height, player_num)
+
+    if generate_type == POINT_SYMMETRY_HALF:
+        points = _generate_point_symmetry(width, height, point_lower, point_upper)
+        tiled = _put_player_line_symmetry_hq_A(width, height)
+
+    return Board(turn, width, height, points, tiled)
 
 
+# Private
 def _generate_line_symmetry_half_A(width, height, point_lower, point_upper):
     points = gen_2d_list(height, width)
 
