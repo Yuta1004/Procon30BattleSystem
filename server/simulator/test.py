@@ -196,6 +196,18 @@ def generate_board_test_6():
     assert _is_line_symmetry_half_y(points), "Test Failed"
 
 
+# Board Generate Test(Pont Symmetry)
+def generate_board_test_7():
+    points = _generate_point_symmetry(10, 7, 0, 9)
+    assert _is_point_symmetry(points), "Test Failed"
+
+
+def generate_board_test_8():
+    points = _generate_point_symmetry(9, 8, 0, 9)
+    assert _is_point_symmetry(points), "Test Failed"
+
+
+# For Test Function
 def _is_line_symmetry_half_y(target):
     width = len(target[0])
     height = len(target)
@@ -208,16 +220,6 @@ def _is_line_symmetry_half_y(target):
 
 def _is_line_symmetry_half_x(target):
     return _is_line_symmetry_half_y(transpositon_2d_list(target))
-
-# Board Generate Test(Pont Symmetry)
-def generate_board_test_7():
-    points = _generate_point_symmetry(10, 7, 0, 9)
-    assert _is_point_symmetry(points), "Test Failed"
-
-
-def generate_board_test_8():
-    points = _generate_point_symmetry(9, 8, 0, 9)
-    assert _is_point_symmetry(points), "Test Failed"
 
 
 def _is_point_symmetry(target):
