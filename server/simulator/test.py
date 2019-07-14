@@ -1,18 +1,23 @@
 from server.simulator.game import Game
-from server.simulator.data import Board
-from server.common.functions import dotest
+from server.simulator.board import Board, _generate_line_symmetry_half_A, _generate_line_symmetry_half_B
+from server.common.functions import dotest, transpositon_2d_list
 
 def simulation_test():
-    dotest("ScoreTest1", test_1)
-    dotest("ScoreTest2", test_2)
-    dotest("ScoreTest3", test_3)
-    dotest("ScoreTest4", test_4)
-    dotest("ScoreTest5", test_5)
-    dotest("ScoreTest6", test_6)
+    dotest("ScoreTest1", score_test_1)
+    dotest("ScoreTest2", score_test_2)
+    dotest("ScoreTest3", score_test_3)
+    dotest("ScoreTest4", score_test_4)
+    dotest("ScoreTest5", score_test_5)
+    dotest("ScoreTest6", score_test_6)
+
+    dotest("GenerateBoardTest1", generate_board_test_1)
+    dotest("GenerateBoardTest2", generate_board_test_2)
+    dotest("GenerateBoardTest3", generate_board_test_3)
+    dotest("GenerateBoardTest4", generate_board_test_4)
 
 
-def test_1():
-    # SCORE TEST 1
+# Score Calculate Test
+def score_test_1():
     turn = 10
     width = 8
     height = 5
@@ -35,8 +40,7 @@ def test_1():
     assert (game.cal_score([1, 2]) == {1: 6, 2: 4}), "Test Failed"
 
 
-def test_2():
-    # SCORE TEST 2
+def score_test_2():
     turn = 10
     width = 8
     height = 5
@@ -59,8 +63,7 @@ def test_2():
     assert (game.cal_score([1, 2]) == {1: 5, 2: 5}), "Test Failed"
 
 
-def test_3():
-    # SCORE TEST 3
+def score_test_3():
     turn = 10
     width = 8
     height = 5
@@ -83,8 +86,7 @@ def test_3():
     assert (game.cal_score([1, 2]) == {1: 32, 2: 6}), "Test Failed"
 
 
-def test_4():
-    # SCORE TEST 4
+def score_test_4():
     turn = 10
     width = 8
     height = 5
@@ -107,8 +109,7 @@ def test_4():
     assert (game.cal_score([1, 2]) == {1: 20, 2: 6}), "Test Failed"
 
 
-def test_5():
-    # SCORE TEST 5
+def score_test_5():
     turn = 10
     width = 5
     height = 5
@@ -131,8 +132,7 @@ def test_5():
     assert (game.cal_score([1]) == {1: 19}), "Test Failed"
 
 
-def test_6():
-    # SCORE TEST 6
+def score_test_6():
     turn = 10
     width = 7
     height = 7
@@ -158,3 +158,37 @@ def test_6():
     game = Game("test1", board, [])
     assert (game.cal_score([1]) == {1: 54}), "Test Failed"
 
+
+# Board Generate Test
+def generate_board_test_1():
+    points = _generate_line_symmetry_half_A(10, 6, 0, 16)
+    assert _is_line_symmetry_half_y(points), "Test Failed"
+
+
+def generate_board_test_2():
+    points = _generate_line_symmetry_half_A(5, 9, 0, 16)
+    assert _is_line_symmetry_half_y(points), "Test Failed"
+
+
+def generate_board_test_3():
+    points = _generate_line_symmetry_half_B(10, 9, 0, 16)
+    assert _is_line_symmetry_half_x(points), "Test Failed"
+
+
+def generate_board_test_4():
+    points = _generate_line_symmetry_half_B(3, 9, 0, 16)
+    assert _is_line_symmetry_half_x(points), "Test Failed"
+
+
+def _is_line_symmetry_half_y(target):
+    width = len(target[0])
+    height = len(target)
+    result = True
+    for y in range(height):
+        for x in range(width):
+            result &= (target[y][x] == target[y][width - x - 1])
+    return result
+
+
+def _is_line_symmetry_half_x(target):
+    return _is_line_symmetry_half_y(transpositon_2d_list(target))
