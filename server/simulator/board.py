@@ -107,3 +107,27 @@ def _generate_point_symmetry(width, height, point_lower, point_upper):
             points[height - y - 1][width - x - 1] = points[y][x]
 
     return deepcopy(points)
+
+
+def _put_player_point_symmetry(width, height, player_num):
+    tiled = gen_2d_list(height, width)
+    base_width = int((width + 1) / 2)
+
+    # 基準プレイヤー配置　
+    for cnt in range(player_num):
+        x = randint(0, base_width - 1)
+        y = randint(0, height - 1)
+        player = int(player_num % 2 == 0 and cnt % 2 == 0) + 1
+        while (tiled[y][x] != 0) and (tiled[y][x] == player):
+            x = randint(0, base_width - 1)
+            y = randint(0, height - 1)
+        tiled[y][x] = player
+
+    # 点対称に配置する
+    for y in range(height):
+        for x in range(base_width):
+            tiled[height - y - 1][width - x - 1] = tiled[y][x]
+            if (tiled[height - y - 1][width - x - 1] == 1) and (player_num % 2 == 1):
+                tiled[height - y - 1][width - x - 1] = 2
+
+    return deepcopy(tiled)
