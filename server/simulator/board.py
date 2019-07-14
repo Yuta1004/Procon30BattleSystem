@@ -48,18 +48,18 @@ def generate_board(turn, width, height, point_upper, point_lower,\
     if generate_type == LINE_SYMMETRY_HALF:
         if randint(0, 1) == 0:
             points = _generate_line_symmetry_half_A(width, height, point_lower, point_upper)
-            tiled = _put_player_line_symmetry_hq_A(width, height, player_num)
+            tiled = _put_player_line_symmetry(width, height, player_num)
         else:
             points = _generate_line_symmetry_half_B(width, height, point_lower, point_upper)
             tiled = _put_player_line_symmetry_half_B(width, height, player_num)
 
     if generate_type == LINE_SYMMETRY_QUOTER:
         points = _generate_line_symmetry_quarter(width, height, point_lower, point_upper)
-        tiled = _put_player_line_symmetry_hq_A(width, height, player_num)
+        tiled = _put_player_line_symmetry(width, height, player_num)
 
     if generate_type == POINT_SYMMETRY_HALF:
         points = _generate_point_symmetry(width, height, point_lower, point_upper)
-        tiled = _put_player_line_symmetry_hq_A(width, height)
+        tiled = _put_player_line_symmetry(width, height)
 
     return Board(turn, width, height, points, tiled)
 
@@ -82,7 +82,7 @@ def _generate_line_symmetry_half_A(width, height, point_lower, point_upper):
     return deepcopy(points)
 
 
-def _put_player_line_symmetry_hq_A(width, height, player_num):
+def _put_player_line_symmetry(width, height, player_num):
     tiled = gen_2d_list(height, width)
     base_width = int((width + 1) / 2)
 
@@ -114,7 +114,7 @@ def _generate_line_symmetry_half_B(width, height, point_lower, point_upper):
 
 def _put_player_line_symmetry_half_B(width, height, player_num):
     return transpositon_2d_list(
-        _put_player_line_symmetry_hq_A(width, height, player_num)
+        _put_player_line_symmetry(width, height, player_num)
     )
 
 
