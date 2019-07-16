@@ -21,8 +21,8 @@ class DBAccessManager:
         cursorオブジェクトが関数に渡されて、処理終了後は自動でcommitする
         """
 
-        def db_execute_wrapper():
+        def db_execute_wrapper(*args, **kwargs):
             with self.conn.cursor() as cursor:
-                deco_func(cursor)
+                deco_func(cursor, *args, **kwargs)
             self.conn.commit()
         return db_execute_wrapper
