@@ -29,6 +29,7 @@ class DBAccessManager:
 
         def db_execute_wrapper(self, *args, **kwargs):
             with self.conn.cursor() as cursor:
-                deco_func(self, cursor, *args, **kwargs)
+                ret_val = deco_func(self, cursor, *args, **kwargs)
             self.conn.commit()
+            return ret_val
         return db_execute_wrapper
