@@ -4,5 +4,5 @@ from server.db.test import  db_manager_test
 print("Simulation Test")
 simulation_test()
 
-print("DBManager Test")
+print("\nDBManager Test")
 db_manager_test()
