@@ -10,19 +10,21 @@ class DBAccessManager:
             user="procon30",
             password=os.environ.get("MYSQL_PASSWORD"),
             db="procon30",
-            charset="utf8b4",
+            charset="utf8mb4",
             cursorclass=pymysql.cursors.DictCursor
         )
 
 
-    def db_execute(self, deco_func):
+    def db_execute(deco_func):
         """
         DB操作用デコレータ
-        cursorオブジェクトが関数に渡されて、処理終了後は自動でcommitする
+            - cursorオブジェクトが関数に渡されて、処理終了後は自動でcommitする
+            - デコレートされるメソッドはDBAccessManagerを継承していること
+            - デコレートされるメソッドは第一引数にself, 第二引数にcursorを持つこと
         """
 
-        def db_execute_wrapper(*args, **kwargs):
+        def db_execute_wrapper(self, *args, **kwargs):
             with self.conn.cursor() as cursor:
-                deco_func(cursor, *args, **kwargs)
+                deco_func(self, cursor, *args, **kwargs)
             self.conn.commit()
         return db_execute_wrapper
