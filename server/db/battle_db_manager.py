@@ -7,6 +7,10 @@ class BattleDBAccessManager(DBAccessManager):
         super().__init__()
 
 
+    def __del__(self):
+        super().__del__()
+
+
     @DBAccessManager.db_execute
     def insert(self, cursor, name, token, turn, turn_msec, turn_switch_msec, teams):
         sql =\
