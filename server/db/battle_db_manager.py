@@ -1,3 +1,4 @@
+from copy import deepcopy
 from server.db.db_manager import DBAccessManager
 
 
@@ -19,3 +20,16 @@ class BattleDBAccessManager(DBAccessManager):
             values(%s, %s, %s, %s, %s, %s, 0)
         """
         cursor.execute(sql, (name, token, turn, turn_msec, turn_switch_msec, teams))
+
+
+    @DBAccessManager.db_execute
+    def get_data(self, cursor, conditon_id):
+        sql = "select * from battle where id=%s"
+        cursor.execute(sql, (conditon_id))
+        result = cursor.fetchall()
+        if len(result) > 0:
+            result = result[0]
+            result["now_battle"] = (True if result["now_battle"] == 1 else False)
+            return result
+        else:
+            return None
