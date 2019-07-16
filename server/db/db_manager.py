@@ -15,6 +15,10 @@ class DBAccessManager:
         )
 
 
+    def __del__(self):
+        self.conn.close()
+
+
     def db_execute(deco_func):
         """
         DB操作用デコレータ
