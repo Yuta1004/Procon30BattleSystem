@@ -53,7 +53,7 @@ def generate_board(turn, width, height, point_upper, point_lower,\
             points = _generate_line_symmetry_half_B(width, height, point_lower, point_upper)
             tiled = _put_player_line_symmetry_half_B(width, height, player_num)
 
-    if generate_type == LINE_SYMMETRY_QUOTER:
+    if generate_type == LINE_SYMMETRY_QUARTER:
         points = _generate_line_symmetry_quarter(width, height, point_lower, point_upper)
         tiled = _put_player_line_symmetry(width, height, player_num)
 
