@@ -13,6 +13,19 @@ class StageDBAccessManager(DBAccessManager):
 
     @DBAccessManager.db_execute
     def insert(self, cursor, battle_id, points, tiled):
+        """
+        Stageテーブルにデータを追加
+
+        Params
+        ----------
+        battle_id : int
+            試合ID
+        points : str
+            配点情報JSON
+        tiled : str
+            陣地情報JSON
+        """
+
         sql =\
         """
             insert into stage (battle_id, points, tiled)
@@ -23,6 +36,19 @@ class StageDBAccessManager(DBAccessManager):
 
     @DBAccessManager.db_execute
     def get_data(self, cursor, battle_id):
+        """
+        Stageテーブルからデータを取得
+
+        Params
+        ----------
+        battle_id : int
+            試合ID
+
+        Return
+        ----------
+        レコード情報(dict)
+        """
+
         sql = "select * from stage where battle_id=%s"
         cursor.execute(sql, (battle_id, ))
         result = cursor.fetchall()
