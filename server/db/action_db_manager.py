@@ -63,3 +63,9 @@ class ActionDBAccessManager(DBAccessManager):
             return result
         else:
             return None
+
+
+    @DBAccessManager.db_execute
+    def update(self, cursor, battle_id, turn, action):
+        sql = "update action set detail=%s where battle_id=%s and turn=%s"
+        cursor.execute(sql, (action, battle_id, turn))
