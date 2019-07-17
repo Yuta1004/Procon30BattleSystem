@@ -14,6 +14,25 @@ class BattleDBAccessManager(DBAccessManager):
 
     @DBAccessManager.db_execute
     def insert(self, cursor, name, token, turn, turn_msec, turn_switch_msec, teams):
+        """
+        Battleテーブルにデータを挿入する
+
+        Params
+        ----------
+        name : str
+            試合名
+        token : str
+            トークン
+        turn : int
+            ターン数
+        turn_msec : int
+            1ターンの秒数(msec)
+        turn_switch_msec : int
+            ターン切り替えの秒数(msec)
+        teams : str
+            チーム情報JSON
+        """
+
         sql =\
         """
             insert into battle (name, token, turn, turn_msec, turn_switch_msec, teams, now_battle)
@@ -24,6 +43,19 @@ class BattleDBAccessManager(DBAccessManager):
 
     @DBAccessManager.db_execute
     def get_data(self, cursor, conditon_id):
+        """
+        Battleテーブルからデータを取得する
+
+        Params
+        ----------
+        condition_id
+            試合ID
+
+        Return
+        ----------
+        レコード情報(dict)
+        """
+
         sql = "select * from battle where id=%s"
         cursor.execute(sql, (conditon_id))
         result = cursor.fetchall()
