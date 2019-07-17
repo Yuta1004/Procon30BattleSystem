@@ -9,20 +9,23 @@ class Game:
         ゲームを管理する
     """
 
-    def __init__(self, channel, board, agents):
+    def __init__(self, battle_id, turn, board, agents):
         """
         コンストラクタ
 
         Params
         ----------
-        channel : str
-            チャンネル
+        battle_id : int
+            試合ID
+        turn : int
+            ターン数
         board : Board
             盤面情報
         agents : Agent + List
             エージェント情報
         """
-        self.channel = channel
+        self.battle_id = battle_id
+        self.turn = turn
         self.board = board
         self.agents = agents
 
