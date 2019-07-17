@@ -47,4 +47,4 @@ def action_db_manager_test_3():
     values = [1, 1, "test_action"]
     for item in result:
         for key, val in zip(keys, values):
-                assert (item[key] == val), "TestFailed"
+            assert (item[key] == val), "TestFailed"
