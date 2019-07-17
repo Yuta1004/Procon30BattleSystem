@@ -10,4 +10,4 @@ create table action (battle_id int, turn int, detail text, primary key(battle_id
 
 ## stage
 
-create table stage (battle_id int, points text, tiled text, constraint fk_battle_id_2 foreign key (battle_id) references battle(id));
+create table stage (battle_id int, width int, height int, points text, tiled text, constraint fk_battle_id_2 foreign key (battle_id) references battle(id));

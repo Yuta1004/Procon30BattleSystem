@@ -56,13 +56,13 @@ def action_db_manager_test_3():
 
 def stage_db_manager_test_1():
     manager = StageDBAccessManager()
-    manager.insert(1, "test_points", "test_tiled")
+    manager.insert(1, 10, 10, "test_points", "test_tiled")
 
 
 def stage_db_manager_test_2():
     manager = StageDBAccessManager()
     result = manager.get_data(1)
-    keys = ["battle_id", "points", "tiled"]
-    values = [1, "test_points", "test_tiled"]
+    keys = ["battle_id", "width", "height", "points", "tiled"]
+    values = [1, 10, 10, "test_points", "test_tiled"]
     for key, val in zip(keys, values):
         assert (result[key] == val), "TestFailed"
