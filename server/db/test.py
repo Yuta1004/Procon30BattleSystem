@@ -1,3 +1,4 @@
+import random
 from server.common.functions import dotest
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.action_db_manager import ActionDBAccessManager
@@ -11,6 +12,7 @@ def db_manager_test():
 #     dotest("ActionDBAccessManagerTest1", action_db_manager_test_1)
     dotest("ActionDBAccessManagerTest2", action_db_manager_test_2)
     dotest("ActionDBAccessManagerTest3", action_db_manager_test_3)
+    dotest("ActionDBAccessManagerTest4", action_db_manager_test_4)
 
     # dotest("StageDBAccessManagerTest1", stage_db_manager_test_1)
     dotest("StageDBAccessManagerTest2", stage_db_manager_test_2)
@@ -37,6 +39,17 @@ def action_db_manager_test_1():
 
 def action_db_manager_test_2():
     manager = ActionDBAccessManager()
+    tmp_action = str(random.randint(0, 1<<30))
+    manager.update(1, 1, tmp_action)
+    result = manager.get_data(1, 1)[0]
+    assert (result["detail"] == tmp_action), "TestFailed"
+    manager.update(1, 1, "test_action")
+    result = manager.get_data(1, 1)[0]
+    assert (result["detail"] == "test_action"), "TestFailed"
+
+
+def action_db_manager_test_3():
+    manager = ActionDBAccessManager()
     result = manager.get_data(1)[0]
     keys = ["battle_id", "turn", "detail"]
     values = [1, 1, "test_action"]
@@ -44,7 +57,7 @@ def action_db_manager_test_2():
         assert (result[key] == val), "TestFailed"
 
 
-def action_db_manager_test_3():
+def action_db_manager_test_4():
     manager = ActionDBAccessManager()
     result = manager.get_data(1, 1)
     keys = ["battle_id", "turn", "detail"]
