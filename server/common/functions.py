@@ -24,6 +24,8 @@ def dotest(name, func):
         print("pass")
     except AssertionError as e:
         print("failed")
+    except Exception as e:
+        print("UnkownException  :", e)
 
 
 def transpositon_2d_list(target):
