@@ -12,7 +12,7 @@ def db_manager_test():
     dotest("ActionDBAccessManagerTest2", action_db_manager_test_2)
     dotest("ActionDBAccessManagerTest3", action_db_manager_test_3)
 
-    dotest("StageDBAccessManagerTest1", stage_db_manager_test_1)
+    # dotest("StageDBAccessManagerTest1", stage_db_manager_test_1)
     dotest("StageDBAccessManagerTest2", stage_db_manager_test_2)
 
 
@@ -62,7 +62,7 @@ def stage_db_manager_test_1():
 def stage_db_manager_test_2():
     manager = StageDBAccessManager()
     result = manager.get_data(1)
-    keys = ["buttle_id", "points", "tiled"]
+    keys = ["battle_id", "points", "tiled"]
     values = [1, "test_points", "test_tiled"]
     for key, val in zip(keys, values):
         assert (result[key] == val), "TestFailed"
