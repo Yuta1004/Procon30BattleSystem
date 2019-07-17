@@ -21,11 +21,11 @@ def dotest(name, func):
     print("\t" + str(name) + " ... ", end="")
     try:
         func()
-        print("pass")
+        print("\033[32m" + "passed" + "\033[0m")
     except AssertionError as e:
-        print("failed")
+        print("\033[31m" + "failed" + "\033[0m")
     except Exception as e:
-        print("UnkownException  :", e)
+        print("\033[31m" + "UnknownException" + "\033[0m", "(", e, ")")
 
 
 def transpositon_2d_list(target):
