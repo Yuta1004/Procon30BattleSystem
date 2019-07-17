@@ -1,6 +1,7 @@
 from server.common.functions import dotest
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.action_db_manager import ActionDBAccessManager
+from server.db.stage_db_manager import StageDBAccessManager
 
 
 def db_manager_test():
@@ -10,6 +11,9 @@ def db_manager_test():
 #     dotest("ActionDBAccessManagerTest1", action_db_manager_test_1)
     dotest("ActionDBAccessManagerTest2", action_db_manager_test_2)
     dotest("ActionDBAccessManagerTest3", action_db_manager_test_3)
+
+    dotest("StageDBAccessManagerTest1", stage_db_manager_test_1)
+    dotest("StageDBAccessManagerTest2", stage_db_manager_test_2)
 
 
 def battle_db_manager_test_1():
@@ -48,3 +52,17 @@ def action_db_manager_test_3():
     for item in result:
         for key, val in zip(keys, values):
             assert (item[key] == val), "TestFailed"
+
+
+def stage_db_manager_test_1():
+    manager = StageDBAccessManager()
+    manager.insert(1, "test_points", "test_tiled")
+
+
+def stage_db_manager_test_2():
+    manager = StageDBAccessManager()
+    result = manager.get_data(1)
+    keys = ["buttle_id", "points", "tiled"]
+    values = [1, "test_points", "test_tiled"]
+    for key, val in zip(keys, values):
+        assert (result[key] == val), "TestFailed"
