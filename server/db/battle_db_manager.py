@@ -31,6 +31,10 @@ class BattleDBAccessManager(DBAccessManager):
             ターン切り替えの秒数(msec)
         teams : str
             チーム情報JSON
+
+        Return
+        ----------
+        追加された試合のID
         """
 
         sql =\
@@ -39,6 +43,7 @@ class BattleDBAccessManager(DBAccessManager):
             values(%s, %s, %s, %s, %s, %s, 0)
         """
         cursor.execute(sql, (name, token, turn, turn_msec, turn_switch_msec, teams))
+        return cursor.lastrowid
 
 
     @DBAccessManager.db_execute

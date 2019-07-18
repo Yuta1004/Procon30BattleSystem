@@ -22,7 +22,6 @@ def simulation_test():
 
 # Score Calculate Test
 def score_test_1():
-    turn = 10
     width = 8
     height = 5
     points = [
@@ -39,13 +38,12 @@ def score_test_1():
         [0, 0, 1, 1, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0]
     ]
-    board = Board(turn, width, height, points, tiled)
-    game = Game("test1", board, [])
+    board = Board(width, height, points, tiled)
+    game = Game(1, 1, board, [])
     assert (game.cal_score([1, 2]) == {1: 6, 2: 4}), "Test Failed"
 
 
 def score_test_2():
-    turn = 10
     width = 8
     height = 5
     points = [
@@ -62,13 +60,12 @@ def score_test_2():
         [0, 0, 0, 1, 2, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0]
     ]
-    board = Board(turn, width, height, points, tiled)
-    game = Game("test1", board, [])
+    board = Board(width, height, points, tiled)
+    game = Game(1, 1, board, [])
     assert (game.cal_score([1, 2]) == {1: 5, 2: 5}), "Test Failed"
 
 
 def score_test_3():
-    turn = 10
     width = 8
     height = 5
     points = [
@@ -85,13 +82,12 @@ def score_test_3():
         [0, 1, 2, 2, 2, 2, 1, 0],
         [0, 1, 1, 1, 1, 1, 1, 0]
     ]
-    board = Board(turn, width, height, points, tiled)
-    game = Game("test1", board, [])
+    board = Board(width, height, points, tiled)
+    game = Game(1, 1, board, [])
     assert (game.cal_score([1, 2]) == {1: 32, 2: 6}), "Test Failed"
 
 
 def score_test_4():
-    turn = 10
     width = 8
     height = 5
     points = [
@@ -108,13 +104,12 @@ def score_test_4():
         [0, 0, 1, 2, 2, 1, 0, 0],
         [0, 0, 0, 1, 1, 0, 0, 0]
     ]
-    board = Board(turn, width, height, points, tiled)
-    game = Game("test1", board, [])
+    board = Board(width, height, points, tiled)
+    game = Game(1, 1, board, [])
     assert (game.cal_score([1, 2]) == {1: 20, 2: 6}), "Test Failed"
 
 
 def score_test_5():
-    turn = 10
     width = 5
     height = 5
     points = [
@@ -131,13 +126,12 @@ def score_test_5():
         [1, 0, 1, 0, 1],
         [1, 1, 1, 1, 1]
     ]
-    board = Board(turn, width, height, points, tiled)
-    game = Game("test1", board, [])
+    board = Board(width, height, points, tiled)
+    game = Game(1, 1, board, [])
     assert (game.cal_score([1]) == {1: 19}), "Test Failed"
 
 
 def score_test_6():
-    turn = 10
     width = 7
     height = 7
     points = [
@@ -158,8 +152,8 @@ def score_test_6():
         [1, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1]
     ]
-    board = Board(turn, width, height, points, tiled)
-    game = Game("test1", board, [])
+    board = Board(width, height, points, tiled)
+    game = Game(1, 1, board, [])
     assert (game.cal_score([1]) == {1: 54}), "Test Failed"
 
 

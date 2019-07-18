@@ -1,28 +1,30 @@
 from random import randint
 from copy import deepcopy
-from server.simulator.values import *
 from server.common.functions import gen_2d_list, transpositon_2d_list
+
+
+# Generate Board Options
+LINE_SYMMETRY_HALF = 0
+LINE_SYMMETRY_QUARTER = 1
+POINT_SYMMETRY_HALF = 2
 
 
 # Public
 class Board:
-    def __init__(self, turn, width, height, points, tiled):
-        self.turn = turn
+    def __init__(self, width, height, points, tiled):
         self.width = width
         self.height = height
         self.points = points
         self.tiled = tiled
 
 
-def generate_board(turn, width, height, point_upper, point_lower,\
+def generate_board(width, height, point_upper, point_lower,\
                    player_num, generate_type=LINE_SYMMETRY_HALF):
     """
     指定された条件で盤面を生成し、そのデータを返す
 
     Params
     ----------
-    turn : int
-        ターン数
     width : int
         生成する盤面のサイズ(幅)
     height : int
@@ -53,7 +55,7 @@ def generate_board(turn, width, height, point_upper, point_lower,\
             points = _generate_line_symmetry_half_B(width, height, point_lower, point_upper)
             tiled = _put_player_line_symmetry_half_B(width, height, player_num)
 
-    if generate_type == LINE_SYMMETRY_QUOTER:
+    if generate_type == LINE_SYMMETRY_QUARTER:
         points = _generate_line_symmetry_quarter(width, height, point_lower, point_upper)
         tiled = _put_player_line_symmetry(width, height, player_num)
 
@@ -61,7 +63,7 @@ def generate_board(turn, width, height, point_upper, point_lower,\
         points = _generate_point_symmetry(width, height, point_lower, point_upper)
         tiled = _put_player_line_symmetry(width, height)
 
-    return Board(turn, width, height, points, tiled)
+    return Board(width, height, points, tiled)
 
 
 # Private
