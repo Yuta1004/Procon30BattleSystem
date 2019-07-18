@@ -41,9 +41,9 @@ class Game:
             return False
 
         for agent in self.agents:
-            if (agent.team == team_id) and (agent._id == agent_id):
+            if (agent.team == team_id) and (agent.id == agent_id):
                 agent.dx = dx
-                agetn.dy = dy
+                agent.dy = dy
                 return True
 
 
@@ -57,16 +57,16 @@ class Game:
         """
         # エージェントの行動が影響する範囲をリストアップ
         affected_positions = []
-        for agent in filter(lambda n: n.action >= 0, self.agents):
-            mx, my = cal_mx_my(agent)
+        for agent in filter(lambda n: n.dx >= -1, self.agents):
+            mx, my = self.cal_mx_my(agent)
             affected_positions.append((mx, my))
-            if can_action(agent) and agent.except_panel:
+            if self.can_action(agent) and agent.except_panel:
                 affected_positions.append(agent.x, agent.y)
 
         # 影響がないエージェントを行動させる
-        for agent in filter(lambda n: n.action >= 0, self.agents):
-            mx, my = cal_mx_my(agent)
-            if can_action(agent) and ((mx, my) not in affected_positions):
+        for agent in filter(lambda n: n.dx >= -1, self.agents):
+            mx, my = self.cal_mx_my(agent)
+            if self.can_action(agent) and (affected_positions.count((mx, my)) == 1):
                 if agent.except_panel:
                     self.board.tiled[my][mx] = 0
                 else:
@@ -142,8 +142,8 @@ class Game:
 
 
     def can_action(self, agent):
-        mx, my = cal_mx_my(agent)
-        return is_safe_pos(mx, my)
+        mx, my = self.cal_mx_my(agent)
+        return self.is_safe_pos(mx, my)
 
 
     def is_safe_pos(self, x, y):
