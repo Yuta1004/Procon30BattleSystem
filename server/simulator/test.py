@@ -44,7 +44,7 @@ def score_test_1():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert (game.cal_score([1, 2]) == {1: 6, 2: 4}), "Test Failed"
+    assert(game.cal_score([1, 2]) == {1: 6, 2: 4})
 
 
 def score_test_2():
@@ -66,7 +66,7 @@ def score_test_2():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert (game.cal_score([1, 2]) == {1: 5, 2: 5}), "Test Failed"
+    assert(game.cal_score([1, 2]) == {1: 5, 2: 5})
 
 
 def score_test_3():
@@ -88,7 +88,7 @@ def score_test_3():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert (game.cal_score([1, 2]) == {1: 32, 2: 6}), "Test Failed"
+    assert(game.cal_score([1, 2]) == {1: 32, 2: 6})
 
 
 def score_test_4():
@@ -110,7 +110,7 @@ def score_test_4():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert (game.cal_score([1, 2]) == {1: 20, 2: 6}), "Test Failed"
+    assert(game.cal_score([1, 2]) == {1: 20, 2: 6})
 
 
 def score_test_5():
@@ -158,51 +158,51 @@ def score_test_6():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert (game.cal_score([1]) == {1: 54}), "Test Failed"
+    assert(game.cal_score([1]) == {1: 54})
 
 
 # Board Generate Test(Line Sysmmetry)
 def generate_board_test_1():
     points = _generate_line_symmetry_half_A(10, 6, 0, 16)
-    assert _is_line_symmetry_half_y(points), "Test Failed"
+    assert _is_line_symmetry_half_y(points)
 
 
 def generate_board_test_2():
     points = _generate_line_symmetry_half_A(5, 9, 0, 16)
-    assert _is_line_symmetry_half_y(points), "Test Failed"
+    assert _is_line_symmetry_half_y(points)
 
 
 def generate_board_test_3():
     points = _generate_line_symmetry_half_B(10, 9, 0, 16)
-    assert _is_line_symmetry_half_x(points), "Test Failed"
+    assert _is_line_symmetry_half_x(points)
 
 
 def generate_board_test_4():
     points = _generate_line_symmetry_half_B(3, 9, 0, 16)
-    assert _is_line_symmetry_half_x(points), "Test Failed"
+    assert _is_line_symmetry_half_x(points)
 
 
 def generate_board_test_5():
     points = _generate_line_symmetry_quarter(10, 9, 0, 16)
-    assert _is_line_symmetry_half_x(points), "Test Failed"
-    assert _is_line_symmetry_half_y(points), "Test Failed"
+    assert _is_line_symmetry_half_x(points)
+    assert _is_line_symmetry_half_y(points)
 
 
 def generate_board_test_6():
     points = _generate_line_symmetry_quarter(5, 12, 0, 16)
-    assert _is_line_symmetry_half_x(points), "Test Failed"
-    assert _is_line_symmetry_half_y(points), "Test Failed"
+    assert _is_line_symmetry_half_x(points)
+    assert _is_line_symmetry_half_y(points)
 
 
 # Board Generate Test(Pont Symmetry)
 def generate_board_test_7():
     points = _generate_point_symmetry(10, 7, 0, 9)
-    assert _is_point_symmetry(points), "Test Failed"
+    assert _is_point_symmetry(points)
 
 
 def generate_board_test_8():
     points = _generate_point_symmetry(9, 8, 0, 9)
-    assert _is_point_symmetry(points), "Test Failed"
+    assert _is_point_symmetry(points)
 
 
 # Flow Test
