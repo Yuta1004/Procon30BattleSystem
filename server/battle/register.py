@@ -1,6 +1,5 @@
 import json
-from server.simulator.values import *
-from server.simulator.board import generate_board
+from server.simulator.board import generate_board, LINE_SYMMETRY_HALF
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.stage_db_manager import StageDBAccessManager
 

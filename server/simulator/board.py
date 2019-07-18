@@ -1,7 +1,12 @@
 from random import randint
 from copy import deepcopy
-from server.simulator.values import *
 from server.common.functions import gen_2d_list, transpositon_2d_list
+
+
+# Generate Board Options
+LINE_SYMMETRY_HALF = 0
+LINE_SYMMETRY_QUARTER = 1
+POINT_SYMMETRY_HALF = 2
 
 
 # Public

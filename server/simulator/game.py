@@ -1,4 +1,3 @@
-from server.simulator.values import *
 from server.common.functions import flatten_2d, gen_2d_list
 
 class Game:
@@ -30,7 +29,7 @@ class Game:
         self.agents = agents
 
 
-    def set_action(self, team_id, agent_id, action):
+    def set_action(self, team_id, agent_id, dx, dy):
         """
         エージェントに行動をセット
 
@@ -40,15 +39,16 @@ class Game:
             チームID
         agent_id : int
             エージェントID
-        action : int
-            アクション(values.pyにある定数を使うこと)
+        dx : int
+        dy : int
         """
-        if (action < ACTION_ID_LOWER) or (ACTION_ID_UPPER < action):
+        if abs(dx) > 1 or abs(dy) > 1:
             return False
 
         for agent in self.agents:
             if (agent.team == team_id) and (agent._id == agent_id):
-                agent.action = action
+                agent.dx = dx
+                agetn.dy = dy
                 return True
 
 
@@ -65,18 +65,17 @@ class Game:
         for agent in filter(lambda n: n.action >= 0, self.agents):
             mx, my = cal_mx_my(agent)
             affected_positions.append((mx, my))
-            if can_action(agent) and (ACTION[agent.action].panel == 1):
+            if can_action(agent) and agent.except_panel:
                 affected_positions.append(agent.x, agent.y)
 
         # 影響がないエージェントを行動させる
         for agent in filter(lambda n: n.action >= 0, self.agents):
             mx, my = cal_mx_my(agent)
-            action = ACTION[agent]
             if can_action(agent) and ((mx, my) not in affected_positions):
-                if action.panel == 0:
-                    self.board.tiled[my][mx] = agent.team
-                elif action.panel == 1:
+                if agent.except_panel:
                     self.board.tiled[my][mx] = 0
+                else:
+                    self.board.tiled[my][mx] = agent.team
 
         self.turn += 1
 
@@ -142,9 +141,8 @@ class Game:
 
 
     def cal_mx_my(self, agent):
-        action = ACTION[agent.action]
-        mx = agent.x + action.dx
-        my = agent.y + action.dy
+        mx = agent.x + agent.dx
+        my = agent.y + agent.dy
         return mx, my
 
 
