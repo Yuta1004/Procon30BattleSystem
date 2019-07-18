@@ -22,6 +22,7 @@ def simulation_test():
     dotest("GenerateBoardTest7", generate_board_test_7)
 
     dotest("FlowTest1", flow_test_1)
+    dotest("FlowTest2", flow_test_2)
 
 
 # Score Calculate Test
@@ -236,7 +237,44 @@ def flow_test_1():
     simulator.set_action(2, 1, 1, 0)
     simulator.set_action(2, 2, 0, -1)
     simulator.step()
-    assert (simulator.cal_score([1, 2]) == {1: 7, 2: 9})
+    assert(simulator.cal_score([1, 2]) == {1: 7, 2: 9})
+    assert(simulator.turn == 1)
+
+
+def flow_test_2():
+    width = 7
+    height = 3
+    points = [
+        [1, 4, -2, 5, -2, 4, 1],
+        [8, 9, 1, 0, 1, 9, 8],
+        [0, 4, 6, 3, 6, 4, 0],
+    ]
+    tiled = [
+        [0, 0, 1, 0, 2, 0, 0],
+        [0, 0, 1, 0, 2, 0, 0],
+        [0, 0, 1, 0, 2, 0, 0]
+    ]
+    agents = [
+        Agent(1, 1, 2, 0),
+        Agent(1, 2, 2, 1),
+        Agent(1, 3, 2, 2),
+        Agent(2, 1, 4, 0),
+        Agent(2, 2, 4, 1),
+        Agent(2, 3, 4, 2),
+    ]
+    board = Board(width, height, points, tiled)
+    simulator = Game(board, agents)
+
+    # 1
+    simulator.set_action(1, 1, 1, 0)
+    simulator.set_action(1, 2, 1, 0)
+    simulator.set_action(1, 3, -1, 0)
+    simulator.set_action(2, 1, 1, 0)
+    simulator.set_action(2, 2, -1, 0)
+    simulator.set_action(2, 3, -1, 0)
+    simulator.step()
+    assert(simulator.cal_score([1, 2]) == {1: 14, 2: 12})
+    assert(simulator.turn == 1)
 
 
 # For Test Function
