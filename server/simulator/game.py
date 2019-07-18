@@ -5,28 +5,23 @@ class Game:
     Gameクラス
 
     Brief:
-        ゲームを管理する
+        　シミュレーター
     """
 
-    def __init__(self, battle_id, turn, board, agents):
+    def __init__(self, board, agents):
         """
         コンストラクタ
 
         Params
         ----------
-        battle_id : int
-            試合ID
-        turn : int
-            ターン数
         board : Board
             盤面情報
         agents : Agent + List
             エージェント情報
         """
-        self.battle_id = battle_id
-        self.turn = turn
         self.board = board
         self.agents = agents
+        self.turn = 0
 
 
     def set_action(self, team_id, agent_id, dx, dy):
