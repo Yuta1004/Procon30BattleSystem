@@ -69,3 +69,14 @@ class ActionDBAccessManager(DBAccessManager):
     def update(self, cursor, battle_id, turn, action):
         sql = "update action set detail=%s where battle_id=%s and turn=%s"
         cursor.execute(sql, (action, battle_id, turn))
+
+
+    @DBAccessManager.db_execute
+    def count(self, cursor, battle_id, turn=None):
+        sql = "select count(&) from action where battle_id=%s"
+        req_tuple = (battle_id, )
+        if turn is not None:
+            sql += " and turn=%s"
+            req_tuple = (battle_id, turn)
+        cursor.execute(sql, req_tuple)
+        return cursor.fetchall()[0]

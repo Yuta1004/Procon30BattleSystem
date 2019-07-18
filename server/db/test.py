@@ -13,6 +13,8 @@ def db_manager_test():
     dotest("ActionDBAccessManagerTest2", action_db_manager_test_2)
     dotest("ActionDBAccessManagerTest3", action_db_manager_test_3)
     dotest("ActionDBAccessManagerTest4", action_db_manager_test_4)
+    dotest("ActionDBAccessManagerTest5", action_db_manager_test_4)
+    dotest("ActionDBAccessManagerTest6", action_db_manager_test_4)
 
     # dotest("StageDBAccessManagerTest1", stage_db_manager_test_1)
     dotest("StageDBAccessManagerTest2", stage_db_manager_test_2)
@@ -65,6 +67,16 @@ def action_db_manager_test_4():
     for item in result:
         for key, val in zip(keys, values):
             assert (item[key] == val), "TestFailed"
+
+
+def action_db_manager_test_5():
+    manager = ActionDBAccessManager()
+    assert (manager.count(1, 1) == 1), "TestFailed"
+
+
+def action_db_manager_test_6():
+    manager = ActionDBAccessManager()
+    assert (manager.count(1) == 1), "TestFailed"
 
 
 def stage_db_manager_test_1():
