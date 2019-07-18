@@ -1,7 +1,9 @@
 from server.simulator.game import Game
 from server.simulator.board import Board, _generate_line_symmetry_half_A,\
     _generate_line_symmetry_half_B, _generate_line_symmetry_quarter, _generate_point_symmetry
+from server.simulator.agent import Agent
 from server.common.functions import dotest, transpositon_2d_list
+
 
 def simulation_test():
     dotest("ScoreTest1", score_test_1)
@@ -18,6 +20,9 @@ def simulation_test():
     dotest("GenerateBoardTest5", generate_board_test_5)
     dotest("GenerateBoardTest6", generate_board_test_6)
     dotest("GenerateBoardTest7", generate_board_test_7)
+
+    dotest("FlowTest1", flow_test_1)
+    dotest("FlowTest2", flow_test_2)
 
 
 # Score Calculate Test
@@ -39,8 +44,8 @@ def score_test_1():
         [0, 0, 0, 0, 0, 0, 0, 0]
     ]
     board = Board(width, height, points, tiled)
-    game = Game(1, 1, board, [])
-    assert (game.cal_score([1, 2]) == {1: 6, 2: 4}), "Test Failed"
+    game = Game(board, [])
+    assert(game.cal_score([1, 2]) == {1: 6, 2: 4})
 
 
 def score_test_2():
@@ -61,8 +66,8 @@ def score_test_2():
         [0, 0, 0, 0, 0, 0, 0, 0]
     ]
     board = Board(width, height, points, tiled)
-    game = Game(1, 1, board, [])
-    assert (game.cal_score([1, 2]) == {1: 5, 2: 5}), "Test Failed"
+    game = Game(board, [])
+    assert(game.cal_score([1, 2]) == {1: 5, 2: 5})
 
 
 def score_test_3():
@@ -83,8 +88,8 @@ def score_test_3():
         [0, 1, 1, 1, 1, 1, 1, 0]
     ]
     board = Board(width, height, points, tiled)
-    game = Game(1, 1, board, [])
-    assert (game.cal_score([1, 2]) == {1: 32, 2: 6}), "Test Failed"
+    game = Game(board, [])
+    assert(game.cal_score([1, 2]) == {1: 32, 2: 6})
 
 
 def score_test_4():
@@ -105,8 +110,8 @@ def score_test_4():
         [0, 0, 0, 1, 1, 0, 0, 0]
     ]
     board = Board(width, height, points, tiled)
-    game = Game(1, 1, board, [])
-    assert (game.cal_score([1, 2]) == {1: 20, 2: 6}), "Test Failed"
+    game = Game(board, [])
+    assert(game.cal_score([1, 2]) == {1: 20, 2: 6})
 
 
 def score_test_5():
@@ -127,7 +132,7 @@ def score_test_5():
         [1, 1, 1, 1, 1]
     ]
     board = Board(width, height, points, tiled)
-    game = Game(1, 1, board, [])
+    game = Game(board, [])
     assert (game.cal_score([1]) == {1: 19}), "Test Failed"
 
 
@@ -153,52 +158,123 @@ def score_test_6():
         [1, 1, 1, 1, 1, 1, 1]
     ]
     board = Board(width, height, points, tiled)
-    game = Game(1, 1, board, [])
-    assert (game.cal_score([1]) == {1: 54}), "Test Failed"
+    game = Game(board, [])
+    assert(game.cal_score([1]) == {1: 54})
 
 
 # Board Generate Test(Line Sysmmetry)
 def generate_board_test_1():
     points = _generate_line_symmetry_half_A(10, 6, 0, 16)
-    assert _is_line_symmetry_half_y(points), "Test Failed"
+    assert _is_line_symmetry_half_y(points)
 
 
 def generate_board_test_2():
     points = _generate_line_symmetry_half_A(5, 9, 0, 16)
-    assert _is_line_symmetry_half_y(points), "Test Failed"
+    assert _is_line_symmetry_half_y(points)
 
 
 def generate_board_test_3():
     points = _generate_line_symmetry_half_B(10, 9, 0, 16)
-    assert _is_line_symmetry_half_x(points), "Test Failed"
+    assert _is_line_symmetry_half_x(points)
 
 
 def generate_board_test_4():
     points = _generate_line_symmetry_half_B(3, 9, 0, 16)
-    assert _is_line_symmetry_half_x(points), "Test Failed"
+    assert _is_line_symmetry_half_x(points)
 
 
 def generate_board_test_5():
     points = _generate_line_symmetry_quarter(10, 9, 0, 16)
-    assert _is_line_symmetry_half_x(points), "Test Failed"
-    assert _is_line_symmetry_half_y(points), "Test Failed"
+    assert _is_line_symmetry_half_x(points)
+    assert _is_line_symmetry_half_y(points)
 
 
 def generate_board_test_6():
     points = _generate_line_symmetry_quarter(5, 12, 0, 16)
-    assert _is_line_symmetry_half_x(points), "Test Failed"
-    assert _is_line_symmetry_half_y(points), "Test Failed"
+    assert _is_line_symmetry_half_x(points)
+    assert _is_line_symmetry_half_y(points)
 
 
 # Board Generate Test(Pont Symmetry)
 def generate_board_test_7():
     points = _generate_point_symmetry(10, 7, 0, 9)
-    assert _is_point_symmetry(points), "Test Failed"
+    assert _is_point_symmetry(points)
 
 
 def generate_board_test_8():
     points = _generate_point_symmetry(9, 8, 0, 9)
-    assert _is_point_symmetry(points), "Test Failed"
+    assert _is_point_symmetry(points)
+
+
+# Flow Test
+def flow_test_1():
+    width = 5
+    height = 5
+    points = [
+        [2, 1, 0, 1, 2],
+        [4, 5, 3, 5, 4],
+        [1, 1, 2, 1, 1],
+        [4, 5, 3, 5, 4],
+        [2, 1, 0, 1, 2]
+    ]
+    tiled = [
+        [0, 1, 0, 2, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 2, 0, 1, 0]
+    ]
+    agents = [
+        Agent(1, 1, 1, 0),
+        Agent(1, 2, 3, 4),
+        Agent(2, 1, 3, 0),
+        Agent(2, 2, 1, 4)
+    ]
+    board = Board(width, height, points, tiled)
+    simulator = Game(board, agents)
+    simulator.set_action(1, 1, 0, 1)
+    simulator.set_action(1, 2, -1, 0)
+    simulator.set_action(2, 1, 1, 0)
+    simulator.set_action(2, 2, 0, -1)
+    simulator.step()
+    assert(simulator.cal_score([1, 2]) == {1: 7, 2: 9})
+    assert(simulator.turn == 1)
+
+
+def flow_test_2():
+    width = 7
+    height = 3
+    points = [
+        [1, 4, -2, 5, -2, 4, 1],
+        [8, 9, 1, 0, 1, 9, 8],
+        [0, 4, 6, 3, 6, 4, 0],
+    ]
+    tiled = [
+        [0, 0, 1, 0, 2, 0, 0],
+        [0, 0, 1, 0, 2, 0, 0],
+        [0, 0, 1, 0, 2, 0, 0]
+    ]
+    agents = [
+        Agent(1, 1, 2, 0),
+        Agent(1, 2, 2, 1),
+        Agent(1, 3, 2, 2),
+        Agent(2, 1, 4, 0),
+        Agent(2, 2, 4, 1),
+        Agent(2, 3, 4, 2),
+    ]
+    board = Board(width, height, points, tiled)
+    simulator = Game(board, agents)
+
+    # 1
+    simulator.set_action(1, 1, 1, 0)
+    simulator.set_action(1, 2, 1, 0)
+    simulator.set_action(1, 3, -1, 0)
+    simulator.set_action(2, 1, 1, 0)
+    simulator.set_action(2, 2, -1, 0)
+    simulator.set_action(2, 3, -1, 0)
+    simulator.step()
+    assert(simulator.cal_score([1, 2]) == {1: 14, 2: 12})
+    assert(simulator.turn == 1)
 
 
 # For Test Function

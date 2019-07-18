@@ -31,7 +31,7 @@ def battle_db_manager_test_2():
     keys = ["id", "name", "token", "turn", "turn_msec", "turn_switch_msec", "teams"]
     values = [1, "test_name", "test_token", 10, 30000, 1000, "teams_json", False]
     for key, val in zip(keys, values):
-        assert (result[key] == val), "TestFailed"
+        assert(result[key] == val)
 
 
 def action_db_manager_test_1():
@@ -42,12 +42,14 @@ def action_db_manager_test_1():
 def action_db_manager_test_2():
     manager = ActionDBAccessManager()
     tmp_action = str(random.randint(0, 1<<30))
+    # 1
     manager.update(1, 1, tmp_action)
     result = manager.get_data(1, 1)[0]
-    assert (result["detail"] == tmp_action), "TestFailed"
+    assert(result["detail"] == tmp_action)
+    # 2
     manager.update(1, 1, "test_action")
     result = manager.get_data(1, 1)[0]
-    assert (result["detail"] == "test_action"), "TestFailed"
+    assert(result["detail"] == "test_action")
 
 
 def action_db_manager_test_3():
@@ -56,7 +58,7 @@ def action_db_manager_test_3():
     keys = ["battle_id", "turn", "detail"]
     values = [1, 1, "test_action"]
     for key, val in zip(keys, values):
-        assert (result[key] == val), "TestFailed"
+        assert(result[key] == val)
 
 
 def action_db_manager_test_4():
@@ -66,17 +68,17 @@ def action_db_manager_test_4():
     values = [1, 1, "test_action"]
     for item in result:
         for key, val in zip(keys, values):
-            assert (item[key] == val), "TestFailed"
+            assert(item[key] == val)
 
 
 def action_db_manager_test_5():
     manager = ActionDBAccessManager()
-    assert (manager.count(1, 1) == 1), "TestFailed"
+    assert(manager.count(1, 1) == 1)
 
 
 def action_db_manager_test_6():
     manager = ActionDBAccessManager()
-    assert (manager.count(1) == 1), "TestFailed"
+    assert(manager.count(1) == 1)
 
 
 def stage_db_manager_test_1():
@@ -90,4 +92,4 @@ def stage_db_manager_test_2():
     keys = ["battle_id", "width", "height", "points", "tiled"]
     values = [1, 10, 10, "test_points", "test_tiled"]
     for key, val in zip(keys, values):
-        assert (result[key] == val), "TestFailed"
+        assert(result[key] == val)
