@@ -24,7 +24,7 @@ class Game:
         self.turn = 0
 
 
-    def set_action(self, team_id, agent_id, dx, dy):
+    def set_action(self, team_id, agent_id, dx, dy, remove_panel=False):
         """
         エージェントに行動をセット
 
@@ -44,6 +44,7 @@ class Game:
             if (agent.team == team_id) and (agent.id == agent_id):
                 agent.dx = dx
                 agent.dy = dy
+                agent.remove_panel = remove_panel
                 return True
 
 
@@ -60,14 +61,14 @@ class Game:
         for agent in filter(lambda n: n.dx >= -1, self.agents):
             mx, my = self.cal_mx_my(agent)
             affected_positions.append((mx, my))
-            if self.can_action(agent) and agent.except_panel:
+            if self.can_action(agent) and agent.remove_panel:
                 affected_positions.append(agent.x, agent.y)
 
         # 影響がないエージェントを行動させる
         for agent in filter(lambda n: n.dx >= -1, self.agents):
             mx, my = self.cal_mx_my(agent)
             if self.can_action(agent) and (affected_positions.count((mx, my)) == 1):
-                if agent.except_panel:
+                if agent.remove_panel:
                     self.board.tiled[my][mx] = 0
                 else:
                     self.board.tiled[my][mx] = agent.team
