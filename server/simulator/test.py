@@ -1,7 +1,9 @@
 from server.simulator.game import Game
 from server.simulator.board import Board, _generate_line_symmetry_half_A,\
     _generate_line_symmetry_half_B, _generate_line_symmetry_quarter, _generate_point_symmetry
+from server.simulator.agent import Agent
 from server.common.functions import dotest, transpositon_2d_list
+
 
 def simulation_test():
     dotest("ScoreTest1", score_test_1)
@@ -18,6 +20,8 @@ def simulation_test():
     dotest("GenerateBoardTest5", generate_board_test_5)
     dotest("GenerateBoardTest6", generate_board_test_6)
     dotest("GenerateBoardTest7", generate_board_test_7)
+
+    dotest("FlowTest1", flow_test_1)
 
 
 # Score Calculate Test
@@ -199,6 +203,40 @@ def generate_board_test_7():
 def generate_board_test_8():
     points = _generate_point_symmetry(9, 8, 0, 9)
     assert _is_point_symmetry(points), "Test Failed"
+
+
+# Flow Test
+def flow_test_1():
+    width = 5
+    height = 5
+    points = [
+        [2, 1, 0, 1, 2],
+        [4, 5, 3, 5, 4],
+        [1, 1, 2, 1, 1],
+        [4, 5, 3, 5, 4],
+        [2, 1, 0, 1, 2]
+    ]
+    tiled = [
+        [0, 1, 0, 2, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 2, 0, 1, 0]
+    ]
+    agents = [
+        Agent(1, 1, 1, 0),
+        Agent(1, 2, 3, 4),
+        Agent(2, 1, 3, 0),
+        Agent(2, 2, 1, 4)
+    ]
+    board = Board(width, height, points, tiled)
+    simulator = Game(board, agents)
+    simulator.set_action(1, 1, 0, 1)
+    simulator.set_action(1, 2, -1, 0)
+    simulator.set_action(2, 1, 1, 0)
+    simulator.set_action(2, 2, 0, -1)
+    simulator.step()
+    assert (simulator.cal_score([1, 2]) == {1: 7, 2: 9})
 
 
 # For Test Function
