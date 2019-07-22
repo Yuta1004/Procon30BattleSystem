@@ -4,7 +4,7 @@ from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.stage_db_manager import StageDBAccessManager
 
 
-def register(name, start_at_unix_time, turn, board_width, board_height,
+def battle_register(name, start_at_unix_time, turn, board_width, board_height,
              point_lower, point_upper, player_num, teamA, teamB,
              generate_board_type=LINE_SYMMETRY_HALF,
              turn_mills=30000, interval_mills=3000):
