@@ -3,13 +3,19 @@ from server.common.functions import dotest
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.action_db_manager import ActionDBAccessManager
 from server.db.stage_db_manager import StageDBAccessManager
+from server.db.team_db_manager import TeamDBAccessManager
 
 
 def db_manager_test():
+    # dotest("TeamDBAccessManagerTest1", team_db_manager_test_1)
+    dotest("TeamDBAccessManagerTest2", team_db_manager_test_2)
+    dotest("TeamDBAccessManagerTest3", team_db_manager_test_3)
+    dotest("TeamDBAccessManagerTest4", team_db_manager_test_4)
+
     # dotest("BattleDBAccessManagerTest1", battle_db_manager_test_1)
     dotest("BattleDBAccessManagerTest2", battle_db_manager_test_2)
 
-#     dotest("ActionDBAccessManagerTest1", action_db_manager_test_1)
+    # dotest("ActionDBAccessManagerTest1", action_db_manager_test_1)
     dotest("ActionDBAccessManagerTest2", action_db_manager_test_2)
     dotest("ActionDBAccessManagerTest3", action_db_manager_test_3)
     dotest("ActionDBAccessManagerTest4", action_db_manager_test_4)
@@ -20,16 +26,47 @@ def db_manager_test():
     dotest("StageDBAccessManagerTest2", stage_db_manager_test_2)
 
 
+def team_db_manager_test_1():
+    manager = TeamDBAccessManager()
+    manager.insert("teamA", "test_tokenA")
+    manager.insert("teamB", "test_tokenB")
+
+
+def team_db_manager_test_2():
+    manager = TeamDBAccessManager()
+    result = manager.get_data(1)[0]
+    assert(result["id"] == 1)
+    assert(result["name"] == "teamA")
+    assert(result["token"] == "test_tokenA")
+
+
+def team_db_manager_test_3():
+    manager = TeamDBAccessManager()
+    result = manager.get_data(token="test_tokenA")[0]
+    assert(result["id"] == 1)
+    assert(result["name"] == "teamA")
+    assert(result["token"] == "test_tokenA")
+
+
+def team_db_manager_test_4():
+    manager = TeamDBAccessManager()
+    result = manager.get_data(1, "test_tokenA")[0]
+    assert(result["id"] == 1)
+    assert(result["name"] == "teamA")
+    assert(result["token"] == "test_tokenA")
+
+
 def battle_db_manager_test_1():
     manager = BattleDBAccessManager()
-    manager.insert("test_name", "test_token", 10, 30000, 1000, "teams_json")
+    manager.insert("test_name", 0, 10, 30000, 1000, 1, 2)
 
 
 def battle_db_manager_test_2():
     manager = BattleDBAccessManager()
     result = manager.get_data(1)
-    keys = ["id", "name", "token", "turn", "turn_msec", "turn_switch_msec", "teams"]
-    values = [1, "test_name", "test_token", 10, 30000, 1000, "teams_json", False]
+    keys = ["id", "name", "start_at_unix_time", "turn", "turn_mills",
+            "interval_mills", "teamA", "teamB", "now_battle"]
+    values = [1, "test_name", 0, 10, 30000, 1000, 1, 2, False]
     for key, val in zip(keys, values):
         assert(result[key] == val)
 

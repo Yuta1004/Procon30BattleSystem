@@ -13,7 +13,7 @@ class BattleDBAccessManager(DBAccessManager):
 
 
     @DBAccessManager.db_execute
-    def insert(self, cursor, name, token, turn, turn_msec, turn_switch_msec, teams):
+    def insert(self, cursor, name, start_at_unix_time, turn, turn_mills, interval_mills, teamA, teamB):
         """
         Battleテーブルにデータを挿入する
 
@@ -21,16 +21,18 @@ class BattleDBAccessManager(DBAccessManager):
         ----------
         name : str
             試合名
-        token : str
-            トークン
+        start_at_unix_time : int
+            試合が始まるUNIX時間
         turn : int
             ターン数
-        turn_msec : int
+        turn_mills : int
             1ターンの秒数(msec)
-        turn_switch_msec : int
+        interval_mills : int
             ターン切り替えの秒数(msec)
-        teams : str
-            チーム情報JSON
+        teamA : int
+            チームAのID
+        teamB : int
+            チームBのID
 
         Return
         ----------
@@ -39,10 +41,10 @@ class BattleDBAccessManager(DBAccessManager):
 
         sql =\
         """
-            insert into battle (name, token, turn, turn_msec, turn_switch_msec, teams, now_battle)
-            values(%s, %s, %s, %s, %s, %s, 0)
+            insert into battle (name, start_at_unix_time, turn, turn_mills, interval_mills, teamA, teamB, now_battle)
+            values(%s, %s, %s, %s, %s, %s, %s, 0)
         """
-        cursor.execute(sql, (name, token, turn, turn_msec, turn_switch_msec, teams))
+        cursor.execute(sql, (name, start_at_unix_time, turn, turn_mills, interval_mills, teamA, teamB))
         return cursor.lastrowid
 
 
