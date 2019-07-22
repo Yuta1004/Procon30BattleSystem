@@ -44,7 +44,8 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
         board_width,
         board_height,
         json.dumps({"points": board.points}),
-        json.dumps({"tiled": board.tiled})
+        json.dumps({"tiled": board.tiled}),
+        json.dumps({"agent_pos": agent_pos_dict})
     )
 
     return battle_id
