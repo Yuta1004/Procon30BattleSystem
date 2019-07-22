@@ -12,7 +12,7 @@ class StageDBAccessManager(DBAccessManager):
 
 
     @DBAccessManager.db_execute
-    def insert(self, cursor, battle_id, width, height, points, tiled):
+    def insert(self, cursor, battle_id, width, height, points, tiled, agent_pos):
         """
         Stageテーブルにデータを追加
 
@@ -28,14 +28,16 @@ class StageDBAccessManager(DBAccessManager):
             配点情報JSON
         tiled : str
             陣地情報JSON
+        agent_pos : str
+            エージェント初期配置JSON
         """
 
         sql =\
         """
-            insert into stage (battle_id, width, height, points, tiled)
-            values(%s, %s, %s, %s, %s)
+            insert into stage (battle_id, width, height, points, tiled, agent_pos)
+            values(%s, %s, %s, %s, %s, %s)
         """
-        cursor.execute(sql, (battle_id, width, height, points, tiled))
+        cursor.execute(sql, (battle_id, width, height, points, tiled, agent_pos))
 
 
     @DBAccessManager.db_execute
