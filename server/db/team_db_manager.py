@@ -13,12 +13,39 @@ class TeamDBAccessManager(DBAccessManager):
 
     @DBAccessManager.db_execute
     def insert(self, cursor, name, token):
+        """
+        チームテーブルにデータを追加
+
+        Params
+        ----------
+        name : str
+            チーム名
+        token : str
+            トークン(一意なもの)
+        """
+
         sql = "insert into team (name, token) values(%s, %s)"
         cursor.execute(sql, (name, token))
 
 
     @DBAccessManager.db_execute
     def get_data(self, cursor, team_id=None, token=None):
+        """
+        チームテーブルからデータを取得する
+
+        Params
+        ----------
+        team_id : int
+            チームID
+        token : str
+            トークン
+
+        Return
+        ----------
+        list(dict)
+        検索条件に一致するレコードの配列
+        """
+
         sql = "select * from team where "
         req_tuple = (team_id, )
 

@@ -4,10 +4,10 @@ from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.stage_db_manager import StageDBAccessManager
 
 
-def register(name, token, turn, board_width, board_height,
-             point_lower, point_upper, player_num, teams,
+def battle_register(name, start_at_unix_time, turn, board_width, board_height,
+             point_lower, point_upper, player_num, teamA, teamB,
              generate_board_type=LINE_SYMMETRY_HALF,
-             turn_msec=30000, turn_switch_msec=3000):
+             turn_mills=30000, interval_mills=3000):
     board = generate_board(
         turn,
         board_width,
@@ -21,11 +21,12 @@ def register(name, token, turn, board_width, board_height,
     battle_db_manager = BattleDBAccessManager()
     battle_id = battle_db_manager.insert(
         name,
-        token,
+        start_at_unix_time,
         turn,
-        turn_msec,
-        turn_switch_msec,
-        teams
+        turn_mills,
+        interval_mills,
+        teamA,
+        teamB
     )
 
     stage_db_manager = StageDBAccessManager()
