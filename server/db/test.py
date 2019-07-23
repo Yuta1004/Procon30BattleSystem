@@ -1,4 +1,5 @@
 import random
+import json
 from server.common.functions import dotest
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.action_db_manager import ActionDBAccessManager
@@ -120,13 +121,34 @@ def action_db_manager_test_6():
 
 def stage_db_manager_test_1():
     manager = StageDBAccessManager()
-    manager.insert(1, 10, 10, "test_points", "test_tiled", "test_agent_pos")
+    manager.insert(
+        1,
+        2,
+        2,
+        json.dumps({"points": [[1, 2], [3, 4]]}),
+        json.dumps({"tiled": [[1, 2], [3, 4]]}),
+        json.dumps({
+            "agent_pos": {
+                1: {
+                    1: {"x": 0, "y": 0},
+                    2: {"x": 1, "y": 0}
+                },
+                2: {
+                    3: {"x": 0, "y": 1},
+                    4: {"x": 1, "y": 1}
+                }
+            }
+        })
+    )
 
 
 def stage_db_manager_test_2():
     manager = StageDBAccessManager()
-    result = manager.get_data(1)
-    keys = ["battle_id", "width", "height", "points", "tiled", "agent_pos"]
-    values = [1, 10, 10, "test_points", "test_tiled", "test_agent_pos"]
-    for key, val in zip(keys, values):
-        assert(result[key] == val)
+    board, agents = manager.get_stage_data(1)
+    assert(board.width == 2)
+    assert(board.height == 2)
+    assert(board.tiled == [[1, 2], [3, 4]])
+    assert(board.points == [[1, 2], [3, 4]])
+    for agent in agents:
+        assert(type(agent.team) == int)
+        assert(type(agent.id) == int)
