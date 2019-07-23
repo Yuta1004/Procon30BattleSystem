@@ -33,11 +33,15 @@ class BattleManager(Thread):
 
         # 盤面復元
         for action in action_history:
-            for agent in json.loads(action["detail"])["detail"]:
-                team_id = agent["team_id"]
-                agent_id = agent["agent_id"]
-                remove_panel = agent["type"] == "remove"
-                dx = agent["dx"]
-                dy = agent["dy"]
-                self.game.set_action(team_id, agent_id, dx, dy, remove_panel)
-            self.game.simulator.step()
+            self.__do_action(json.loads(action["detail"])["detail"])
+
+
+    def __do_action(self, action_detail):
+        for agent in action_detail:
+            team_id = agent["team_id"]
+            agent_id = agent["agent_id"]
+            remove_panel = agent["type"] == "remove"
+            dx = agent["dx"]
+            dy = agent["dy"]
+            self.game.set_action(team_id, agent_id, dx, dy, remove_panel)
+        self.game.simulator.step()
