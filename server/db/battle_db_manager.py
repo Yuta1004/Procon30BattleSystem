@@ -49,13 +49,13 @@ class BattleDBAccessManager(DBAccessManager):
 
 
     @DBAccessManager.db_execute
-    def get_data(self, cursor, conditon_id):
+    def get_data(self, cursor, battle_id):
         """
         Battleテーブルからデータを取得する
 
         Params
         ----------
-        condition_id
+        battle_id
             試合ID
 
         Return
@@ -64,7 +64,7 @@ class BattleDBAccessManager(DBAccessManager):
         """
 
         sql = "select * from battle where id=%s"
-        cursor.execute(sql, (conditon_id))
+        cursor.execute(sql, (battle_id, ))
         result = cursor.fetchall()
         if len(result) > 0:
             result = result[0]
