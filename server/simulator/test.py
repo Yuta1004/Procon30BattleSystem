@@ -227,15 +227,15 @@ def flow_test_1():
     agents = [
         Agent(1, 1, 1, 0),
         Agent(1, 2, 3, 4),
-        Agent(2, 1, 3, 0),
-        Agent(2, 2, 1, 4)
+        Agent(2, 3, 3, 0),
+        Agent(2, 4, 1, 4)
     ]
     board = Board(width, height, points, tiled)
     simulator = Game(board, agents)
     simulator.set_action(1, 1, 0, 1)
     simulator.set_action(1, 2, -1, 0)
-    simulator.set_action(2, 1, 1, 0)
-    simulator.set_action(2, 2, 0, -1)
+    simulator.set_action(2, 3, 1, 0)
+    simulator.set_action(2, 4, 0, -1)
     simulator.step()
     assert(simulator.cal_score([1, 2]) == {1: 7, 2: 9})
     assert(simulator.turn == 1)
@@ -258,9 +258,9 @@ def flow_test_2():
         Agent(1, 1, 2, 0),
         Agent(1, 2, 2, 1),
         Agent(1, 3, 2, 2),
-        Agent(2, 1, 4, 0),
-        Agent(2, 2, 4, 1),
-        Agent(2, 3, 4, 2),
+        Agent(2, 4, 4, 0),
+        Agent(2, 5, 4, 1),
+        Agent(2, 6, 4, 2),
     ]
     board = Board(width, height, points, tiled)
     simulator = Game(board, agents)
@@ -269,9 +269,9 @@ def flow_test_2():
     simulator.set_action(1, 1, 1, 0)
     simulator.set_action(1, 2, 1, 0)
     simulator.set_action(1, 3, -1, 0)
-    simulator.set_action(2, 1, 1, 0)
-    simulator.set_action(2, 2, -1, 0)
-    simulator.set_action(2, 3, -1, 0)
+    simulator.set_action(2, 4, 1, 0)
+    simulator.set_action(2, 5, -1, 0)
+    simulator.set_action(2, 6, -1, 0)
     simulator.step()
     assert(simulator.cal_score([1, 2]) == {1: 14, 2: 12})
     assert(simulator.turn == 1)

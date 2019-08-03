@@ -1,8 +1,9 @@
 import json
 from server.db.action_db_manager import ActionDBAccessManager
+from server.db.team_db_manager import TeamDBAccessManager
 
 
-def save_action(battle_id, turn, agent_id, action_type, dx, dy):
+def save_action(battle_id, token, turn, agent_id, action_type, dx, dy):
     if action_type not in ["move", "remove", "stay"]:
         raise ValueError(
             "action_type must be one of [\"move\", \"remove\", \"stay\"]"
@@ -11,6 +12,9 @@ def save_action(battle_id, turn, agent_id, action_type, dx, dy):
         raise ValueError(
             "(dx, dy) must be in the range -1 to 1"
         )
+
+    # トークンを元にしてチームIDを取得
+    team_id = TeamDBAccessManager().get_data(token=token)[0]["team_id"]
 
     # 指定されたID,ターンにまだ行動が登録されていなかった場合 or そうでない場合
     manager = ActionDBAccessManager()
@@ -21,7 +25,8 @@ def save_action(battle_id, turn, agent_id, action_type, dx, dy):
             json.dumps({
                 "actions": [
                     {
-                        "agentID": agent_id,
+                        "team_id": team_id,
+                        "agent_id": agent_id,
                         "type": action_type,
                         "dx": dx,
                         "dy": dy,
@@ -42,6 +47,7 @@ def save_action(battle_id, turn, agent_id, action_type, dx, dy):
                     action["dy"] = dy
         else:
             actions["actions"].append({
+                "team_id": team_id,
                 "agent_id": agent_id,
                 "type": action_type,
                 "dx": dx,
