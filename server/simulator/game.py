@@ -88,6 +88,9 @@ class Game:
             else:
                 affected_agents.append(agent.id)
 
+        # エージェントリセット
+        list(map(lambda agent: agent.reset(), self.agents))
+
         self.turn += 1
         return safety_agents, affected_agents
 

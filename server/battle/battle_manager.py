@@ -43,9 +43,17 @@ class BattleManager(Thread):
 
             # 行動
             action_db_manager = ActionDBAccessManager()
-            action = action_db_manager.get_data(self.battle_id, turn)
+            action = action_db_manager.get_data(self.battle_id, self.turn)
             action = json.loads(action["detail"])["detail"]
-            self.__do_action(action)
+            safety_agents, affected_agents = self.__do_action(action)
+
+            # エージェントの行動ステータス更新
+            for agent in action["actions"]:
+                if agent["id"] in safety_agents:
+                    agent["apply"] = 1
+                elif agent["id"] in affected_agents:
+                    agent["apply"] = 0
+            action_db_manager.update(self.battle_id, self.turn, json.dumps(action))
 
             # 次ターンまで待機
             after_time = int(time.time() * 1000)
