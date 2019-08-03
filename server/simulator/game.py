@@ -59,15 +59,15 @@ class Game:
         # エージェントの行動が影響する範囲をリストアップ
         affected_positions = []
         for agent in filter(lambda n: n.dx >= -1, self.agents):
-            mx, my = self.cal_mx_my(agent)
+            mx, my = self.__cal_mx_my(agent)
             affected_positions.append((mx, my))
-            if self.can_action(agent) and agent.remove_panel:
+            if self.__can_action(agent) and agent.remove_panel:
                 affected_positions.append(agent.x, agent.y)
 
         # 影響がないエージェントを行動させる
         for agent in filter(lambda n: n.dx >= -1, self.agents):
-            mx, my = self.cal_mx_my(agent)
-            if self.can_action(agent) and (affected_positions.count((mx, my)) == 1):
+            mx, my = self.__cal_mx_my(agent)
+            if self.__can_action(agent) and (affected_positions.count((mx, my)) == 1):
                 if agent.remove_panel:
                     self.board.tiled[my][mx] = 0
                 else:
@@ -104,7 +104,7 @@ class Game:
             self.rec_tiled = gen_2d_list(self.board.height, self.board.width)
             for y in range(self.board.height):
                 for x in range(self.board.width):
-                    if (self.rec_tiled[y][x] == 0) and (not self.recursive_child(x, y, team_id)):
+                    if (self.rec_tiled[y][x] == 0) and (not self.__recursive_child(x, y, team_id)):
                         self.rec_tiled[y][x] = 0
 
             # 領域ポイント : 囲みが有効である座標のスコアを合計する
@@ -115,7 +115,7 @@ class Game:
         return score_list
 
 
-    def recursive_child(self, x, y, target):
+    def __recursive_child(self, x, y, target):
         # 盤面の外周に来た = 囲み無効
         if (x == 0) or (x == self.board.width - 1) or (y == 0) or (y == self.board.height - 1):
             return False
@@ -130,26 +130,26 @@ class Game:
         for (dx, dy) in zip(dx_list, dy_list):
             mx = x + dx
             my = y + dy
-            if self.is_safe_pos(mx, my) and (self.rec_tiled[my][mx] == 0)\
+            if self.__is_safe_pos(mx, my) and (self.rec_tiled[my][mx] == 0)\
                     and (self.board.tiled[my][mx] != target):
-                if not self.recursive_child(mx, my, target):
+                if not self.__recursive_child(mx, my, target):
                     self.rec_tiled[my][mx] = 0
                     return False
         return True
 
 
-    def cal_mx_my(self, agent):
+    def __cal_mx_my(self, agent):
         mx = agent.x + agent.dx
         my = agent.y + agent.dy
         return mx, my
 
 
-    def can_action(self, agent):
-        mx, my = self.cal_mx_my(agent)
-        return self.is_safe_pos(mx, my)
+    def __can_action(self, agent):
+        mx, my = self.__cal_mx_my(agent)
+        return self.__is_safe_pos(mx, my)
 
 
-    def is_safe_pos(self, x, y):
+    def __is_safe_pos(self, x, y):
         return (0 <= x) and (x < self.board.width) and\
                     (0 <= y) and (y < self.board.height)
 
