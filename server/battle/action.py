@@ -31,7 +31,7 @@ def save_action(battle_id, token, turn, agent_id, action_type, dx, dy):
                         "dx": dx,
                         "dy": dy,
                         "turn": turn,
-                        "apply": 0
+                        "apply": -1
                     }
                 ]
             })
@@ -53,6 +53,6 @@ def save_action(battle_id, token, turn, agent_id, action_type, dx, dy):
                 "dx": dx,
                 "dy": dy,
                 "turn": turn,
-                "apply": 0
+                "apply": -1
             })
         manager.update(battle_id, turn, json.dumps(actions))
