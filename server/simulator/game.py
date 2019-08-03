@@ -1,4 +1,6 @@
+import json
 from server.common.functions import flatten_2d, gen_2d_list
+from server.db.action_db_manager import ActionDBAccessManager
 
 class Game:
     """
@@ -55,25 +57,42 @@ class Game:
         Params
         ----------
         None
+
+        Returns
+        ----------
+        safety_agents : list
+            正常に行動できたエージェントのID
+        affected_agents : list
+            競合を起こしたエージェントのID
         """
+
         # エージェントの行動が影響する範囲をリストアップ
         affected_positions = []
         for agent in filter(lambda n: n.dx >= -1, self.agents):
-            mx, my = self.cal_mx_my(agent)
+            mx, my = self.__cal_mx_my(agent)
             affected_positions.append((mx, my))
-            if self.can_action(agent) and agent.remove_panel:
+            if self.__can_action(agent) and agent.remove_panel:
                 affected_positions.append(agent.x, agent.y)
 
         # 影響がないエージェントを行動させる
+        safety_agents = []
+        affected_agents = []
         for agent in filter(lambda n: n.dx >= -1, self.agents):
-            mx, my = self.cal_mx_my(agent)
-            if self.can_action(agent) and (affected_positions.count((mx, my)) == 1):
+            mx, my = self.__cal_mx_my(agent)
+            if self.__can_action(agent) and (affected_positions.count((mx, my)) == 1):  # 競合確認
+                safety_agents.append(agent.id)
                 if agent.remove_panel:
                     self.board.tiled[my][mx] = 0
                 else:
                     self.board.tiled[my][mx] = agent.team
+            else:
+                affected_agents.append(agent.id)
+
+        # エージェントリセット
+        list(map(lambda agent: agent.reset(), self.agents))
 
         self.turn += 1
+        return safety_agents, affected_agents
 
 
     def cal_score(self, team_id_list):
@@ -104,7 +123,7 @@ class Game:
             self.rec_tiled = gen_2d_list(self.board.height, self.board.width)
             for y in range(self.board.height):
                 for x in range(self.board.width):
-                    if (self.rec_tiled[y][x] == 0) and (not self.recursive_child(x, y, team_id)):
+                    if (self.rec_tiled[y][x] == 0) and (not self.__recursive_child(x, y, team_id)):
                         self.rec_tiled[y][x] = 0
 
             # 領域ポイント : 囲みが有効である座標のスコアを合計する
@@ -115,7 +134,7 @@ class Game:
         return score_list
 
 
-    def recursive_child(self, x, y, target):
+    def __recursive_child(self, x, y, target):
         # 盤面の外周に来た = 囲み無効
         if (x == 0) or (x == self.board.width - 1) or (y == 0) or (y == self.board.height - 1):
             return False
@@ -130,26 +149,26 @@ class Game:
         for (dx, dy) in zip(dx_list, dy_list):
             mx = x + dx
             my = y + dy
-            if self.is_safe_pos(mx, my) and (self.rec_tiled[my][mx] == 0)\
+            if self.__is_safe_pos(mx, my) and (self.rec_tiled[my][mx] == 0)\
                     and (self.board.tiled[my][mx] != target):
-                if not self.recursive_child(mx, my, target):
+                if not self.__recursive_child(mx, my, target):
                     self.rec_tiled[my][mx] = 0
                     return False
         return True
 
 
-    def cal_mx_my(self, agent):
+    def __cal_mx_my(self, agent):
         mx = agent.x + agent.dx
         my = agent.y + agent.dy
         return mx, my
 
 
-    def can_action(self, agent):
-        mx, my = self.cal_mx_my(agent)
-        return self.is_safe_pos(mx, my)
+    def __can_action(self, agent):
+        mx, my = self.__cal_mx_my(agent)
+        return self.__is_safe_pos(mx, my)
 
 
-    def is_safe_pos(self, x, y):
+    def __is_safe_pos(self, x, y):
         return (0 <= x) and (x < self.board.width) and\
                     (0 <= y) and (y < self.board.height)
 
