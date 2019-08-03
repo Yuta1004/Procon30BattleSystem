@@ -15,6 +15,7 @@ class BattleManager(Thread):
     def __init__(self, battle_id):
         super().__init__()
         self.game = None
+        self.turn = 1
         self.battle_id = battle_id
         self.__roll_forward()
 
@@ -33,7 +34,7 @@ class BattleManager(Thread):
         self.__wait_for_start_battle()
 
         # 2. 試合プロセス
-        for turn in range(1, turn_limit + 1):
+        for self.turn in range(1, turn_limit + 1):
             # 送信待機
             msleep(turn_mills)
             before_time = int(time.time() * 1000)
@@ -52,6 +53,14 @@ class BattleManager(Thread):
         # 3. 試合後処理
         battle_db_manager = BattleDBAccessManager()
         battle_db_manager.update_battle_status(0)
+
+
+    def get_board(self):
+        return self.game.board
+
+
+    def get_agents(self):
+        return self.game.agents
 
 
     def __wait_for_start_battle(self):
