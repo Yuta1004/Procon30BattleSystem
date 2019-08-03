@@ -1,10 +1,13 @@
 import json
+import time
+import datetime
 from threading import Thread
 from server.simulator.board import Board
 from server.simulator.game import Game
 from server.simulator.agent import Agent
 from server.db.action_db_manager import ActionDBAccessManager
 from server.db.stage_db_manager import StageDBAccessManager
+from server.db.battle_db_manager import BattleDBAccessManager
 
 
 class BattleManager(Thread):
@@ -17,7 +20,27 @@ class BattleManager(Thread):
 
 
     def run(self):
-        pass
+        # 0. 準備
+        battle_db_manager = BattleDBAccessManager()
+        battle_data = battle_db_manager.get_data(self.battle_id)
+        turn = battle_data["turn"]
+        turn_mills = battle_data["turn_mills"]
+        interval_mills = ["interval_mills"]
+        msleep = lambda t: time.sleep(t / 1000.0)
+
+        # 1. 試合開始待機
+        self.__wait_for_start_battle()
+
+
+    def __wait_for_start_battle(self):
+        unix_time = -1
+        battle_db_manager = BattleDBAccessManager()
+        start_at_unix_time = battle_db_manager.get_data(self.battle_id)["start_at_unix_time"]
+        del(start_at_unix_time)
+
+        while unix_time != start_at_unix_time:
+            now_datetime = datetime.datetime.now()
+            unix_time = int(time.mktime(now_datetime.timetuple()))
 
 
     def __roll_forward(self):
