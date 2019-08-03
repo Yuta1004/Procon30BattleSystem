@@ -23,13 +23,30 @@ class BattleManager(Thread):
         # 0. 準備
         battle_db_manager = BattleDBAccessManager()
         battle_data = battle_db_manager.get_data(self.battle_id)
-        turn = battle_data["turn"]
+        turn_limit = battle_data["turn"]
         turn_mills = battle_data["turn_mills"]
         interval_mills = ["interval_mills"]
         msleep = lambda t: time.sleep(t / 1000.0)
 
         # 1. 試合開始待機
         self.__wait_for_start_battle()
+
+        # 2. 試合プロセス
+        for turn in range(1, turn_limit + 1):
+            # 送信待機
+            msleep(turn_mills)
+            before_time = int(time.time() * 1000)
+
+            # 行動
+            action_db_manager = ActionDBAccessManager()
+            action = action_db_manager.get_data(self.battle_id, turn)
+            action = json.loads(action["detail"])["detail"]
+            self.__do_action(action)
+
+            # 次ターンまで待機
+            after_time = int(time.time() * 1000)
+            while before_time + interval_mills > after_time:
+                after_time = int(time.time() * 1000)
 
 
     def __wait_for_start_battle(self):
