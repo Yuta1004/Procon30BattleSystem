@@ -45,7 +45,17 @@ def score_test_1():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert(game.cal_score([1, 2]) == {1: 6, 2: 4})
+    true_score = {
+        1: {
+            "tilePoint": 2,
+            "areaPoint": 4
+        },
+        2: {
+            "tilePoint": 4,
+            "areaPoint": 0
+        }
+    }
+    assert(game.cal_score([1, 2]) == true_score)
 
 
 def score_test_2():
@@ -67,7 +77,17 @@ def score_test_2():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert(game.cal_score([1, 2]) == {1: 5, 2: 5})
+    true_score = {
+        1: {
+            "tilePoint": 3,
+            "areaPoint": 2
+        },
+        2: {
+            "tilePoint": 3,
+            "areaPoint": 2
+        }
+    }
+    assert(game.cal_score([1, 2]) == true_score)
 
 
 def score_test_3():
@@ -89,7 +109,17 @@ def score_test_3():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert(game.cal_score([1, 2]) == {1: 32, 2: 6})
+    true_score = {
+        1: {
+            "tilePoint": 22,
+            "areaPoint": 10
+        },
+        2: {
+            "tilePoint": 2,
+            "areaPoint": 4
+        }
+    }
+    assert(game.cal_score([1, 2]) == true_score)
 
 
 def score_test_4():
@@ -111,7 +141,17 @@ def score_test_4():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert(game.cal_score([1, 2]) == {1: 20, 2: 6})
+    true_score = {
+        1: {
+            "tilePoint": 10,
+            "areaPoint": 10
+        },
+        2: {
+            "tilePoint": 2,
+            "areaPoint": 4
+        }
+    }
+    assert(game.cal_score([1, 2]) == true_score)
 
 
 def score_test_5():
@@ -133,7 +173,13 @@ def score_test_5():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert (game.cal_score([1]) == {1: 19}), "Test Failed"
+    true_score = {
+        1: {
+            "tilePoint": 15,
+            "areaPoint": 4
+        }
+    }
+    assert (game.cal_score([1]) == true_score), "Test Failed"
 
 
 def score_test_6():
@@ -159,7 +205,13 @@ def score_test_6():
     ]
     board = Board(width, height, points, tiled)
     game = Game(board, [])
-    assert(game.cal_score([1]) == {1: 54})
+    true_score = {
+        1: {
+            "tilePoint": 32,
+            "areaPoint": 22
+        }
+    }
+    assert(game.cal_score([1]) == true_score)
 
 
 # Board Generate Test(Line Sysmmetry)
@@ -237,7 +289,18 @@ def flow_test_1():
     simulator.set_action(2, 3, 1, 0)
     simulator.set_action(2, 4, 0, -1)
     simulator.step()
-    assert(simulator.cal_score([1, 2]) == {1: 7, 2: 9})
+
+    true_score = {
+        1: {
+            "tilePoint": 7,
+            "areaPoint": 0
+        },
+        2: {
+            "tilePoint": 9,
+            "areaPoint": 0
+        }
+    }
+    assert(simulator.cal_score([1, 2]) == true_score)
     assert(simulator.turn == 1)
 
 
@@ -273,7 +336,18 @@ def flow_test_2():
     simulator.set_action(2, 5, -1, 0)
     simulator.set_action(2, 6, -1, 0)
     simulator.step()
-    assert(simulator.cal_score([1, 2]) == {1: 14, 2: 12})
+
+    true_score = {
+        1: {
+            "tilePoint": 14,
+            "areaPoint": 0
+        },
+        2: {
+            "tilePoint": 12,
+            "areaPoint": 0
+        }
+    }
+    assert(simulator.cal_score([1, 2]) == true_score)
     assert(simulator.turn == 1)
 
 

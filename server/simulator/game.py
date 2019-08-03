@@ -93,10 +93,12 @@ class Game:
         score_list = {}
 
         for (idx, team_id) in enumerate(team_id_list):
+            score_list[team_id] = {}
+
             # タイルポイント
             tiled_tmp = flatten_2d(self.board.tiled)
             points_flat = flatten_2d(self.board.points)
-            score_list[team_id] = sum(map(lambda x, y: (x == team_id) * y, tiled_tmp, points_flat))
+            score_list[team_id]["tilePoint"] = sum(map(lambda x, y: (x == team_id) * y, tiled_tmp, points_flat))
 
             # 全ての座標について、囲みが有効か探索
             self.rec_tiled = gen_2d_list(self.board.height, self.board.width)
@@ -107,7 +109,7 @@ class Game:
 
             # 領域ポイント : 囲みが有効である座標のスコアを合計する
             self.rec_tiled = flatten_2d(self.rec_tiled)
-            score_list[team_id] += sum(map(lambda x, y: abs(x * y), self.rec_tiled, points_flat))
+            score_list[team_id]["areaPoint"] = sum(map(lambda x, y: abs(x * y), self.rec_tiled, points_flat))
 
         self.rec_tiled = None
         return score_list
