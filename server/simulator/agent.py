@@ -7,3 +7,9 @@ class Agent:
         self.remove_panel = False
         self.dx = -10
         self.dy = -10
+
+
+    def reset(self):
+        self.remove_panel = False
+        self.dx = 0
+        self.dy = 0
