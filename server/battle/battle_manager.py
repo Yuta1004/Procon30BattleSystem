@@ -75,7 +75,7 @@ class BattleManager(Thread):
         unix_time = -1
         battle_db_manager = BattleDBAccessManager()
         start_at_unix_time = battle_db_manager.get_data(self.battle_id)["start_at_unix_time"]
-        del(start_at_unix_time)
+        del(battle_db_manager)
 
         while unix_time != start_at_unix_time:
             now_datetime = datetime.datetime.now()
