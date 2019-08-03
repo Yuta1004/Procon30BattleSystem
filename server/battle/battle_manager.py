@@ -18,6 +18,8 @@ class BattleManager(Thread):
         self.turn = 1
         self.battle_id = battle_id
         self.__roll_forward()
+        battle_db_manager = BattleDBAccessManager()
+        self.battle_info = battle_db_manager.get_data(self.battle_id)
 
 
     def run(self):
@@ -61,6 +63,12 @@ class BattleManager(Thread):
 
     def get_agents(self):
         return self.game.agents
+
+
+    def get_score(self):
+        return self.game.cal_score(
+            [self.battle_info["teamA"], self.battle_info["teamB"]]
+        )
 
 
     def __wait_for_start_battle(self):
