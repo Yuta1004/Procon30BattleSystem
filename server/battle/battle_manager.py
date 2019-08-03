@@ -27,6 +27,7 @@ class BattleManager(Thread):
         turn_mills = battle_data["turn_mills"]
         interval_mills = ["interval_mills"]
         msleep = lambda t: time.sleep(t / 1000.0)
+        del(battle_db_manager)
 
         # 1. 試合開始待機
         self.__wait_for_start_battle()
@@ -47,6 +48,10 @@ class BattleManager(Thread):
             after_time = int(time.time() * 1000)
             while before_time + interval_mills > after_time:
                 after_time = int(time.time() * 1000)
+
+        # 3. 試合後処理
+        battle_db_manager = BattleDBAccessManager()
+        battle_db_manager.update_battle_status(0)
 
 
     def __wait_for_start_battle(self):
