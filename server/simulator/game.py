@@ -1,4 +1,6 @@
+import json
 from server.common.functions import flatten_2d, gen_2d_list
+from server.db.action_db_manager import ActionDBAccessManager
 
 class Game:
     """
@@ -55,7 +57,15 @@ class Game:
         Params
         ----------
         None
+
+        Returns
+        ----------
+        safety_agents : list
+            正常に行動できたエージェントのID
+        affected_agents : list
+            競合を起こしたエージェントのID
         """
+
         # エージェントの行動が影響する範囲をリストアップ
         affected_positions = []
         for agent in filter(lambda n: n.dx >= -1, self.agents):
@@ -65,15 +75,21 @@ class Game:
                 affected_positions.append(agent.x, agent.y)
 
         # 影響がないエージェントを行動させる
+        safety_agents = []
+        affected_agents = []
         for agent in filter(lambda n: n.dx >= -1, self.agents):
             mx, my = self.__cal_mx_my(agent)
-            if self.__can_action(agent) and (affected_positions.count((mx, my)) == 1):
+            if self.__can_action(agent) and (affected_positions.count((mx, my)) == 1):  # 競合確認
+                safety_agents.append(agent.id)
                 if agent.remove_panel:
                     self.board.tiled[my][mx] = 0
                 else:
                     self.board.tiled[my][mx] = agent.team
+            else:
+                affected_agents.append(agent.id)
 
         self.turn += 1
+        return safety_agents, affected_agents
 
 
     def cal_score(self, team_id_list):
