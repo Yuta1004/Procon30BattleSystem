@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from server import base_route
 from server.db.battle_db_manager import BattleDBAccessManager
+from server.battle.register import battle_register as battle_register_func
 
 route_battle = Blueprint(__name__, "battle")
 
@@ -38,6 +39,23 @@ def battle_view(battle_id):
     return jsonify(battle_list[0]), 200
 
 
-@route_battle.route(base_route + "/battle/register")
+@route_battle.route(base_route + "/battle/register", methods=["POST"])
 def battle_register():
-    return "Register Battle"
+    req_json = request.json
+    battle_id = battle_register_func(
+        req_json["name"],               # 試合名
+        req_json["startAtUnixTime"],    # 試合開始時刻
+        req_json["turn"],               # ターン数
+        req_json["width"],              # 盤面サイズ(幅)
+        req_json["height"],             # 盤面サイズ(縦)
+        req_json["pointLower"],         # 配置得点(下限)
+        req_json["pointUpper"],         # 配置得点(上限)
+        req_json["playerNum"],          # プレイヤー数(1チーム)
+        req_json["teamA"],              # チームAのID
+        req_json["teamB"],              # チームBのID
+        req_json["generateBoardType"],  # 生成する盤面のタイプ(0~2)
+        req_json["turnMillis"],         # 1ターンの秒数
+        req_json["intervalMillis"]      # ターン切り替えの秒数
+    )
+
+    return jsonify(battleID=battle_id), 200
