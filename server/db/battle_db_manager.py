@@ -49,41 +49,57 @@ class BattleDBAccessManager(DBAccessManager):
 
 
     @DBAccessManager.db_execute
-    def get_data(self, cursor, conditon_id):
+    def get_data(self, cursor, battle_id=None, team_id=None):
         """
         Battleテーブルからデータを取得する
 
         Params
         ----------
-        condition_id
+        battle_id
             試合ID
+        team_id
+            チームID
 
         Return
         ----------
-        レコード情報(dict)
+        レコード情報(list)
         """
 
-        sql = "select * from battle where id=%s"
-        cursor.execute(sql, (conditon_id))
+        # 条件に応じたSQLを作る
+        sql = "select * from battle "
+        req_tuple = ()
+        if (battle_id is not None) and (team_id is not None):   # battle_id and team_id
+            sql += "where id=%s and (teamA=%s or teamB=%s)"
+            req_tuple = (battle_id, team_id, team_id)
+        elif battle_id is not None:                           # battle_id
+            sql += "where id=%s"
+            req_tuple = (battle_id,)
+        elif team_id is not None:                             # team_id
+            sql += "where teamA=%s or teamB=%s"
+            req_tuple = (team_id, team_id)
+        else:
+            return None
+
+        cursor.execute(sql, req_tuple)
         result = cursor.fetchall()
         if len(result) > 0:
-            result = result[0]
-            result["now_battle"] = (True if result["now_battle"] == 1 else False)
+            for result_elem in result:
+                result_elem["now_battle"] = (True if result_elem["now_battle"] == 1 else False)
             return result
         else:
             return None
 
 
-        @DBAccessManager.db_execute
-        def update_battle_status(self, cursor, status):
-            """
-            試合ステータスを更新する
+    @DBAccessManager.db_execute
+    def update_battle_status(self, cursor, status):
+        """
+        試合ステータスを更新する
 
-            Params
-            ----------
-            status
-                ステータス。1でゲーム開始前orゲーム中、0でゲーム終了を表す
-            """
+        Params
+        ----------
+        status
+            ステータス。1でゲーム開始前orゲーム中、0でゲーム終了を表す
+        """
 
-            sql = "update battle set now_battle=%s where id=%s"
-            cursor.execute(sql, (status, ))
+        sql = "update battle set now_battle=%s where id=%s"
+        cursor.execute(sql, (status, ))

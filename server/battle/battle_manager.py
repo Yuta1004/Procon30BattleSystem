@@ -17,15 +17,17 @@ class BattleManager(Thread):
         self.game = None
         self.turn = 1
         self.battle_id = battle_id
+        self.now_interval = False
+        self.action_writing = False
+        self.battle_info = BattleDBAccessManager().get_data(battle_id=self.battle_id)[0]
+
         self.__roll_forward()
-        battle_db_manager = BattleDBAccessManager()
-        self.battle_info = battle_db_manager.get_data(self.battle_id)
 
 
     def run(self):
         # 0. 準備
         battle_db_manager = BattleDBAccessManager()
-        battle_data = battle_db_manager.get_data(self.battle_id)
+        battle_data = battle_db_manager.get_data(battle_id=self.battle_id)[0]
         turn_limit = battle_data["turn"]
         turn_mills = battle_data["turn_mills"]
         interval_mills = ["interval_mills"]
@@ -39,6 +41,8 @@ class BattleManager(Thread):
         for self.turn in range(1, turn_limit + 1):
             # 送信待機
             msleep(turn_mills)
+            while self.action_writing:
+                pass
             before_time = int(time.time() * 1000)
 
             # 行動
@@ -48,6 +52,7 @@ class BattleManager(Thread):
             safety_agents, affected_agents = self.__do_action(action)
 
             # エージェントの行動ステータス更新
+            self.now_interval = True
             for agent in action["actions"]:
                 if agent["id"] in safety_agents:
                     agent["apply"] = 1
@@ -59,6 +64,7 @@ class BattleManager(Thread):
             after_time = int(time.time() * 1000)
             while before_time + interval_mills > after_time:
                 after_time = int(time.time() * 1000)
+            self.now_interval = False
 
         # 3. 試合後処理
         battle_db_manager = BattleDBAccessManager()
@@ -82,7 +88,7 @@ class BattleManager(Thread):
     def __wait_for_start_battle(self):
         unix_time = -1
         battle_db_manager = BattleDBAccessManager()
-        start_at_unix_time = battle_db_manager.get_data(self.battle_id)["start_at_unix_time"]
+        start_at_unix_time = battle_db_manager.get_data(battle_id=self.battle_id)[0]["start_at_unix_time"]
         del(battle_db_manager)
 
         while unix_time != start_at_unix_time:
@@ -98,7 +104,7 @@ class BattleManager(Thread):
 
         # 行動履歴取得
         action_manager = ActionDBAccessManager()
-        action_history = action_manager.get_data(self.battle_id)
+        action_history = action_manager.get_data(battle_id=self.battle_id)[0]
         action_history = sorted(action_history, key=lambda x: x["turn"])
 
         # 盤面復元
