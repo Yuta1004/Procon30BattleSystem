@@ -6,10 +6,10 @@ class DBAccessManager:
 
     def __init__(self):
         self.conn = pymysql.connect(
-            host="localhost",
-            user="procon30",
+            host=os.environ.get("MYSQL_HOST"),
+            user=os.environ.get("MYSQL_USER"),
             password=os.environ.get("MYSQL_PASSWORD"),
-            db="procon30",
+            db=os.environ.get("MYSQL_DB"),
             charset="utf8mb4",
             cursorclass=pymysql.cursors.DictCursor
         )
