@@ -54,16 +54,16 @@ def action_send(token, battle_id, action_list):
     # 行動保存
     while battle_manager.action_writing: pass
     battle_manager.action_writing = True
-    action_list = []
+    action_ret_list = []
     turn = battle_manager.turn
-    for action in action_list:
+    for action in action_list["actions"]:
         agent_id = action["agentID"]
         dx = action["dx"]
         dy = action["dy"]
         action_type = action["type"]
         action["turn"] = turn
         save_action(battle_id, token, turn, agent_id, action_type, dx, dy)  # 行動書き込み!
-        action_list.append(deepcopy(action))
+        action_ret_list.append(deepcopy(action))
     battle_manager.action_writing = False
 
     return 200, {
