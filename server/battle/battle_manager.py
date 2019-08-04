@@ -35,46 +35,37 @@ class BattleManager(Thread):
         del(battle_db_manager)
 
         # 1. 試合開始待機
-        print("AAAA")
         self.__wait_for_start_battle()
-        print("BBBB")
 
         # 2. 試合プロセス
         for self.turn in range(1, turn_limit + 1):
             # 送信待機
-            print("CCCC")
             msleep(turn_mills)
             while self.action_writing:
                 pass
             before_time = int(time.time() * 1000)
-            print("DDDD")
 
-            # 行動フェーズ
-            print("EEEE")
+            # 行動準備
+            self.now_interval = True
             action_db_manager = ActionDBAccessManager()
             action = action_db_manager.get_data(self.battle_id, self.turn)
+
+            # 行動 -> エージェントステータス更新
             if len(action) != 0:
-                # 行動
                 action = json.loads(action[0]["detail"])["actions"]
                 safety_agents, affected_agents = self.__do_action(action)
-
-                # エージェントの行動ステータス更新
-                self.now_interval = True
                 for agent in action:
                     if agent["agent_id"] in safety_agents:
                         agent["apply"] = 1
                     elif agent["agent_id"] in affected_agents:
                         agent["apply"] = 0
                 action_db_manager.update(self.battle_id, self.turn, json.dumps({"actions": action}))
-            print("HHHH")
 
             # 次ターンまで待機
-            print("IIII")
             after_time = int(time.time() * 1000)
             while before_time + interval_mills > after_time:
                 after_time = int(time.time() * 1000)
             self.now_interval = False
-            print("JJJJ")
 
         # 3. 試合後処理
         battle_db_manager = BattleDBAccessManager()
