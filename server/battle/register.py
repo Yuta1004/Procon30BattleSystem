@@ -20,7 +20,6 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
     )
 
     board = generate_board(
-        turn,
         board_width,
         board_height,
         point_upper,
