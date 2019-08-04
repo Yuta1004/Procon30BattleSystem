@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Blueprint
 from server.views.top import route_top
-from server.views.battle import route_battle
+from server.views.battle_api import route_battle
 from server.views.match_api import route_match
 from server.views.ping_api import route_ping
 
