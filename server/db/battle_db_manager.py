@@ -75,7 +75,7 @@ class BattleDBAccessManager(DBAccessManager):
             sql += "where id=%s"
             req_tuple = (battle_id,)
         elif team_id is not None:                             # team_id
-            sql += "teamA=%s or teamB=%s"
+            sql += "where teamA=%s or teamB=%s"
             req_tuple = (team_id, team_id)
         else:
             return None
