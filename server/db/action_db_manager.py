@@ -62,7 +62,7 @@ class ActionDBAccessManager(DBAccessManager):
         if len(result) > 0:
             return result
         else:
-            return None
+            return []
 
 
     @DBAccessManager.db_execute

@@ -87,7 +87,7 @@ class BattleDBAccessManager(DBAccessManager):
                 result_elem["now_battle"] = (True if result_elem["now_battle"] == 1 else False)
             return result
         else:
-            return None
+            return []
 
 
     @DBAccessManager.db_execute
