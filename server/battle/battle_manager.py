@@ -104,7 +104,7 @@ class BattleManager(Thread):
 
         # 行動履歴取得
         action_manager = ActionDBAccessManager()
-        action_history = action_manager.get_data(battle_id=self.battle_id)[0]
+        action_history = action_manager.get_data(battle_id=self.battle_id)
         action_history = sorted(action_history, key=lambda x: x["turn"])
 
         # 盤面復元
