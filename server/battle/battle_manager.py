@@ -38,7 +38,7 @@ class BattleManager(Thread):
         self.__wait_for_start_battle()
 
         # 2. 試合プロセス
-        for self.turn in range(1, turn_limit + 1):
+        for self.turn in range(self.turn, turn_limit + 1):
             # 送信待機
             msleep(turn_mills)
             while self.action_writing:
