@@ -18,9 +18,10 @@ class BattleManager(Thread):
         self.turn = 1
         self.battle_id = battle_id
         self.now_interval = False
+        self.action_writing = False
+        self.battle_info = BattleDBAccessManager().get_data(battle_id=self.battle_id)[0]
+
         self.__roll_forward()
-        battle_db_manager = BattleDBAccessManager()
-        self.battle_info = battle_db_manager.get_data(battle_id=self.battle_id)[0]
 
 
     def run(self):
@@ -40,6 +41,8 @@ class BattleManager(Thread):
         for self.turn in range(1, turn_limit + 1):
             # 送信待機
             msleep(turn_mills)
+            while self.action_writing:
+                pass
             before_time = int(time.time() * 1000)
 
             # 行動
