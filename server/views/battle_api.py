@@ -21,9 +21,21 @@ def battle_top():
     return jsonify(battle_list), 200
 
 
-@route_battle.route(base_route + "/battle/{battle_id}")
+@route_battle.route(base_route + "/battle/<battle_id>")
 def battle_view(battle_id):
-    return "View Battle : " + battle_id
+    battle_list = BattleDBAccessManager().get_data(battle_id=battle_id)
+    if battle_list is None:
+        return jsonify(status="InvalidBattleID"), 401
+
+    # 一部キー名を変更する
+    battle = battle_list[0]
+    battle["battleID"] = battle.pop("id")
+    battle["startAtUnixTime"] = battle.pop("start_at_unix_time")
+    battle["turnMillis"] = battle.pop("turn_mills")
+    battle["intervalMillis"] = battle.pop("interval_mills")
+    battle.pop("now_battle")
+
+    return jsonify(battle_list[0]), 200
 
 
 @route_battle.route(base_route + "/battle/register")
