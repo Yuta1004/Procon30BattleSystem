@@ -10,6 +10,26 @@ from server.battle.action import save_action
 
 
 def action_send(token, battle_id, action_list):
+    """
+    トークンや行動情報JSONを元に行動を保存する
+
+    Params
+    ----------
+    token : str
+        トークン
+    battle_id : int
+        試合ID
+    action_list : list
+        行動情報
+
+    Returns
+    ----------
+    int
+        HTTPステータス
+    dict or list
+        レスポンスデータ
+    """
+
     # トークンチェック
     team_db_manager = TeamDBAccessManager()
     team = team_db_manager.get_data(token=token)
