@@ -1,7 +1,7 @@
 PYTHON3 = python3
 ENVFILE = devenv.sh
 
-make:
+run:
 	@$(PYTHON3) run.py
 
 test:
