@@ -22,27 +22,27 @@ def get_all_matches(token):
 
     battle_db_manager = BattleDBAccessManager()
     team_db_manager = TeamDBAccessManager()
-    team_list = team_db_manager.get_data(token=token)
+    team = team_db_manager.get_data(token=token)
 
     # トークン存在なし
-    if team_list is None:
+    if team is None:
         return 401, {
             "status": "InvalidToken"
         }
 
     # 同じトークンを持つチーム一覧を抜き出し→そのチームが参戦しているチームを抜き出す
     match_list = []
-    for team in team_list:
-        for battle in battle_db_manager.get_data(team_id=team["id"]):
-            match_team = battle["teamA"] if battle["teamB"] == team["id"] else battle["teamB"]
-            match_list.append(
-                {
-                    "id": battle["id"],
-                    "intervalMillis": battle["interval_mills"],
-                    "matchTo": team_db_manager.get_data(match_team)[0]["name"],
-                    "teamID": team["id"],
-                    "turnMillis": battle["turn_mills"],
-                    "turns": battle["turn"]
-                }
-            )
+    team = team[0]
+    for battle in battle_db_manager.get_data(team_id=team["id"]):
+        match_team = battle["teamA"] if battle["teamB"] == team["id"] else battle["teamB"]
+        match_list.append(
+            {
+                "id": battle["id"],
+                "intervalMillis": battle["interval_mills"],
+                "matchTo": team_db_manager.get_data(match_team)[0]["name"],
+                "teamID": team["id"],
+                "turnMillis": battle["turn_mills"],
+                "turns": battle["turn"]
+            }
+        )
     return 200, match_list
