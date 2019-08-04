@@ -19,13 +19,13 @@ class BattleManager(Thread):
         self.battle_id = battle_id
         self.__roll_forward()
         battle_db_manager = BattleDBAccessManager()
-        self.battle_info = battle_db_manager.get_data(self.battle_id)
+        self.battle_info = battle_db_manager.get_data(battle_id=self.battle_id)[0]
 
 
     def run(self):
         # 0. 準備
         battle_db_manager = BattleDBAccessManager()
-        battle_data = battle_db_manager.get_data(self.battle_id)
+        battle_data = battle_db_manager.get_data(battle_id=self.battle_id)[0]
         turn_limit = battle_data["turn"]
         turn_mills = battle_data["turn_mills"]
         interval_mills = ["interval_mills"]
@@ -82,7 +82,7 @@ class BattleManager(Thread):
     def __wait_for_start_battle(self):
         unix_time = -1
         battle_db_manager = BattleDBAccessManager()
-        start_at_unix_time = battle_db_manager.get_data(self.battle_id)["start_at_unix_time"]
+        start_at_unix_time = battle_db_manager.get_data(battle_id=self.battle_id)[0]["start_at_unix_time"]
         del(battle_db_manager)
 
         while unix_time != start_at_unix_time:
@@ -98,7 +98,7 @@ class BattleManager(Thread):
 
         # 行動履歴取得
         action_manager = ActionDBAccessManager()
-        action_history = action_manager.get_data(self.battle_id)
+        action_history = action_manager.get_data(battle_id=self.battle_id)[0]
         action_history = sorted(action_history, key=lambda x: x["turn"])
 
         # 盤面復元
