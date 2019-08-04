@@ -7,6 +7,7 @@ from server.db.team_db_manager import TeamDBAccessManager
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.battle.battle_manager import BattleManager
 from server.battle.action import save_action
+from server.api_func.check import token_check, battle_join_check, battle_started_check, interval_check
 
 
 def action_send(token, battle_id, action_list):
@@ -31,48 +32,24 @@ def action_send(token, battle_id, action_list):
     """
 
     # トークンチェック
-    team_db_manager = TeamDBAccessManager()
-    team = team_db_manager.get_data(token=token)
-    if team is None:
-        return 401, {
-            "status": "InvalidToken"
-        }
+    is_error, status, response = token_check(token)
+    if is_error:
+        return status, response
 
     # 試合参加チェック
-    team = team[0]
-    battle_db_manager = BattleDBAccessManager()
-    battle = battle_db_manager.get_data(battle_id=battle_id)
-    if (battle is None):
-        return 400, {
-            "startAtUnixTime": 0,
-            "status": "InvalidMatches"
-        }
-    battle = battle[0]
-    if (battle["teamA"] != team["id"]) and (battle["teamB"] != team["id"]):
-        return 400, {
-            "startAtUnixTime": 0,
-            "status": "InvalidMathches"
-        }
+    is_error, status, response = battle_join_check(token, battle_id)
+    if is_error:
+        return status, response
 
     # 試合開始前アクセス
-    now_datetime = datetime.datetime.now()
-    now_unix_time = int(time.mktime(now_datetime.timetuple()))
-    if now_unix_time < battle["start_at_unix_time"]:
-        return 400, {
-            "startAtUnixTime": battle["start_at_unix_time"],
-            "status": "TooEarly"
-        }
+    is_error, status, response = battle_started_check(battle_id)
+    if is_error:
+        return status, response
 
     # インターバルチェック
-    battle_manager = None
-    for thread in threading.enumerate():
-        if (type(thread) == BattleManager) and (thread.battle_id == battle_id):
-            battle_manager = thread
-            if thread.now_interval:
-                return 400, {
-                    "startAtUnixTime": battle["start_at_unix_time"],
-                    "status": "UnacceptableTime"
-                }
+    is_error, status, response, battle_manager = interval_check(battle_id)
+    if is_error:
+        return status, response
 
     # 行動保存
     while battle_manager.action_writing: pass
