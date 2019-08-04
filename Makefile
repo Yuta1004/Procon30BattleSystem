@@ -5,5 +5,8 @@ ENVFILE-TEST = devenv-test.sh
 run:
 	@source $(ENVFILE); $(PYTHON3) run.py
 
+run-test:
+	@source $(ENVFILE-TEST); $(PYTHON3) run.py
+
 test:
 	@source $(ENVFILE-TEST); $(PYTHON3) dotest.py
