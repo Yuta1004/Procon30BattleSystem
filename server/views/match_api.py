@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from server import base_route
-from server.api_func.matches import get_all_matches
+from server.api_func.matches import get_all_matches, get_match_detail
 from server.api_func.action_send import action_send
 
 route_match = Blueprint(__name__, "match-api")
@@ -15,7 +15,9 @@ def matches_top():
 
 @route_match.route(base_route + "/matches/<battle_id>")
 def matches_details(battle_id):
-    return "Return Battle Info : " + battle_id
+    token = request.headers.get("Authorization")
+    status, match_detail = get_match_detail(token, battle_id)
+    return jsonify(match_detail), status
 
 
 @route_match.route(base_route + "/matches/<battle_id>/action", methods=["POST"])
