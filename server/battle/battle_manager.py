@@ -17,6 +17,7 @@ class BattleManager(Thread):
         self.game = None
         self.turn = 1
         self.battle_id = battle_id
+        self.now_interval = False
         self.__roll_forward()
         battle_db_manager = BattleDBAccessManager()
         self.battle_info = battle_db_manager.get_data(battle_id=self.battle_id)[0]
@@ -48,6 +49,7 @@ class BattleManager(Thread):
             safety_agents, affected_agents = self.__do_action(action)
 
             # エージェントの行動ステータス更新
+            self.now_interval = True
             for agent in action["actions"]:
                 if agent["id"] in safety_agents:
                     agent["apply"] = 1
@@ -59,6 +61,7 @@ class BattleManager(Thread):
             after_time = int(time.time() * 1000)
             while before_time + interval_mills > after_time:
                 after_time = int(time.time() * 1000)
+            self.now_interval = False
 
         # 3. 試合後処理
         battle_db_manager = BattleDBAccessManager()
