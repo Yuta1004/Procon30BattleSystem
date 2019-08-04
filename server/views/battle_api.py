@@ -24,8 +24,9 @@ def battle_top():
 
 @route_battle.route(base_route + "/battle/<battle_id>")
 def battle_view(battle_id):
+    battle_id = int(battle_id)
     battle_list = BattleDBAccessManager().get_data(battle_id=battle_id)
-    if battle_list is None:
+    if len(battle_list) == 0:
         return jsonify(status="InvalidBattleID"), 401
 
     # 一部キー名を変更する
