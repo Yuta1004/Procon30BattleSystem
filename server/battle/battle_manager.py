@@ -111,6 +111,7 @@ class BattleManager(Thread):
         # 盤面復元
         for action in action_history:
             self.__do_action(json.loads(action["detail"])["actions"])
+            self.turn += 1
 
 
     def __do_action(self, action_detail):
