@@ -14,6 +14,8 @@ def get_all_matches(token):
 
     Returns
     ----------
+    int
+        HTTPステータス
     dict or list
         レスポンスデータ
     """
@@ -24,7 +26,7 @@ def get_all_matches(token):
 
     # トークン存在なし
     if team_list is None:
-        return {
+        return 401, {
             "status": "InvalidToken"
         }
 
@@ -43,4 +45,4 @@ def get_all_matches(token):
                     "turns": battle["turn"]
                 }
             )
-    return match_list
+    return 200, match_list

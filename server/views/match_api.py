@@ -8,8 +8,8 @@ route_match = Blueprint(__name__, "match-api")
 @route_match.route(base_route + "/matches", methods=["GET"])
 def matches_top():
     token = request.headers.get("Authorization")
-    match_list = get_all_matches(token)
-    return jsonify(match_list)
+    status, match_list = get_all_matches(token)
+    return jsonify(match_list), status
 
 
 @route_match.route(base_route + "/matches/<battle_id>")
