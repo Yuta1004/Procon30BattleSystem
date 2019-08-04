@@ -78,7 +78,7 @@ class BattleDBAccessManager(DBAccessManager):
             sql += "where teamA=%s or teamB=%s"
             req_tuple = (team_id, team_id)
         else:
-            return None
+            pass
 
         cursor.execute(sql, req_tuple)
         result = cursor.fetchall()
@@ -87,7 +87,7 @@ class BattleDBAccessManager(DBAccessManager):
                 result_elem["now_battle"] = (True if result_elem["now_battle"] == 1 else False)
             return result
         else:
-            return None
+            return []
 
 
     @DBAccessManager.db_execute

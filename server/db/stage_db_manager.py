@@ -62,7 +62,7 @@ class StageDBAccessManager(DBAccessManager):
 
         # 盤面情報
         board_info = self.__get_data(battle_id)
-        if board_info is None:
+        if len(board_info) == 0:
             return None
         width = board_info["width"]
         height = board_info["height"]
@@ -107,4 +107,4 @@ class StageDBAccessManager(DBAccessManager):
         if len(result) > 0:
             return result[0]
         else:
-            return None
+            return []

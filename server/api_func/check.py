@@ -26,7 +26,7 @@ def token_check(token):
     """
 
     token_check = TeamDBAccessManager().get_data(token=token)
-    if token_check is None:
+    if len(token_check) == 0:
         return True, 401, {"status": "InvalidToken"}
     else:
         return False, None, None
@@ -56,7 +56,7 @@ def battle_join_check(token, battle_id):
     team = TeamDBAccessManager().get_data(token=token)[0]
     battle_db_manager = BattleDBAccessManager()
     battle = BattleDBAccessManager().get_data(battle_id=battle_id)
-    if (battle is None):
+    if len(battle) == 0:
         return True, 400, {
             "startAtUnixTime": 0,
             "status": "InvalidMatches"

@@ -62,7 +62,7 @@ class ActionDBAccessManager(DBAccessManager):
         if len(result) > 0:
             return result
         else:
-            return None
+            return []
 
 
     @DBAccessManager.db_execute
@@ -73,10 +73,10 @@ class ActionDBAccessManager(DBAccessManager):
 
     @DBAccessManager.db_execute
     def count(self, cursor, battle_id, turn=None):
-        sql = "select count(&) from action where battle_id=%s"
+        sql = "select count(*) from action where battle_id=%s"
         req_tuple = (battle_id, )
         if turn is not None:
             sql += " and turn=%s"
             req_tuple = (battle_id, turn)
         cursor.execute(sql, req_tuple)
-        return cursor.fetchall()[0]
+        return cursor.fetchall()[0]["count(*)"]

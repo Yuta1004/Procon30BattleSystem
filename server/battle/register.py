@@ -20,7 +20,6 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
     )
 
     board = generate_board(
-        turn,
         board_width,
         board_height,
         point_upper,
@@ -66,7 +65,7 @@ def _get_agent_pos(battle_id, tiled, width, height, teamA, teamB):
                     str(team_list[team_idx] % 2048) +\
                     str(team_cnt[team_idx])
                 )
-                tiled[y][x] = agent_id
+                tiled[y][x] = team_list[team_idx]
                 team_cnt[team_idx] += 1
                 agent_pos_dict[team_list[team_idx]][agent_id] = {
                     "x": x, "y": y

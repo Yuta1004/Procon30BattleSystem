@@ -67,4 +67,4 @@ class TeamDBAccessManager(DBAccessManager):
         if len(result) > 0:
             return result
         else:
-            return None
+            return []
