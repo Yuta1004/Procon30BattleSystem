@@ -1,7 +1,9 @@
+import threading
 from flask import Blueprint, jsonify, request
 from server import base_route
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.battle.register import battle_register as battle_register_func
+from server.battle.battle_manager import BattleManager
 
 route_battle = Blueprint(__name__, "battle")
 
@@ -60,3 +62,26 @@ def battle_register():
     )
 
     return jsonify(battleID=battle_id), 200
+
+
+@route_battle.route(base_route + "/battle/start/<battle_id>")
+def battle_start(battle_id):
+    # 試合存在確認
+    if len(BattleDBAccessManager().get_data(battle_id)) == 0:
+        return jsonify(status="InvalidBattleID"), 400
+
+    # 起動済みか確認
+    battle_id = int(battle_id)
+    is_started = False
+    for thread in threading.enumerate():
+        is_started |= (type(thread) == BattleManager) and (thread.battle_id == battle_id)
+
+    # 起動
+    if not is_started:
+        tmp = BattleManager(battle_id)
+        tmp.setDaemon(True)
+        tmp.start()
+        return jsonify(status="OK"), 200
+    else:
+        return jsonify(status="Already started!"), 400
+
