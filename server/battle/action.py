@@ -38,7 +38,7 @@ def save_action(battle_id, token, turn, agent_id, action_type, dx, dy):
     else:
         actions = json.loads(manager.get_data(battle_id, turn)[0]["detail"])
         # 指定agent_idの行動が既に指定されていた場合 or そうでない場合
-        if len(set(map(lambda x: x["agent_id"] == agent_id, actions["actions"]))) >= 1:
+        if len(set(map(lambda x: x["agent_id"] == agent_id, actions["actions"]))) >= 2:
             for action in actions["actions"]:
                 if action["agent_id"] == agent_id:
                     action["type"] = action_type
