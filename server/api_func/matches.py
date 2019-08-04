@@ -109,7 +109,7 @@ def get_match_detail(token, battle_id):
     # actions
     actions = []
     action_history = ActionDBAccessManager().get_data(battle_id)
-    action_history = list(lambda action: json.loads(action["details"]["actions"]), action_history)
+    action_history = list(map(lambda action: json.loads(action["details"]["actions"]), action_history))
     for action in action_history:
         actions.extend(
             list(map(lambda x:
