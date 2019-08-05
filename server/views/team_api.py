@@ -30,3 +30,13 @@ def team_view_token(token):
         return jsonify(status="InvalidToken"), 400
 
     return jsonify(team[0]), 200
+
+
+@route_team.route(base_route + "/team/register", methods=["POST"])
+def team_register():
+    req_json = request.json
+    TeamDBAccessManager().insert(
+        req_json["name"],
+        req_json["token"]
+    )
+    return jsonify(status="OK"), 200
