@@ -79,3 +79,40 @@ def register_battle(host_url):
         print("register successed! ( BattleID:", response_json["battleID"], ")")
     else:
         print("error (", result.status, ")")
+
+
+def register_team(host_url):
+    # 情報収集
+    battle_info = {}
+    request_list = [
+        ["TeamName", "name"],
+        ["Token", "token"]
+    ]
+
+    for request in request_list:
+        print(request[0] + " : ", end="")
+        res = ""
+        while res == "": res = input()
+        battle_info[request[1]] = res
+
+    # 確認
+    print()
+    print("register ok? y/N : ", end="")
+    res = ""
+    while res == "": res = input()
+    if not(res == "y" or res == "Y"):
+        print("register finish")
+        return
+
+    # 通信
+    api_url = host_url + "/team/register"
+    headers = {"Content-Type": "application/json"}
+    http_connecter = urllib3.PoolManager()
+    result = http_connecter.request(
+        "POST", api_url, body=json.dumps(battle_info), headers=headers
+    )
+
+    if result.status == 200:
+        print("register successed!")
+    else:
+        print("error (", result.status, ")")
