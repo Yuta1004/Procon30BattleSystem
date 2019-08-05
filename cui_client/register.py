@@ -113,6 +113,7 @@ def register_team(host_url):
     )
 
     if result.status == 200:
-        print("register successed!")
+        res_json = json.loads(result.data.decode())
+        print("register successed! ( TeamID:", res_json["teamID"], ")")
     else:
         print("error (", result.status, ")")
