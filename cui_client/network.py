@@ -11,7 +11,7 @@ def network_check(host_url):
         print("Failed ( Connnection Refused )")
         return
 
-    if result.status == 200:
+    if (result.status == 200) and (result.data.decode() == "#procon30 Battle API"):
         print("OK")
     else:
         print("Failed (", result.staut, ")")
