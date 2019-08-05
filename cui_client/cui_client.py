@@ -1,5 +1,6 @@
 from cui_client.network import network_check
 from cui_client.show_battle import show_battle, show_battle_id
+from cui_client.ping import ping
 
 
 host_url = "http://localhost:16000/procon30-battle-api"
@@ -11,11 +12,18 @@ def exec_command(command):
     # Check
     if command[0] == "check":
         if len(command) == 1:
-            print("Usage : check [connection]")
+            print("Usage : check [connection/token]")
             return
 
         if command[1] == "connection":
             network_check(host_url)
+            return
+
+        if command[1] == "token":
+            if len(command) == 3:
+                ping(host_url, command[2])
+            else:
+                print("Usage : check token {token}")
             return
 
         print("Usage : check [connection]")
