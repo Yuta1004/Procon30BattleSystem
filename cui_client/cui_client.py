@@ -1,4 +1,5 @@
 from cui_client.network import network_check
+from cui_client.show_battle import show_battle, show_battle_id
 
 
 host_url = "http://localhost:16000/procon30-battle-api"
@@ -38,6 +39,18 @@ def exec_command(command):
 
         print("Usage : set [host]")
         return
+
+    # Show
+    if command[0] == "show":
+        if len(command) == 1:
+            print("Usage : show [battle] {battle_id}")
+            return
+
+        if command[1] == "battle":
+            if len(command) == 2:
+                show_battle(host_url)
+            else:
+                show_battle_id(host_url, command[2])
 
     # Status
     if command[0] == "status":
