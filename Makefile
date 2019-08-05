@@ -1,6 +1,6 @@
 PYTHON3 = python3
-ENVFILE = devenv.sh
-ENVFILE-TEST = devenv-test.sh
+ENVFILE = env/devenv.sh
+ENVFILE-TEST = env/devenv-test.sh
 
 run:
 	@source $(ENVFILE); $(PYTHON3) run-server.py
