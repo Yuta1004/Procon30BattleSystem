@@ -35,8 +35,8 @@ def team_view_token(token):
 @route_team.route(base_route + "/team/register", methods=["POST"])
 def team_register():
     req_json = request.json
-    TeamDBAccessManager().insert(
+    team_id = TeamDBAccessManager().insert(
         req_json["name"],
         req_json["token"]
     )
-    return jsonify(status="OK"), 200
+    return jsonify(teamID=team_id), 200

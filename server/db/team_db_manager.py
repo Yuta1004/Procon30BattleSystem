@@ -22,10 +22,16 @@ class TeamDBAccessManager(DBAccessManager):
             チーム名
         token : str
             トークン(一意なもの)
+
+        Return
+        ----------
+        int
+            チームID
         """
 
         sql = "insert into team (name, token) values(%s, %s)"
         cursor.execute(sql, (name, token))
+        return cursor.lastrowid
 
 
     @DBAccessManager.db_execute
