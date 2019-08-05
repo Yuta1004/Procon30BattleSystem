@@ -67,7 +67,7 @@ def battle_db_manager_test_2():
     result = manager.get_data(battle_id=1)[0]
     keys = ["id", "name", "start_at_unix_time", "turn", "turn_mills",
             "interval_mills", "teamA", "teamB", "now_battle"]
-    values = [1, "test_name", 0, 10, 30000, 1000, 1, 2, False]
+    values = [1, "test_name", 0, 10, 30000, 1000, 1, 2, True]
     for key, val in zip(keys, values):
         assert(result[key] == val)
 

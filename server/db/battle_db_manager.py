@@ -42,7 +42,7 @@ class BattleDBAccessManager(DBAccessManager):
         sql =\
         """
             insert into battle (name, start_at_unix_time, turn, turn_mills, interval_mills, teamA, teamB, now_battle)
-            values(%s, %s, %s, %s, %s, %s, %s, 0)
+            values(%s, %s, %s, %s, %s, %s, %s, 1)
         """
         cursor.execute(sql, (name, start_at_unix_time, turn, turn_mills, interval_mills, teamA, teamB))
         return cursor.lastrowid
