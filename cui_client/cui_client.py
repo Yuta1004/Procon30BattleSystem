@@ -39,6 +39,10 @@ def exec_command(command):
         print("Usage : set [host]")
         return
 
+    # Status
+    if command[0] == "status":
+        print("Host URL :", host_url)
+
 
 def cui_client_main():
     # バージョン表示とか
