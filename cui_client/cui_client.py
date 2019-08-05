@@ -51,10 +51,15 @@ def exec_command(command):
                 show_battle(host_url)
             else:
                 show_battle_id(host_url, command[2])
+        return
 
     # Status
     if command[0] == "status":
         print("Host URL :", host_url)
+        return
+
+    # Not Found
+    print("Command not found :", command[0])
 
 
 def cui_client_main():
@@ -73,7 +78,9 @@ def cui_client_main():
         print(">> ", end="")
         command = input().split()
 
-        if command[0] == "exit":
+        if len(command) == 0:
+            continue
+        elif command[0] == "exit":
             print("Bye")
             break
 
