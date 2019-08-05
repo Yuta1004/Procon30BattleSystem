@@ -51,7 +51,8 @@ class TeamDBAccessManager(DBAccessManager):
 
         # 設定された引数に応じて処理を変える
         if (team_id is None) and (token is None):
-            raise ValueError("Must be set parameter [team_id] or [token]")
+            sql = "select * from team"
+            req_tuple = ()
         elif (team_id is not None) and (token is not None):
             sql += "id=%s and token=%s"
             req_tuple = (team_id, token)
