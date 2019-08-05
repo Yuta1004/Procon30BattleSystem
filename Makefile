@@ -10,3 +10,6 @@ run-test:
 
 test:
 	@source $(ENVFILE-TEST); $(PYTHON3) dotest.py
+
+cui-client:
+	@$(PYTHON3) run-cuiclient.py
