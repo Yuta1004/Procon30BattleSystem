@@ -1,5 +1,6 @@
 from cui_client.network import network_check, network_check_non_display
 from cui_client.show_battle import show_battle, show_battle_id
+from cui_client.show_team import show_team, show_team_id, show_team_token
 from cui_client.ping import ping
 from cui_client.register import register_battle
 from cui_client.help import show_help
@@ -70,7 +71,7 @@ def exec_command(command):
     # Show
     if command[0] == "show":
         if len(command) == 1:
-            print("Usage : show [battle] {battle_id}")
+            print("Usage : show [battle/team]")
             return
 
         if command[1] == "battle":
@@ -78,6 +79,24 @@ def exec_command(command):
                 show_battle(host_url)
             else:
                 show_battle_id(host_url, command[2])
+            return
+
+        if command[1] == "team":
+            if len(command) == 2:
+                show_team(host_url)
+            elif command[2] == "id":
+                if len(command) == 3:
+                    print("Usage : show team id {team_id}")
+                else:
+                    show_team_id(host_url, command[3])
+            elif command[2] == "token":
+                if len(command) == 3:
+                    print("Usage : show team token {team_id}")
+                else:
+                    show_team_token(host_url, command[3])
+            return
+
+        print("Usage : show [battle/team]")
         return
 
     # Register
