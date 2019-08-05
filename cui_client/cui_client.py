@@ -1,6 +1,7 @@
 from cui_client.network import network_check
 from cui_client.show_battle import show_battle, show_battle_id
 from cui_client.ping import ping
+from cui_client.register import register_battle
 
 
 host_url = "http://localhost:16000/procon30-battle-api"
@@ -59,6 +60,16 @@ def exec_command(command):
                 show_battle(host_url)
             else:
                 show_battle_id(host_url, command[2])
+        return
+
+    # Register
+    if command[0] == "register":
+        if len(command) == 1:
+            print("Usage : register [battle/team]")
+            return
+
+        if command[1] == "battle":
+            register_battle(host_url)
         return
 
     # Status
