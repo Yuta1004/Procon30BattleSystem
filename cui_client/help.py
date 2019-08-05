@@ -1,0 +1,10 @@
+def show_help():
+    print("status\t\t\tShow system status")
+    print("show battle\t\tShow all battle infomations not finished")
+    print("show battle {id}\tShow battle infomation")
+    print("register battle\t\tRegister new battle")
+    print("check connection\tCheck connection")
+    print("check token\t\tCheck token")
+    print("set host\t\tSet host-url value")
+    print("exit\t\t\tExit cui client")
+    print("help\t\t\tShow all commands")
