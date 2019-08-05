@@ -2,7 +2,7 @@ import urllib3
 
 
 def network_check(host_url):
-    print("[system] Checking connection ... ", end="")
+    print("Checking connection ... ", end="")
 
     http_connecter = urllib3.PoolManager()
     try:
