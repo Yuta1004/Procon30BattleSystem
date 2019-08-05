@@ -1,0 +1,17 @@
+import urllib3
+
+
+def network_check(host_url):
+    print("[system] Checking connection ... ", end="")
+
+    http_connecter = urllib3.PoolManager()
+    try:
+        result = http_connecter.request("GET", host_url)
+    except urllib3.exceptions.MaxRetryError:
+        print("Failed ( Connnection Refused )")
+        return
+
+    if result.status == 200:
+        print("OK")
+    else:
+        print("Failed (", result.staut, ")")
