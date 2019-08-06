@@ -43,8 +43,16 @@ class Action{
 }
 
 class Team{
-    Team(){
-        
+    public ArrayList<Agent> agents;
+    public int areaPoint;
+    public int tilePoint;
+    public int teamID;
+    
+    Team(ArrayList<Agent> agents, int areaPoint, int tilePoint, int teamID){
+        this.agents = agents;
+        this.areaPoint = areaPoint;
+        this.tilePoint = tilePoint;
+        this.teamID = teamID;
     }
 }
 
