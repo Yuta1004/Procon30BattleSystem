@@ -25,8 +25,20 @@ class GameState{
 }
 
 class Action{
-    Action(){
+    public int agentID;
+    public int dx;
+    public int dy;
+    public String type;
+    public int apply;
+    public int turn;
     
+    Action(int agentID, int dx, int dy, String type, int apply, int turn){
+        this.agentID = agentID;
+        this.dx = dx;
+        this.dy = dy;
+        this.type = type;
+        this.apply = apply;
+        this.turn = turn;
     }
 }
 
