@@ -44,12 +44,18 @@ class Action{
 
 class Team{
     Team(){
-    
+        
     }
 }
 
 class Agent{
-    Agent(){
+    public int agentID;
+    public int x;
+    public int y;
     
+    Agent(int agentID, int x, int y){
+        this.agentID = agentID;
+        this.x = x;
+        this.y = y;
     }
 }
