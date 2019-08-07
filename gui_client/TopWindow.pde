@@ -23,6 +23,16 @@ class TopWindow implements Window{
         this.tokenEnterButton.tag = "ClientStart";
     }
 
+    void start(){
+        this.tokenInputForm.setVisible(true);
+        this.tokenEnterButton.setVisible(true);
+    }
+
+    void finish(){
+        this.tokenInputForm.setVisible(false);
+        this.tokenEnterButton.setVisible(false);
+    }
+
     void draw(){
         background(255);
 
