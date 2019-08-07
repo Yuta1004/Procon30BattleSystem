@@ -9,15 +9,15 @@ TopWindow topWindow;
 
 void setup(){
     size(800, 800);
-    
+
     topWindow = new TopWindow(this);
 }
 
 void draw(){
-    topWindow.topWindowDraw();
+    topWindow.draw();
 }
 
- 
+
 /* G4P Handlers */
 // Button
 public void handleButtonEvents(GButton button, GEvent event){
