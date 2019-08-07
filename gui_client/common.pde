@@ -9,3 +9,10 @@ ArrayList<ArrayList<Integer>> convertJSONArray2d(JSONArray target){
     }
    return retArray;
 }
+
+String getNowTime(){
+    String hour = nf(hour(), 2);
+    String minute = nf(minute(), 2);
+    String second = nf(second(), 2);
+    return hour + ":" + minute + ":" + second;
+}
