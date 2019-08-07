@@ -4,17 +4,19 @@ import http.requests.*;
 String TOKEN = "";
 String HOST = "http://localhost:16000/procon30-battle-api";
 
-TopWindow topWindow;
+HashMap<String, Window> windows;
 
 
+/* Processing Standard Functions */
 void setup(){
     size(800, 800);
 
-    topWindow = new TopWindow(this);
+    windows = new HashMap<String, Window>();
+    windows.put("Top", new TopWindow(this));
 }
 
 void draw(){
-    topWindow.draw();
+    windows.get("Top").draw();
 }
 
 
