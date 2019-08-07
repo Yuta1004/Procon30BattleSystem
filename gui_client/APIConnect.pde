@@ -69,7 +69,6 @@ GameState getGameState(int battleID){
         // add
         teamsArray.add(
             new Team(agentsArray, areaPoint, tilePoint, teamID)
-
         );
     }
 
