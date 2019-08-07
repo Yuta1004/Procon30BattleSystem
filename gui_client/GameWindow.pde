@@ -35,12 +35,18 @@ class GameWindow implements Window{
         // Board
         for(int y = 0; y < this.bHeight; ++ y){
             for(int x = 0; x < this.bWidth; ++ x){
+                int dX = x * this.tileSize + this.xBias;
+                int dY = y * this.tileSize + this.yBias;
+
                 // tile
                 fill(teamColors.get(1));
-                rect(x * this.tileSize + this.xBias,    // x
-                     y * this.tileSize + this.yBias,    // y
-                     this.tileSize, this.tileSize);     // size
+                rect(dX, dY, this.tileSize, this.tileSize);
 
+                // score
+                fill(0);
+                textAlign(CENTER);
+                textSize(this.tileSize / 3);
+                text(99, dX + this.tileSize / 2, dY + this.tileSize / 1.5);
             }
         }
     }
