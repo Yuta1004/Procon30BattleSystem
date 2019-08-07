@@ -75,5 +75,11 @@ class GameWindow implements Window{
         text("AREA -\t " + str(gameState.teams.get(1).areaPoint), 910, 230);
         text("TILE -\t " + str(gameState.teams.get(1).tilePoint), 910, 260);
 
+        // Information(turn)
+        fill(0);
+        textAlign(CENTER);
+        textSize(30);
+        text("~Turn~", 1000, 350);
+        text(gameState.turn, 1000, 390);
     }
 }
