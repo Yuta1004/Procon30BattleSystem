@@ -1,5 +1,6 @@
 class GameWindow implements Window{
     private gui_client parent;
+    private int battleID;
     private GameState gameState;
     private int bWidth;
     private int bHeight;
@@ -7,9 +8,11 @@ class GameWindow implements Window{
     private int xBias;
     private int yBias;
     private HashMap<Integer, Integer> teamColors;
+    private GButton gameUpdate;
 
     GameWindow(gui_client parent, int battleID){
         this.parent = parent;
+        this.battleID = battleID;
         this.gameState = getGameState(battleID);
 
         this.bWidth = gameState.boardWidth;
@@ -22,6 +25,11 @@ class GameWindow implements Window{
         teamColors.put(0, color(255));
         teamColors.put(gameState.teams.get(0).teamID, color(255, 200, 200));
         teamColors.put(gameState.teams.get(1).teamID, color(200, 200, 255));
+
+        this.gameUpdate = new GButton(
+            this.parent, 950, 500, 100, 50, "UPDATE"
+        );
+        this.gameUpdate.tag = "GameUpdate";
     }
 
     void start(){
@@ -81,10 +89,15 @@ class GameWindow implements Window{
         textSize(30);
         text("~Turn~", 1000, 350);
         text(gameState.turn, 1000, 390);
+
+        // Information(update)
+        text("~Game Update~", 1000, 470);
     }
 
     // Button
-    public void handleButtonEvents(GButton button, GEvent event){}
+    public void handleButtonEvents(GButton button, GEvent event){
+        this.gameState = getGameState(this.battleID);
+    }
 
     // TextFieled
     public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){}
