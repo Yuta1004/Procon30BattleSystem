@@ -12,15 +12,16 @@ class GameWindow implements Window{
         this.parent = parent;
         this.gameState = getGameState(battleID);
 
-        this.bWidth = 20;
-        this.bHeight = 20;
+        this.bWidth = gameState.boardWidth;
+        this.bHeight = gameState.boardHeight;
         this.tileSize = min(80, int(800 / max(bWidth, bHeight)));
         this.xBias = (800 - tileSize * bWidth) / 2;
         this.yBias = (800 - tileSize * bHeight) / 2;
         this.teamColors = new HashMap<Integer, Integer>();
 
-        teamColors.put(1, color(255, 200, 200));
-        teamColors.put(2, color(200, 200, 255));
+        teamColors.put(0, color(255));
+        teamColors.put(gameState.teams.get(0).teamID, color(255, 200, 200));
+        teamColors.put(gameState.teams.get(1).teamID, color(200, 200, 255));
     }
 
     void start(){
@@ -41,14 +42,15 @@ class GameWindow implements Window{
                 int dY = y * this.tileSize + this.yBias;
 
                 // tile
-                fill(teamColors.get(1));
+                fill(teamColors.get(gameState.tiled.get(y).get(x)));
                 rect(dX, dY, this.tileSize, this.tileSize);
 
                 // score
                 fill(0);
                 textAlign(CENTER);
                 textSize(this.tileSize / 3);
-                text(99, dX + this.tileSize / 2, dY + this.tileSize / 1.5);
+                text(this.gameState.points.get(y).get(x),
+                     dX + this.tileSize / 2, dY + this.tileSize / 1.5);
             }
         }
     }
