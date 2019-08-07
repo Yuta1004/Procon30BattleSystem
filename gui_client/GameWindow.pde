@@ -5,6 +5,7 @@ class GameWindow implements Window{
     private int tileSize;
     private int xBias;
     private int yBias;
+    private HashMap<Integer, Integer> teamColors;
 
     GameWindow(gui_client parent){
         this.parent = parent;
@@ -14,6 +15,10 @@ class GameWindow implements Window{
         this.tileSize = min(80, int(800 / max(bWidth, bHeight)));
         this.xBias = (800 - tileSize * bWidth) / 2;
         this.yBias = (800 - tileSize * bHeight) / 2;
+        this.teamColors = new HashMap<Integer, Integer>();
+
+        teamColors.put(1, color(255, 200, 200));
+        teamColors.put(2, color(200, 200, 255));
     }
 
     void start(){
@@ -30,9 +35,12 @@ class GameWindow implements Window{
         // Board
         for(int y = 0; y < this.bHeight; ++ y){
             for(int x = 0; x < this.bWidth; ++ x){
+                // tile
+                fill(teamColors.get(1));
                 rect(x * this.tileSize + this.xBias,    // x
                      y * this.tileSize + this.yBias,    // y
                      this.tileSize, this.tileSize);     // size
+
             }
         }
     }
