@@ -14,9 +14,12 @@ String nowViewingWindowID;
 void setup(){
     size(800, 800);
 
-    nowViewingWindowID = "Top";
+    nowViewingWindowID = "";
     windows = new HashMap<String, Window>();
     windows.put("Top", new TopWindow(this));
+    windows.get("Top").finish();
+
+    switchWindow("Top");
 }
 
 void draw(){
@@ -43,9 +46,10 @@ public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){
 /* Other Functions */
 boolean switchWindow(String moveToWindowID){
     if(windows.containsKey(moveToWindowID)){
-        windows.get(nowViewingWindowID).finish();
+        if(!"".equals(nowViewingWindowID))
+            windows.get(nowViewingWindowID).finish();
+        windows.get(moveToWindowID).start();
         nowViewingWindowID = moveToWindowID;
-        windows.get(nowViewingWindowID).start();
         return true;
     }
     return false;
