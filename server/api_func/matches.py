@@ -95,7 +95,7 @@ def get_match_detail(token, battle_id):
                 "teamID": team_id,
                 "areaPoint": score[team_id]["areaPoint"],
                 "tilePoint": score[team_id]["tilePoint"],
-                "Agents": list(map(lambda agent:
+                "agents": list(map(lambda agent:
                     {
                         "agentID": agent.id,
                         "x": agent.x,
