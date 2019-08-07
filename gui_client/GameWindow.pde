@@ -82,4 +82,10 @@ class GameWindow implements Window{
         text("~Turn~", 1000, 350);
         text(gameState.turn, 1000, 390);
     }
+
+    // Button
+    public void handleButtonEvents(GButton button, GEvent event){}
+
+    // TextFieled
+    public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){}
 }

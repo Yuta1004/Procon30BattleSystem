@@ -51,4 +51,16 @@ class TopWindow implements Window{
         textSize(20);
         text("TOKEN:", 500, 568);
     }
+
+    // Button
+    void handleButtonEvents(GButton button, GEvent event){
+        if(TOKEN.length() > 0){
+            println(TOKEN);
+        }
+    }
+
+    // TextFieled
+    void handleTextEvents(GEditableTextControl textcontrol, GEvent event){
+        TOKEN = textcontrol.getText();
+    }
 }

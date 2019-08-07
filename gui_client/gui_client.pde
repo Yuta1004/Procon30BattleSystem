@@ -30,18 +30,12 @@ void draw(){
 /* G4P Handlers */
 // Button
 public void handleButtonEvents(GButton button, GEvent event){
-    if("ClientStart".equals(button.tag)){
-        if(TOKEN.length() > 0){
-            println(TOKEN);
-        }
-    }
+    windows.get(nowViewingWindowID).handleButtonEvents(button, event);
 }
 
 // TextFieled
 public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){
-    if("TokenInput".equals(textcontrol.tag)){
-        TOKEN = textcontrol.getText();
-    }
+    windows.get(nowViewingWindowID).handleTextEvents(textcontrol, event);
 }
 
 /* Other Functions */
