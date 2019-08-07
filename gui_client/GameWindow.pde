@@ -53,5 +53,27 @@ class GameWindow implements Window{
                      dX + this.tileSize / 2, dY + this.tileSize / 1.5);
             }
         }
+
+        // Information(score)
+        fill(255, 200, 200);
+        rect(850, 70, 300, 100);
+        fill(200, 200, 255);
+        rect(850, 170, 300, 100);
+
+        fill(0);
+        textAlign(CENTER);
+        textSize(30);
+        text("~Score~", 1000, 50);
+        text("ID : " + str(gameState.teams.get(0).teamID), 900, 100);
+        text("ID : " + str(gameState.teams.get(1).teamID), 900, 200);
+
+        fill(0);
+        textAlign(LEFT);
+        textSize(25);
+        text("AREA -\t " + str(gameState.teams.get(0).areaPoint), 910, 130);
+        text("TILE -\t " + str(gameState.teams.get(0).tilePoint), 910, 160);
+        text("AREA -\t " + str(gameState.teams.get(1).areaPoint), 910, 230);
+        text("TILE -\t " + str(gameState.teams.get(1).tilePoint), 910, 260);
+
     }
 }
