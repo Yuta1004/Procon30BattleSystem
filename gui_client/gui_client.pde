@@ -8,17 +8,19 @@ String HOST = "http://localhost:16000/procon30-battle-api";
 
 /* Var Values */
 HashMap<String, Window> windows;
+String nowViewingWindowID;
 
 /* Processing Standard Functions */
 void setup(){
     size(800, 800);
 
+    nowViewingWindowID = "Top";
     windows = new HashMap<String, Window>();
     windows.put("Top", new TopWindow(this));
 }
 
 void draw(){
-    windows.get("Top").draw();
+    windows.get(nowViewingWindowID).draw();
 }
 
 /* G4P Handlers */
@@ -36,4 +38,13 @@ public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){
     if("TokenInput".equals(textcontrol.tag)){
         TOKEN = textcontrol.getText();
     }
+}
+
+/* Other Functions */
+boolean switchWindow(String moveToWindowID){
+    if(windows.containsKey(moveToWindowID)){
+        nowViewingWindowID = moveToWindowID;
+        return true;
+    }
+    return false;
 }
