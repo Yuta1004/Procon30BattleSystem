@@ -12,6 +12,7 @@ String nowViewingWindowID;
 
 /* Processing Standard Functions */
 void setup(){
+    frameRate(15);
     size(1200, 800);
 
     nowViewingWindowID = "";
