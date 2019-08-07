@@ -92,6 +92,10 @@ class GameWindow implements Window{
 
         // Information(update)
         text("~Game Update~", 1000, 470);
+
+        // Information(clock)
+        text("~Clock~", 1000, 620);
+        text(getNowTime(), 1000, 670);
     }
 
     // Button
