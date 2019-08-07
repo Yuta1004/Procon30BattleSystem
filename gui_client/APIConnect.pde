@@ -1,8 +1,8 @@
 import http.requests.*;
 
-GameState getGameState(String url){
+GameState getGameState(int battleID){
     // Get data from API
-    String apiURL = HOST + url;
+    String apiURL = HOST + "/matches/" + str(battleID);
     GetRequest get = new GetRequest(apiURL);
     get.addHeader("Authorization", TOKEN);
     get.send();
