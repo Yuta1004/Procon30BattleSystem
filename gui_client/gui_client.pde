@@ -43,7 +43,9 @@ public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){
 /* Other Functions */
 boolean switchWindow(String moveToWindowID){
     if(windows.containsKey(moveToWindowID)){
+        windows.get(nowViewingWindowID).finish();
         nowViewingWindowID = moveToWindowID;
+        windows.get(nowViewingWindowID).start();
         return true;
     }
     return false;
