@@ -12,7 +12,7 @@ String nowViewingWindowID;
 
 /* Processing Standard Functions */
 void setup(){
-    size(800, 800);
+    size(1200, 800);
 
     nowViewingWindowID = "";
     windows = new HashMap<String, Window>();
