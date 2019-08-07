@@ -1,11 +1,13 @@
+/* Libraries */
 import g4p_controls.*;
 import http.requests.*;
 
+/* Const Values */
 String TOKEN = "";
 String HOST = "http://localhost:16000/procon30-battle-api";
 
+/* Var Values */
 HashMap<String, Window> windows;
-
 
 /* Processing Standard Functions */
 void setup(){
@@ -18,7 +20,6 @@ void setup(){
 void draw(){
     windows.get("Top").draw();
 }
-
 
 /* G4P Handlers */
 // Button
