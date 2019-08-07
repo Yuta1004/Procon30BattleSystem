@@ -1,5 +1,6 @@
 class GameWindow implements Window{
     private gui_client parent;
+    private GameState gameState;
     private int bWidth;
     private int bHeight;
     private int tileSize;
@@ -7,8 +8,9 @@ class GameWindow implements Window{
     private int yBias;
     private HashMap<Integer, Integer> teamColors;
 
-    GameWindow(gui_client parent){
+    GameWindow(gui_client parent, int battleID){
         this.parent = parent;
+        this.gameState = getGameState(battleID);
 
         this.bWidth = 20;
         this.bHeight = 20;
