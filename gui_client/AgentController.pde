@@ -7,6 +7,7 @@ class AgentController{
     private int tileSize;
     private int teamColor;
     private GButton agentSelectButton;
+    private boolean isVisible;
     private ArrayList<GButton> agentMoveSetButtons;
 
     AgentController(gui_client parent, int teamID, int agentID, int x, int y, int tileSize, int teamColor){
@@ -17,6 +18,7 @@ class AgentController{
         this.y = y * tileSize + 3;
         this.tileSize = tileSize;
         this.teamColor = teamColor;
+        this.isVisible = false;
         initButtons();
         setVisible(false);
     }
@@ -79,5 +81,7 @@ class AgentController{
     }
 
     public void handleButtonEvents(GButton button, GEvent event){
+        this.isVisible = !this.isVisible;
+        setVisible(this.isVisible);
     }
 }

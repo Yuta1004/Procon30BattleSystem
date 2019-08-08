@@ -123,7 +123,12 @@ class GameWindow implements Window{
 
     // Button
     public void handleButtonEvents(GButton button, GEvent event){
-        this.gameState = getGameState(this.battleID);
+        if("GameUpdate".equals(button.tag)){
+            this.gameState = getGameState(this.battleID);
+        }else{
+            int agentID = int(button.tag);
+            this.agentControllers.get(agentID).handleButtonEvents(button, event);
+        }
     }
 
     // TextFieled
