@@ -9,6 +9,7 @@ class GameWindow implements Window{
     private int yBias;
     private HashMap<Integer, Integer> teamColors;
     private GButton gameUpdate;
+    private ArrayList<AgentController> agentControllers;
 
     GameWindow(gui_client parent, int battleID){
         this.parent = parent;
@@ -30,6 +31,8 @@ class GameWindow implements Window{
             this.parent, 950, 500, 100, 50, "UPDATE"
         );
         this.gameUpdate.tag = "GameUpdate";
+
+        initAgentControllers();
     }
 
     void start(){
@@ -38,6 +41,25 @@ class GameWindow implements Window{
 
     void finish(){
         // do nothing
+    }
+
+    void initAgentControllers(){
+        this.agentControllers = new ArrayList<AgentController>();
+        for(int idxT = 0; idxT < this.gameState.teams.size(); ++ idxT){
+            Team team = this.gameState.teams.get(idxT);
+            for(int idxA = 0; idxA < team.agents.size(); ++ idxA){
+                this.agentControllers.add(
+                    new AgentController(
+                        this.parent,                    // gui_client
+                        team.teamID,                    // teamID
+                        team.agents.get(idxA).agentID,  // agentID
+                        team.agents.get(idxA).x,        // x
+                        team.agents.get(idxA).y,        // y
+                        this.tileSize
+                    )
+                );
+            }
+        }
     }
 
     void draw(){
