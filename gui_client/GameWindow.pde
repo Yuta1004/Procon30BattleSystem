@@ -72,16 +72,16 @@ class GameWindow implements Window{
         textAlign(CENTER);
         textSize(30);
         text("~Score~", 1000, 50);
-        text("ID : " + str(gameState.teams.get(0).teamID), 900, 100);
-        text("ID : " + str(gameState.teams.get(1).teamID), 900, 200);
+        text("ID " + str(gameState.teams.get(0).teamID), 900, 100);
+        text("ID " + str(gameState.teams.get(1).teamID), 900, 200);
 
         fill(0);
         textAlign(LEFT);
         textSize(25);
-        text("AREA -\t " + str(gameState.teams.get(0).areaPoint), 910, 130);
-        text("TILE -\t " + str(gameState.teams.get(0).tilePoint), 910, 160);
-        text("AREA -\t " + str(gameState.teams.get(1).areaPoint), 910, 230);
-        text("TILE -\t " + str(gameState.teams.get(1).tilePoint), 910, 260);
+        text("AREA :\t " + str(gameState.teams.get(0).areaPoint), 910, 130);
+        text("TILE :\t " + str(gameState.teams.get(0).tilePoint), 910, 160);
+        text("AREA :\t " + str(gameState.teams.get(1).areaPoint), 910, 230);
+        text("TILE :\t " + str(gameState.teams.get(1).tilePoint), 910, 260);
 
         // Information(turn)
         fill(0);
