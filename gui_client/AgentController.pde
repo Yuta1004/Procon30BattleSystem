@@ -18,6 +18,7 @@ class AgentController{
         this.tileSize = tileSize;
         this.teamColor = teamColor;
         initButtons();
+        setVisible(false);
     }
 
     private void initButtons(){
@@ -65,6 +66,12 @@ class AgentController{
     public void setPos(int x, int y){
         this.x = x;
         this.y = y;
+    }
+
+    public void setVisible(boolean bool){
+        for(int idx = 0; idx < 8; ++ idx){
+            this.agentMoveSetButtons.get(idx).setVisible(bool);
+        }
     }
 
     public void finish(){
