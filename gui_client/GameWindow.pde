@@ -1,12 +1,7 @@
 class GameWindow implements Window{
     private gui_client parent;
-    private int battleID;
     private GameState gameState;
-    private int bWidth;
-    private int bHeight;
-    private int tileSize;
-    private int xBias;
-    private int yBias;
+    private int battleID, bWidth, bHeight, tileSize, xBias, yBias;
     private HashMap<Integer, Integer> teamColors;
     private HashMap<Integer, AgentController> agentControllers;
     private GButton gameUpdate;
@@ -135,6 +130,9 @@ class GameWindow implements Window{
     public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){}
 
     // Key Events
-    void keyPressed(){}
+    void keyPressed(){
+        if(key)
+    }
+
     void keyReleased(){}
 }

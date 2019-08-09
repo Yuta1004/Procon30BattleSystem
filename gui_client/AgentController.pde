@@ -1,11 +1,6 @@
 class AgentController{
     private gui_client parent;
-    private int teamID;
-    private int agentID;
-    private int x;
-    private int y;
-    private int tileSize;
-    private int teamColor;
+    private int teamID, agentID, x, y, tileSize, teamColor;
     private GButton agentSelectButton;
     private boolean isVisible;
     private ArrayList<GButton> agentMoveSetButtons;
