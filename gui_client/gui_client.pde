@@ -38,6 +38,15 @@ public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){
     windows.get(nowViewingWindowID).handleTextEvents(textcontrol, event);
 }
 
+// Key Events
+void keyPressed(){
+    windows.get(nowViewingWindowID).keyPressed();
+}
+
+void keyReleased(){
+    windows.get(nowViewingWindowID).keyReleased();
+}
+
 /* Other Functions */
 boolean switchWindow(String moveToWindowID){
     if(windows.containsKey(moveToWindowID)){
