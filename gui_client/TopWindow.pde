@@ -63,4 +63,8 @@ class TopWindow implements Window{
     void handleTextEvents(GEditableTextControl textcontrol, GEvent event){
         TOKEN = textcontrol.getText();
     }
+
+    // Key Events
+    void keyPressed(){}
+    void keyReleased(){}
 }

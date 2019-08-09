@@ -4,4 +4,6 @@ interface Window{
     void finish();
     void handleButtonEvents(GButton button, GEvent event);
     void handleTextEvents(GEditableTextControl textcontrol, GEvent event);
+    void keyPressed();
+    void keyReleased();
 }

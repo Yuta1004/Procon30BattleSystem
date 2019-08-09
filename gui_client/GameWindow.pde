@@ -133,4 +133,8 @@ class GameWindow implements Window{
 
     // TextFieled
     public void handleTextEvents(GEditableTextControl textcontrol, GEvent event){}
+
+    // Key Events
+    void keyPressed(){}
+    void keyReleased(){}
 }
