@@ -51,7 +51,7 @@ class AgentController{
                 this.tileSize,
                 this.tileSize, ""
             );
-            button.tag = str(dx[idx]) + ":" + str(dy[idx]);
+            button.tag = str(this.agentID) + ":" + str(dx[idx]) + ":" + str(dy[idx]);
             button.setLocalColor(3, color(0));
             button.setLocalColor(4, color(255, 255, 0, 40));
             button.setLocalColor(6, color(255, 255, 0, 80));
