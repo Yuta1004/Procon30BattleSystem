@@ -5,6 +5,7 @@ class GameWindow implements Window{
     private HashMap<Integer, Integer> teamColors;
     private HashMap<Integer, AgentController> agentControllers;
     private GButton gameUpdate;
+    private boolean ifShiftPressing;
 
     GameWindow(gui_client parent, int battleID){
         this.parent = parent;
@@ -17,6 +18,7 @@ class GameWindow implements Window{
         this.xBias = (800 - tileSize * bWidth) / 2;
         this.yBias = (800 - tileSize * bHeight) / 2;
         this.teamColors = new HashMap<Integer, Integer>();
+        this.ifShiftPressing = false;
 
         teamColors.put(0, color(255));
         teamColors.put(gameState.teams.get(0).teamID, color(255, 200, 200));
@@ -60,6 +62,12 @@ class GameWindow implements Window{
 
     void draw(){
         background(255);
+
+        // Panel remove mode
+        if(this.ifShiftPressing){
+            fill(100, 100, 100, 200);
+            rect(0, 0, 810, 790);
+        }
 
         // Board
         for(int y = 0; y < this.bHeight; ++ y){
@@ -131,8 +139,14 @@ class GameWindow implements Window{
 
     // Key Events
     void keyPressed(){
-        if(key)
+        if(key == CODED){
+            if(keyCode == SHIFT) this.ifShiftPressing = true;
+        }
     }
 
-    void keyReleased(){}
+    void keyReleased(){
+        if(key == CODED){
+            if(keyCode == SHIFT) this.ifShiftPressing = false;
+        }
+    }
 }
