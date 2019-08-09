@@ -130,7 +130,7 @@ class GameWindow implements Window{
             this.gameState = getGameState(this.battleID);
         }else{
             int agentID = int(split(button.tag, ":")[0]);
-            this.agentControllers.get(agentID).handleButtonEvents(button, event);
+            this.agentControllers.get(agentID).handleButtonEvents(button, event, this.ifShiftPressing);
         }
     }
 
