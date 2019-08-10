@@ -7,7 +7,7 @@ class GameState{
     public ArrayList<ArrayList<Integer>> tiled;
     public ArrayList<Action> actions;
     public ArrayList<Team> teams;
-    
+
     GameState(int boardWidth, int boardHeight, int startAtUnixTime, int turn,
               ArrayList<ArrayList<Integer>> points,
               ArrayList<ArrayList<Integer>> tiled,
@@ -31,7 +31,7 @@ class Action{
     public String type;
     public int apply;
     public int turn;
-    
+
     Action(int agentID, int dx, int dy, String type, int apply, int turn){
         this.agentID = agentID;
         this.dx = dx;
@@ -47,7 +47,7 @@ class Team{
     public int areaPoint;
     public int tilePoint;
     public int teamID;
-    
+
     Team(ArrayList<Agent> agents, int areaPoint, int tilePoint, int teamID){
         this.agents = agents;
         this.areaPoint = areaPoint;
@@ -60,10 +60,28 @@ class Agent{
     public int agentID;
     public int x;
     public int y;
-    
+
     Agent(int agentID, int x, int y){
         this.agentID = agentID;
         this.x = x;
         this.y = y;
+    }
+}
+
+class Battle{
+    public int battleID;
+    public int myTeamID;
+    public int turns;
+    public int turnMillis;
+    public int intervalMillis;
+    public String matchTo;
+
+    Battle(int battleID, int myTeamID, int turns, int turnMillis, int intervalMillis, String matchTo){
+        this.battleID = battleID;
+        this.myTeamID = myTeamID;
+        this.turns = turns;
+        this.turnMillis = turnMillis;
+        this.intervalMillis = intervalMillis;
+        this.matchTo = matchTo;
     }
 }
