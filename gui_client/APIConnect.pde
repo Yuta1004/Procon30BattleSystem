@@ -1,5 +1,3 @@
-import http.requests.*;
-
 GameState getGameState(int battleID){
     // Get data from API
     String apiURL = HOST + "/matches/" + str(battleID);
