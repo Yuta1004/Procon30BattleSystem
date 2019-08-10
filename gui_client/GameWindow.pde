@@ -123,6 +123,12 @@ class GameWindow implements Window{
         // Information(clock)
         text("~Clock~", 1000, 620);
         text(getNowTime(), 1000, 670);
+
+        // Exit Message
+        fill(0);
+        textSize(15);
+        textAlign(LEFT);
+        text("Press \'B\' to exit game", 1000, 785);
     }
 
     // Button
@@ -142,6 +148,8 @@ class GameWindow implements Window{
     void keyPressed(){
         if(key == CODED){
             if(keyCode == SHIFT) this.ifShiftPressing = true;
+        }else if(key == 'B'){
+            switchWindow("BattleSelect");
         }
     }
 
