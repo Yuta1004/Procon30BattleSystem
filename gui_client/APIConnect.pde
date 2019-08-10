@@ -1,3 +1,20 @@
+void sendActionData(int battleID, int agentID, int dx, int dy, String type){
+    // Make actions JSON
+    String actionData = "{\"actions\" : [{ \"agentID\": AGENTID, \"dx\": DX, \"dy\": DY, \"type\": TYPE }]}";
+    actionData = actionData.replace("AGENTID", str(agentID));
+    actionData = actionData.replace("DX", str(dx));
+    actionData = actionData.replace("DY", str(dy));
+    actionData = actionData.replace("TYPE", type);
+
+    // Post send
+    String apiURL = HOST + "/matches/" + str(battleID) + "/action";
+    PostRequest post = new PostRequest(apiURL);
+    post.addHeader("Authorization", TOKEN);
+    post.addHeader("Content-Type", "application/json");
+    post.setData(actionData);
+    post.send();
+}
+
 GameState getGameState(int battleID){
     // Get data from API
     String apiURL = HOST + "/matches/" + str(battleID);
