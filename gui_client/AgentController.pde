@@ -73,8 +73,13 @@ class AgentController{
         }
     }
 
+    public void start(){
+        this.agentSelectButton.setVisible(true);
+    }
+
     public void finish(){
         this.agentSelectButton.setVisible(false);
+        setVisible(false);
     }
 
     public void handleButtonEvents(GButton button, GEvent event, boolean isShiftPressing){
