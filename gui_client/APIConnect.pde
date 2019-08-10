@@ -15,6 +15,33 @@ void sendActionData(int battleID, int agentID, int dx, int dy, String type){
     post.send();
 }
 
+ArrayList<Battle> getBattleList(){
+    // Get data from API
+    String apiURL = HOST + "/matches";
+    GetRequest get = new GetRequest(apiURL);
+    get.addHeader("Authorization", TOKEN);
+    get.send();
+
+    // Parse
+    ArrayList<Battle> battleList = new ArrayList<Battle>();
+    JSONArray battleJSONArray = parseJSONArray(get.getContent());
+    for(int idx = 0; idx < battleJSONArray.size(); ++ idx){
+        JSONObject battle = battleJSONArray.getJSONObject(idx);
+        battleList.add(
+            new Battle(
+                battle.getInt("id"),
+                battle.getInt("teamID"),
+                battle.getInt("turns"),
+                battle.getInt("turnMillis"),
+                battle.getInt("intervalMillis"),
+                battle.getString("matchTo")
+            )
+        );
+    }
+
+    return battleList;
+}
+
 GameState getGameState(int battleID){
     // Get data from API
     String apiURL = HOST + "/matches/" + str(battleID);
