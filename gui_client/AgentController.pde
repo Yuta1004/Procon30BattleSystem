@@ -1,12 +1,14 @@
 class AgentController{
     private gui_client parent;
-    private int teamID, agentID, x, y, tileSize, teamColor;
+    private int battleID, teamID, agentID, x, y, tileSize, teamColor;
     private GButton agentSelectButton;
     private boolean isVisible;
     private ArrayList<GButton> agentMoveSetButtons;
 
-    AgentController(gui_client parent, int teamID, int agentID, int x, int y, int tileSize, int teamColor){
+    AgentController(gui_client parent, int battleID, int teamID, int agentID,
+                    int x, int y, int tileSize, int teamColor){
         this.parent = parent;
+        this.battleID = battleID;
         this.teamID = teamID;
         this.agentID = agentID;
         this.x = x * tileSize + 3;
@@ -76,7 +78,21 @@ class AgentController{
     }
 
     public void handleButtonEvents(GButton button, GEvent event, boolean isShiftPressing){
-        this.isVisible = !this.isVisible;
-        setVisible(this.isVisible);
+        String[] command = split(button.tag, ":");
+
+        // Agent Click
+        if(command.length == 1){
+            this.isVisible = !this.isVisible;
+            setVisible(this.isVisible);
+        }
+
+        // Move Select
+        if(command.length == 3){
+            int dx = int(command[1]);
+            int dy = int(command[2]);
+            String type = isShiftPressing ? "\"remove\"" : "\"move\"";
+            sendActionData(this.battleID, this.agentID, dx, dy, type);
+            setVisible(false);
+        }
     }
 }
