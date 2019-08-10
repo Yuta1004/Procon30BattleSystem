@@ -33,11 +33,19 @@ class GameWindow implements Window{
     }
 
     void start(){
-        // do nothing
+        for(AgentController controller: this.agentControllers.values()){
+            controller.start();
+        }
+        this.gameUpdate.setVisible(true);
+
     }
 
     void finish(){
-        // do nothing
+        for(AgentController controller: this.agentControllers.values()){
+            controller.finish();
+        }
+        this.gameUpdate.setVisible(false);
+        this.ifShiftPressing = false;
     }
 
     void initAgentControllers(){
