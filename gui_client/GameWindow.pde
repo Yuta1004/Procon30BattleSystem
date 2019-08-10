@@ -48,6 +48,7 @@ class GameWindow implements Window{
                 Agent agent = team.agents.get(idxA);
                 AgentController controller = new AgentController(
                     this.parent,    // gui_client
+                    this.battleID,  // battleID
                     team.teamID,    // teamID
                     agent.agentID,  // agentID
                     agent.x,        // x
