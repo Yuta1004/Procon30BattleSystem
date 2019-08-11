@@ -62,9 +62,19 @@ class AgentController{
         }
     }
 
-    public void setPos(int x, int y){
-        this.x = x;
-        this.y = y;
+    public void setPos(int boardX, int boardY){
+        int newX = boardX * this.tileSize + 3;
+        int newY = boardY * this.tileSize + 3;
+        int dx[] = {0, 1, 1, 1, 0, -1, -1, -1};
+        int dy[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+
+        // move
+        this.agentSelectButton.moveTo(newX, newY);
+        for(int idx = 0; idx < 8; ++ idx){
+            int afterX = newX + this.tileSize * dx[idx];
+            int afterY = newY + this.tileSize * dy[idx];
+            this.agentMoveSetButtons.get(idx).moveTo(afterX, afterY);
+        }
     }
 
     public void setVisible(boolean bool){
