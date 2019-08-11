@@ -24,6 +24,7 @@ class TopWindow implements Window{
     }
 
     void start(){
+        this.tokenInputForm.setText(TOKEN);
         this.tokenInputForm.setVisible(true);
         this.tokenEnterButton.setVisible(true);
     }
