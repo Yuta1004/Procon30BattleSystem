@@ -47,7 +47,13 @@ GameState getGameState(int battleID){
     get.send();
 
     // Parse (Basic info)
-    JSONObject result = parseJSONObject(get.getContent());
+    JSONObject result = new JSONObject();
+    try{
+        result = parseJSONObject(get.getContent());
+    }catch (Exception e){
+        displayErrorDialog("Cannot get game data from API.<br>Please check connection.");
+        return new GameState();
+    }
     int boardWidth = result.getInt("width");
     int boardHeight = result.getInt("height");
     int startAtUnixTime = result.getInt("startedAtUnixTime");
