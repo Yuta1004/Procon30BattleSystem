@@ -139,10 +139,19 @@ class GameWindow implements Window{
         text("Press \'B\' to exit game", 1000, 785);
     }
 
+    private void updateBoard(){
+        this.gameState = getGameState(this.battleID);
+        for(Team team: this.gameState.teams){
+            for(Agent agent: team.agents){
+                this.agentControllers.get(agent.agentID).setPos(agent.x, agent.y);
+            }
+        }
+    }
+
     // Button
     public void handleButtonEvents(GButton button, GEvent event){
         if("GameUpdate".equals(button.tag)){
-            this.gameState = getGameState(this.battleID);
+            updateBoard();
         }else{
             int agentID = int(split(button.tag, ":")[0]);
             this.agentControllers.get(agentID).handleButtonEvents(button, event, this.ifShiftPressing);
