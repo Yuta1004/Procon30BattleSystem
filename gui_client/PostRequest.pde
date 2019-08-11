@@ -58,7 +58,7 @@ public class PostRequest{
             httpClient.getConnectionManager().shutdown();
             headerPairs.clear();
         } catch( Exception e ) {
-            e.printStackTrace();
+            println("[Error] Network Error! (", e, ")");
         }
     }
 

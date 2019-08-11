@@ -41,7 +41,7 @@ public class GetRequest{
             if( entity != null ) EntityUtils.consume(entity);
             httpClient.getConnectionManager().shutdown();
         } catch( Exception e ) {
-            e.printStackTrace();
+            println("[Error] Network Error!! (", e, ")");
         }
     }
 
