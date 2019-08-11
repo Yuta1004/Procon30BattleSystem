@@ -7,6 +7,7 @@ String HOST = "http://localhost:16000/procon30-battle-api";
 
 /* Var Values */
 HashMap<String, Window> windows;
+HashMap<Integer, Battle> battleList;
 String nowViewingWindowID;
 
 /* Processing Standard Functions */
@@ -18,8 +19,9 @@ void setup(){
     windows = new HashMap<String, Window>();
     windows.put("Top", new TopWindow(this));
     windows.get("Top").finish();
-
     switchWindow("Top");
+
+    battleList = new HashMap<Integer, Battle>();
 }
 
 void draw(){

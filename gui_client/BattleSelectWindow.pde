@@ -1,11 +1,9 @@
 class BattleSelectWindow implements Window{
     private gui_client parent;
     private ArrayList<GButton> joinButtons;
-    private ArrayList<Battle> battleList;
 
     BattleSelectWindow(gui_client parent){
         this.parent = parent;
-        this.battleList = new ArrayList<Battle>();
         this.joinButtons = new ArrayList<GButton>();
 
         // Init Button
@@ -19,10 +17,12 @@ class BattleSelectWindow implements Window{
     }
 
     void start(){
-        this.battleList = getBattleList();
-        for(int idx = 0; idx < min(7, this.battleList.size()); ++ idx){
-            this.joinButtons.get(idx).tag = str(battleList.get(idx).battleID);
+        getBattleList();
+        int idx = 0;
+        for(Battle battle: battleList.values()){
+            this.joinButtons.get(idx).tag = str(battle.battleID);
             this.joinButtons.get(idx).setVisible(true);
+            ++ idx;
         }
     }
 
@@ -42,9 +42,8 @@ class BattleSelectWindow implements Window{
         text("Battle Select", 600, 120);
 
         // View Battle List
-        for(int idx = 0; idx < this.battleList.size(); ++ idx) {
-            Battle battle = this.battleList.get(idx);
-
+        int idx = 0;
+        for(Battle battle: battleList.values()) {
             // Background
             int baseY = 200 + idx * 110;
             fill(255, 255, 100, 150);
@@ -79,6 +78,8 @@ class BattleSelectWindow implements Window{
             textSize(20);
             textAlign(LEFT);
             text("Join", 900, baseY + 25);
+
+            ++ idx;
         }
     }
 

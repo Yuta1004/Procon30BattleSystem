@@ -15,7 +15,7 @@ void sendActionData(int battleID, int agentID, int dx, int dy, String type){
     post.send();
 }
 
-ArrayList<Battle> getBattleList(){
+void getBattleList(){
     // Get data from API
     String apiURL = HOST + "/matches";
     GetRequest get = new GetRequest(apiURL);
@@ -23,11 +23,10 @@ ArrayList<Battle> getBattleList(){
     get.send();
 
     // Parse
-    ArrayList<Battle> battleList = new ArrayList<Battle>();
     JSONArray battleJSONArray = parseJSONArray(get.getContent());
     for(int idx = 0; idx < battleJSONArray.size(); ++ idx){
         JSONObject battle = battleJSONArray.getJSONObject(idx);
-        battleList.add(
+        battleList.put(battle.getInt("id"),
             new Battle(
                 battle.getInt("id"),
                 battle.getInt("teamID"),
@@ -38,8 +37,6 @@ ArrayList<Battle> getBattleList(){
             )
         );
     }
-
-    return battleList;
 }
 
 GameState getGameState(int battleID){
