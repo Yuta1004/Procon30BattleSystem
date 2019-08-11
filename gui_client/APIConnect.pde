@@ -13,6 +13,14 @@ void sendActionData(int battleID, int agentID, int dx, int dy, String type){
     post.addHeader("Content-Type", "application/json");
     post.setData(actionData);
     post.send();
+
+    // Error Handling
+    try{
+        parseJSONObject(post.getContent());
+    }catch(Exception e){
+        displayErrorDialog("Cannot send action data.<br>Please check connection.");
+        return;
+    }
 }
 
 void getBattleList(){
