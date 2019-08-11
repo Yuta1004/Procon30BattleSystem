@@ -22,8 +22,17 @@ void getBattleList(){
     get.addHeader("Authorization", TOKEN);
     get.send();
 
+    // Error Handling
+    JSONArray battleJSONArray = new JSONArray();
+    try{
+        battleJSONArray = parseJSONArray(get.getContent());
+    }catch (Exception e){
+        displayErrorDialog("Cannot get battle data from api.<br>Please check token.");
+        battleList = new HashMap<Integer, Battle>();
+        return;
+    }
+
     // Parse
-    JSONArray battleJSONArray = parseJSONArray(get.getContent());
     for(int idx = 0; idx < battleJSONArray.size(); ++ idx){
         JSONObject battle = battleJSONArray.getJSONObject(idx);
         battleList.put(battle.getInt("id"),
