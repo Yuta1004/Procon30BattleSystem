@@ -22,3 +22,7 @@ int signum(int value){
     if(value < 0) return -1;
     return 0;
 }
+
+void displayErrorDialog(String message){
+    G4P.showMessage(this, message, "Error", G4P.ERROR);
+}
