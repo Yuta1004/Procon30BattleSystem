@@ -56,7 +56,6 @@ class TopWindow implements Window{
     // Button
     void handleButtonEvents(GButton button, GEvent event){
         if(TOKEN.length() > 0){
-            println(TOKEN);
             windows.put("BattleSelect", new BattleSelectWindow(this.parent));
             switchWindow("BattleSelect");
         }
