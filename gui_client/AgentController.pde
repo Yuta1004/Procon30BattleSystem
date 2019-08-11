@@ -85,6 +85,11 @@ class AgentController{
     public void handleButtonEvents(GButton button, GEvent event, boolean isShiftPressing){
         String[] command = split(button.tag, ":");
 
+        // Block clicks to not my team agent
+        if(battleList.get(this.battleID).myTeamID != this.teamID){
+            return;
+        }
+
         // Agent Click
         if(command.length == 1){
             this.isVisible = !this.isVisible;
