@@ -22,6 +22,17 @@ class GameState{
         this.actions = actions;
         this.teams = teams;
     }
+
+    GameState(){
+        this.boardWidth = -1;
+        this.boardHeight = -1;
+        this.startAtUnixTime = -1;
+        this.turn = -1;
+        this.points = new ArrayList<ArrayList<Integer>>();
+        this.tiled = new ArrayList<ArrayList<Integer>>();
+        this.actions = new ArrayList<Action>();
+        this.teams = new ArrayList<Team>();
+    }
 }
 
 class Action{
