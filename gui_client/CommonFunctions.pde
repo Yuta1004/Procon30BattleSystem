@@ -16,3 +16,9 @@ String getNowTime(){
     String second = nf(second(), 2);
     return hour + ":" + minute + ":" + second;
 }
+
+int signum(int value){
+    if(value > 0) return 1;
+    if(value < 0) return -1;
+    return 0;
+}
