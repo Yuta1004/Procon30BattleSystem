@@ -35,7 +35,7 @@ void getBattleList(){
     try{
         battleJSONArray = parseJSONArray(get.getContent());
     }catch (Exception e){
-        displayErrorDialog("Cannot get battle data from api.<br>Please check token.");
+        displayErrorDialog("Cannot get battle data from api.<br>Please check token or connection.");
         battleList = new HashMap<Integer, Battle>();
         return;
     }
