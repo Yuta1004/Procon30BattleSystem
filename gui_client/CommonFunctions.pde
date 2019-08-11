@@ -10,11 +10,11 @@ ArrayList<ArrayList<Integer>> convertJSONArray2d(JSONArray target){
    return retArray;
 }
 
-String getNowTime(){
-    String hour = nf(hour(), 2);
-    String minute = nf(minute(), 2);
-    String second = nf(second(), 2);
-    return hour + ":" + minute + ":" + second;
+String formatDate(int hour, int minute, int second){
+    String hourStr = nf(hour, 2);
+    String minuteStr = nf(minute, 2);
+    String secondStr = nf(second, 2);
+    return hourStr + ":" + minuteStr + ":" + secondStr;
 }
 
 int signum(int value){
