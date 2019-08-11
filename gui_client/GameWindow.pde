@@ -20,9 +20,16 @@ class GameWindow implements Window{
         this.teamColors = new HashMap<Integer, Integer>();
         this.ifShiftPressing = false;
 
+        int colors[] = {
+            color(255, 200, 200),
+            color(200, 200, 255)
+        };
+        for(int idx = 0; idx < min(2, this.gameState.teams.size()); ++ idx){
+            teamColors.put(this.gameState.teams.get(0).teamID, color(255, 200, 200));
+            teamColors.put(this.gameState.teams.get(1).teamID, color(200, 200, 255));
+        }
         teamColors.put(0, color(255));
-        teamColors.put(gameState.teams.get(0).teamID, color(255, 200, 200));
-        teamColors.put(gameState.teams.get(1).teamID, color(200, 200, 255));
+
 
         this.gameUpdate = new GButton(
             this.parent, 950, 500, 100, 50, "UPDATE"
@@ -73,9 +80,12 @@ class GameWindow implements Window{
         background(255);
 
         // Panel remove mode
-        if(this.ifShiftPressing){
+        if(this.ifShiftPressing && this.bWidth > 0){
             fill(100, 100, 100, 200);
-            rect(0, 0, 810, 790);
+            rect(0, 0,
+                 this.bWidth * this.tileSize + 10,
+                 this.bHeight * this.tileSize - 10
+            );
         }
 
         // Board
@@ -107,16 +117,17 @@ class GameWindow implements Window{
         textAlign(CENTER);
         textSize(30);
         text("~Score~", 1000, 50);
-        text("ID " + str(gameState.teams.get(0).teamID), 900, 100);
-        text("ID " + str(gameState.teams.get(1).teamID), 900, 200);
+        for(int idx = 0; idx < this.gameState.teams.size(); ++ idx){
+            text("ID " + str(gameState.teams.get(idx).teamID), 900, (idx + 1) * 100);
+        }
 
         fill(0);
         textAlign(LEFT);
         textSize(25);
-        text("AREA :\t " + str(gameState.teams.get(0).areaPoint), 910, 130);
-        text("TILE :\t " + str(gameState.teams.get(0).tilePoint), 910, 160);
-        text("AREA :\t " + str(gameState.teams.get(1).areaPoint), 910, 230);
-        text("TILE :\t " + str(gameState.teams.get(1).tilePoint), 910, 260);
+        for(int idx = 0; idx < this.gameState.teams.size(); ++ idx){
+            text("AREA :\t " + str(this.gameState.teams.get(idx).areaPoint), 910, 130 + idx * 100);
+            text("TILE :\t " + str(this.gameState.teams.get(idx).tilePoint), 910, 160 + idx * 100);
+        }
 
         // Information(turn)
         fill(0);
