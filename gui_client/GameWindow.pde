@@ -1,13 +1,18 @@
+import java.util.Calendar;
+
+
 class GameWindow implements Window{
     private gui_client parent;
     private GameState gameState;
     private int battleID, bWidth, bHeight, tileSize, xBias, yBias;
+    private long periodTime, nextUpdateTime;
     private HashMap<Integer, Integer> teamColors;
     private HashMap<Integer, AgentController> agentControllers;
     private GButton gameUpdate;
     private boolean ifShiftPressing;
 
     GameWindow(gui_client parent, int battleID){
+        // Init Variables
         this.parent = parent;
         this.battleID = battleID;
         this.gameState = getGameState(battleID);
@@ -20,6 +25,7 @@ class GameWindow implements Window{
         this.teamColors = new HashMap<Integer, Integer>();
         this.ifShiftPressing = false;
 
+        // Init View color
         int colors[] = {
             color(255, 200, 200),
             color(200, 200, 255)
@@ -30,13 +36,21 @@ class GameWindow implements Window{
         }
         teamColors.put(0, color(255));
 
-
+        // Init G4P
         this.gameUpdate = new GButton(
-            this.parent, 950, 500, 100, 50, "UPDATE"
+            this.parent, 950, 550, 100, 50, "MANUAL UPDATE"
         );
         this.gameUpdate.tag = "GameUpdate";
 
+        // Init AgentController
         initAgentControllers();
+
+        // Auto Update Setup
+        Battle battle = battleList.get(this.battleID);
+        long nowTime = System.currentTimeMillis() / 1000;
+        this.periodTime = (battle.turnMillis + battle.intervalMillis) / 1000;
+        long nowSlipTime = (nowTime - this.gameState.startAtUnixTime) % this.periodTime;
+        this.nextUpdateTime = nowTime + (periodTime - nowSlipTime);
     }
 
     void start(){
@@ -44,7 +58,6 @@ class GameWindow implements Window{
             controller.start();
         }
         this.gameUpdate.setVisible(true);
-
     }
 
     void finish(){
@@ -78,6 +91,13 @@ class GameWindow implements Window{
 
     void draw(){
         background(255);
+
+        // Auto Update
+        long nowTime = System.currentTimeMillis() / 1000;
+        if(nowTime >= this.nextUpdateTime){
+            updateBoard();
+            this.nextUpdateTime += this.periodTime;
+        }
 
         // Panel remove mode
         if(this.ifShiftPressing && this.bWidth > 0){
@@ -137,11 +157,17 @@ class GameWindow implements Window{
         text(gameState.turn, 1000, 390);
 
         // Information(update)
-        text("~Game Update~", 1000, 470);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(this.nextUpdateTime * 1000);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        text("~Next Update~", 1000, 480);
+        text(formatDate(hour, minute, second), 1000, 530);
 
         // Information(clock)
-        text("~Clock~", 1000, 620);
-        text(getNowTime(), 1000, 670);
+        text("~Clock~", 1000, 670);
+        text(formatDate(hour(), minute(), second()), 1000, 720);
 
         // Exit Message
         fill(0);
