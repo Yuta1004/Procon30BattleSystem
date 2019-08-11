@@ -79,14 +79,15 @@ class BattleSelectWindow implements Window{
             textAlign(LEFT);
             text("Join", 900, baseY + 25);
 
-            // Exit Message
-            fill(0);
-            textSize(15);
-            textAlign(LEFT);
-            text("Press \'B\' to back to top", 1000, 785);
-
             ++ idx;
         }
+
+        // Exit Message
+        fill(0);
+        textSize(15);
+        textAlign(LEFT);
+        text("Press \'B\' to back to top", 1000, 785);
+
     }
 
     /* G4P functions */
