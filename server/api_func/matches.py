@@ -73,6 +73,8 @@ def get_match_detail(token, battle_id):
     for thread in threading.enumerate():
         if (type(thread) == BattleManager) and (thread.battle_id == battle_id):
             battle_manager = thread
+    if battle_manager is None:
+        return 500, {"status": "Battle not started."}
 
     ret_dict = {}
 
