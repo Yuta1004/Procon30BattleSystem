@@ -11,7 +11,7 @@ route_battle = Blueprint(__name__, "battle")
 @route_battle.route(base_route + "/battle")
 def battle_top():
     battle_list = BattleDBAccessManager().get_data()
-    battle_list = list(filter(lambda x: x["now_battle"] == 1, battle_list))
+    battle_list = list(filter(lambda x: x["now_battle"], battle_list))
 
     # 一部キー名を変更する
     for battle in battle_list:
