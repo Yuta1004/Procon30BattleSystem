@@ -34,9 +34,10 @@ def get_all_matches(token):
     team_db_manager = TeamDBAccessManager()
     team = team_db_manager.get_data(token=token)[0]
 
-    # 同じトークンを持つチーム一覧を抜き出し→そのチームが参戦しているチームを抜き出す
+    # 同じトークンを持つチーム一覧を抜き出し→そのチームが参戦しているチームを抜き出す(now_battle=True)
     match_list = []
-    for battle in battle_db_manager.get_data(team_id=team["id"]):
+    raw_battle_list = battle_db_manager.get_data(team_id=team["id"])
+    for battle in list(filter(lambda x: x["now_battle"], raw_battle_list)):
         match_team = battle["teamA"] if battle["teamB"] == team["id"] else battle["teamB"]
         match_list.append(
             {
@@ -73,6 +74,8 @@ def get_match_detail(token, battle_id):
     for thread in threading.enumerate():
         if (type(thread) == BattleManager) and (thread.battle_id == battle_id):
             battle_manager = thread
+    if battle_manager is None:
+        return 500, {"status": "Battle not started."}
 
     ret_dict = {}
 

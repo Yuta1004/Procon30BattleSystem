@@ -80,6 +80,7 @@ class Game:
         for agent in filter(lambda n: n.dx >= -1, self.agents):
             mx, my = self.__cal_mx_my(agent)
             if self.__can_action(agent) and (affected_positions.count((mx, my)) == 1):  # 競合確認
+                agent.move()    # 行動
                 safety_agents.append(agent.id)
                 if agent.remove_panel:
                     self.board.tiled[my][mx] = 0

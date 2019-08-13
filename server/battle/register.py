@@ -8,6 +8,15 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
              point_lower, point_upper, player_num, teamA, teamB,
              generate_board_type=LINE_SYMMETRY_HALF,
              turn_mills=30000, interval_mills=3000):
+    board = generate_board(
+        board_width,
+        board_height,
+        point_upper,
+        point_lower,
+        player_num,
+        generate_board_type
+    )
+
     battle_db_manager = BattleDBAccessManager()
     battle_id = battle_db_manager.insert(
         name,
@@ -17,15 +26,6 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
         interval_mills,
         teamA,
         teamB
-    )
-
-    board = generate_board(
-        board_width,
-        board_height,
-        point_upper,
-        point_lower,
-        player_num,
-        generate_board_type
     )
 
     board.tiled, agent_pos_dict = _get_agent_pos(

@@ -11,7 +11,7 @@ route_battle = Blueprint(__name__, "battle")
 @route_battle.route(base_route + "/battle")
 def battle_top():
     battle_list = BattleDBAccessManager().get_data()
-    battle_list = list(filter(lambda x: x["now_battle"] == 1, battle_list))
+    battle_list = list(filter(lambda x: x["now_battle"], battle_list))
 
     # 一部キー名を変更する
     for battle in battle_list:
@@ -85,3 +85,15 @@ def battle_start(battle_id):
     else:
         return jsonify(status="Already started!"), 400
 
+
+@route_battle.route(base_route + "/battle/finish/<battle_id>")
+def battle_finish(battle_id):
+    # 試合存在確認
+    if len(BattleDBAccessManager().get_data(battle_id)) == 0:
+        return jsonify(status="InvalidBattleID"), 400
+
+    # 終了コマンド送信
+    for thread in threading.enumerate():
+        if (type(thread) == BattleManager) and (thread.battle_id == int(battle_id)):
+            thread.finish()
+    return jsonify(status="OK"), 200

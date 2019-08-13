@@ -9,6 +9,11 @@ class Agent:
         self.dy = -10
 
 
+    def move(self):
+        self.x += self.dx
+        self.y += self.dy
+
+
     def reset(self):
         self.remove_panel = False
         self.dx = 0

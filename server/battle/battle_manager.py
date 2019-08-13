@@ -1,3 +1,4 @@
+import math
 import json
 import time
 import datetime
@@ -20,8 +21,10 @@ class BattleManager(Thread):
         self.now_interval = False
         self.action_writing = False
         self.battle_info = BattleDBAccessManager().get_data(battle_id=self.battle_id)[0]
+        self.do_battle = True
 
         self.__roll_forward()
+        BattleDBAccessManager().update_battle_status(self.battle_id, 1)
 
 
     def run(self):
@@ -67,9 +70,14 @@ class BattleManager(Thread):
                 after_time = int(time.time() * 1000)
             self.now_interval = False
 
-        # 3. 試合後処理
-        battle_db_manager = BattleDBAccessManager()
-        battle_db_manager.update_battle_status(0)
+            # 終了コマンドを受け取ったら
+            if not self.do_battle:
+                break
+
+        # 3. 終了コマンド待機
+        while self.do_battle:
+            pass
+        BattleDBAccessManager().update_battle_status(self.battle_id, 0)
 
 
     def get_board(self):
@@ -84,6 +92,10 @@ class BattleManager(Thread):
         return self.game.cal_score(
             [self.battle_info["teamA"], self.battle_info["teamB"]]
         )
+
+
+    def finish(self):
+        self.do_battle = False
 
 
     def __wait_for_start_battle(self):
@@ -109,9 +121,25 @@ class BattleManager(Thread):
         action_history = sorted(action_history, key=lambda x: x["turn"])
 
         # 盤面復元
+        battle_info = BattleDBAccessManager().get_data(self.battle_id)[0]
         for action in action_history:
-            self.__do_action(json.loads(action["detail"])["actions"])
-            self.turn += 1
+            if action["turn"] <= battle_info["turn"]:
+                self.__do_action(json.loads(action["detail"])["actions"])
+
+        # ターン情報復元
+        ## 試合が開始してからの秒数を計算
+        start_at_unix_time = battle_info["start_at_unix_time"]
+        now_unix_time = int(time.mktime(datetime.datetime.now().timetuple()))
+        passed_time_millis = (now_unix_time - start_at_unix_time) * 1000
+
+        ## 1ターンに要する時間で割る = 現在時刻でのターン数
+        period_time_millis = battle_info["turn_mills"] + battle_info["interval_mills"]
+        self.turn = math.ceil(passed_time_millis / period_time_millis)
+        self.turn = min(battle_info["turn"] + 1, self.turn)
+
+        ## 少し待機(復元ターンと現在時刻のずれを修正する)
+        wait_millis = self.turn * period_time_millis - now_unix_time * 1000
+        time.sleep(max(0, wait_millis / 1000.0))
 
 
     def __do_action(self, action_detail):
