@@ -10,6 +10,7 @@ public class PostRequest{
     private String url;
     private String content;
     private String encoding;
+    private int statusCode;
     private HttpResponse response;
     private StringEntity postData;
     private ArrayList<BasicNameValuePair> headerPairs;
@@ -54,12 +55,18 @@ public class PostRequest{
             response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
             this.content = EntityUtils.toString(response.getEntity());
+            this.statusCode = response.getStatusLine().getStatusCode();
+
             if(entity != null) EntityUtils.consume(entity);
             httpClient.getConnectionManager().shutdown();
             headerPairs.clear();
         } catch( Exception e ) {
             println("[Error] Network Error! (", e, ")");
         }
+    }
+
+    public int getStatusCode(){
+        return this.statusCode;
     }
 
     public String getContent(){

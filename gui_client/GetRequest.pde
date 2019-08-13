@@ -8,10 +8,11 @@ import org.apache.http.util.EntityUtils;
 
 
 public class GetRequest{
-    String url;
-    String content;
-    HttpResponse response;
-    ArrayList<BasicNameValuePair> headerPairs;
+    private String url;
+    private String content;
+    private int statusCode;
+    private HttpResponse response;
+    private ArrayList<BasicNameValuePair> headerPairs;
 
     public GetRequest(String url){
         this.url = url;
@@ -37,12 +38,17 @@ public class GetRequest{
             response = httpClient.execute( httpGet );
             HttpEntity entity = response.getEntity();
             this.content = EntityUtils.toString(response.getEntity());
+            this.statusCode = response.getStatusLine().getStatusCode();
 
             if( entity != null ) EntityUtils.consume(entity);
             httpClient.getConnectionManager().shutdown();
         } catch( Exception e ) {
             println("[Error] Network Error!! (", e, ")");
         }
+    }
+
+    public int getStatusCode(){
+        return this.statusCode;
     }
 
     public String getContent(){

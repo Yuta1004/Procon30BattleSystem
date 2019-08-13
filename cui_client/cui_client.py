@@ -4,7 +4,7 @@ from cui_client.show_team import show_team, show_team_id, show_team_token
 from cui_client.ping import ping
 from cui_client.register import register_battle, register_team
 from cui_client.help import show_help
-from cui_client.start_battle import start_battle
+from cui_client.manage_battle import start_battle, finish_battle
 
 
 host_url = "http://localhost:16000/procon30-battle-api"
@@ -123,6 +123,15 @@ def exec_command(command):
             return
 
         start_battle(host_url, command[1])
+        return
+
+    # finish
+    if command[0] == "finish":
+        if len(command) == 1:
+            print("Usage : finish {battle_id}")
+            return
+
+        finish_battle(host_url, command[1])
         return
 
     # Not Found

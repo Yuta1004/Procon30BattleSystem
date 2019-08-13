@@ -15,9 +15,7 @@ void sendActionData(int battleID, int agentID, int dx, int dy, String type){
     post.send();
 
     // Error Handling
-    try{
-        parseJSONObject(post.getContent());
-    }catch(Exception e){
+    if(post.getStatusCode() != 200){
         displayErrorDialog("Cannot send action data.<br>Please check connection.");
         return;
     }
@@ -31,16 +29,15 @@ void getBattleList(){
     get.send();
 
     // Error Handling
-    JSONArray battleJSONArray = new JSONArray();
-    try{
-        battleJSONArray = parseJSONArray(get.getContent());
-    }catch (Exception e){
+    if(get.getStatusCode() != 200){
         displayErrorDialog("Cannot get battle data from api.<br>Please check token or connection.");
         battleList = new HashMap<Integer, Battle>();
         return;
     }
 
     // Parse
+    JSONArray battleJSONArray = new JSONArray();
+    battleJSONArray = parseJSONArray(get.getContent());
     for(int idx = 0; idx < battleJSONArray.size(); ++ idx){
         JSONObject battle = battleJSONArray.getJSONObject(idx);
         battleList.put(battle.getInt("id"),
@@ -63,14 +60,15 @@ GameState getGameState(int battleID){
     get.addHeader("Authorization", TOKEN);
     get.send();
 
-    // Parse (Basic info)
-    JSONObject result = new JSONObject();
-    try{
-        result = parseJSONObject(get.getContent());
-    }catch (Exception e){
+    // Error Handling
+    if(get.getStatusCode() != 200){
         displayErrorDialog("Cannot get game data from API.<br>Please check connection.");
         return new GameState();
     }
+
+    // Parse (Basic info)
+    JSONObject result = new JSONObject();
+    result = parseJSONObject(get.getContent());
     int boardWidth = result.getInt("width");
     int boardHeight = result.getInt("height");
     int startAtUnixTime = result.getInt("startedAtUnixTime");
