@@ -21,7 +21,7 @@ class BattleManager(Thread):
         self.now_interval = False
         self.action_writing = False
         self.battle_info = BattleDBAccessManager().get_data(battle_id=self.battle_id)[0]
-        self.keep_battle_state = True
+        self.do_battle = True
 
         self.__roll_forward()
 
@@ -69,12 +69,16 @@ class BattleManager(Thread):
                 after_time = int(time.time() * 1000)
             self.now_interval = False
 
+            # 終了コマンドを受け取ったら
+            if not self.do_battle:
+                break
+
         # 3. 試合後処理
         battle_db_manager = BattleDBAccessManager()
         battle_db_manager.update_battle_status(self.battle_id, 0)
 
         # 4. 終了コマンド待機
-        while self.keep_battle_state:
+        while self.do_battle:
             pass
 
 
@@ -93,7 +97,7 @@ class BattleManager(Thread):
 
 
     def finish(self):
-        self.keep_battle_state = False
+        self.do_battle = False
 
 
     def __wait_for_start_battle(self):
