@@ -21,6 +21,7 @@ class BattleManager(Thread):
         self.now_interval = False
         self.action_writing = False
         self.battle_info = BattleDBAccessManager().get_data(battle_id=self.battle_id)[0]
+        self.keep_battle_state = True
 
         self.__roll_forward()
 
@@ -72,6 +73,10 @@ class BattleManager(Thread):
         battle_db_manager = BattleDBAccessManager()
         battle_db_manager.update_battle_status(self.battle_id, 0)
 
+        # 4. 終了コマンド待機
+        while self.keep_battle_state:
+            pass
+
 
     def get_board(self):
         return self.game.board
@@ -85,6 +90,10 @@ class BattleManager(Thread):
         return self.game.cal_score(
             [self.battle_info["teamA"], self.battle_info["teamB"]]
         )
+
+
+    def finish(self):
+        self.keep_battle_state = False
 
 
     def __wait_for_start_battle(self):
