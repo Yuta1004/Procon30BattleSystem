@@ -4,7 +4,6 @@ from server import base_route
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.battle.register import battle_register as battle_register_func
 from server.battle.battle_manager import BattleManager
-from server.api_func.battle import send_battle_finish_command
 
 route_battle = Blueprint(__name__, "battle")
 
@@ -41,12 +40,6 @@ def battle_view(battle_id):
     battle.pop("now_battle")
 
     return jsonify(battle_list[0]), 200
-
-
-@route_battle.route(base_route + "/battle/<battle_id>/finish")
-def battle_finish(battle_id):
-    send_battle_finish_command(int(battle_id))
-    return jsonify(status="OK"), 200
 
 
 @route_battle.route(base_route + "/battle/register", methods=["POST"])
@@ -92,3 +85,15 @@ def battle_start(battle_id):
     else:
         return jsonify(status="Already started!"), 400
 
+
+@route_battle.route(base_route + "/battle/finish/<battle_id>")
+def battle_finish(battle_id):
+    # 試合存在確認
+    if len(BattleDBAccessManager().get_data(battle_id)) == 0:
+        return jsonify(status="InvalidBattleID"), 400
+
+    # 終了コマンド送信
+    for thread in threading.enumerate():
+        if (type(thread) == BattleManager) and (thread.battle_id == int(battle_id)):
+            thread.finish()
+    return jsonify(status="OK"), 200
