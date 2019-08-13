@@ -70,7 +70,7 @@ class BattleManager(Thread):
 
         # 3. 試合後処理
         battle_db_manager = BattleDBAccessManager()
-        battle_db_manager.update_battle_status(0)
+        battle_db_manager.update_battle_status(self.battle_id, 0)
 
 
     def get_board(self):

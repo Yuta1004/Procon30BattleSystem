@@ -91,15 +91,18 @@ class BattleDBAccessManager(DBAccessManager):
 
 
     @DBAccessManager.db_execute
-    def update_battle_status(self, cursor, status):
+    def update_battle_status(self, cursor, battle_id, status):
         """
         試合ステータスを更新する
 
         Params
         ----------
-        status
+        battle_id : int
+            試合ID
+        status : int
             ステータス。1でゲーム開始前orゲーム中、0でゲーム終了を表す
         """
 
+        status = max(0, min(1, status))
         sql = "update battle set now_battle=%s where id=%s"
-        cursor.execute(sql, (status, ))
+        cursor.execute(sql, (status, battle_id))
