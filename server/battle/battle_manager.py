@@ -24,6 +24,7 @@ class BattleManager(Thread):
         self.do_battle = True
 
         self.__roll_forward()
+        BattleDBAccessManager().update_battle_status(self.battle_id, 1)
 
 
     def run(self):
@@ -73,13 +74,10 @@ class BattleManager(Thread):
             if not self.do_battle:
                 break
 
-        # 3. 試合後処理
-        battle_db_manager = BattleDBAccessManager()
-        battle_db_manager.update_battle_status(self.battle_id, 0)
-
-        # 4. 終了コマンド待機
+        # 3. 終了コマンド待機
         while self.do_battle:
             pass
+        BattleDBAccessManager().update_battle_status(self.battle_id, 0)
 
 
     def get_board(self):
