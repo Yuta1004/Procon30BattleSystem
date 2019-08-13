@@ -1,3 +1,4 @@
+import math
 import json
 import time
 import datetime
@@ -111,7 +112,18 @@ class BattleManager(Thread):
         # 盤面復元
         for action in action_history:
             self.__do_action(json.loads(action["detail"])["actions"])
-            self.turn += 1
+
+        # ターン情報復元
+        battle_info = BattleDBAccessManager().get_data(self.battle_id)[0]
+        start_at_unix_time = battle_info["start_at_unix_time"]
+        period_time_millis = battle_info["turn_mills"] + battle_info["interval_mills"]
+        now_unix_time = int(time.mktime(datetime.datetime.now().timetuple()))
+        passed_time_millis = (now_unix_time - start_at_unix_time) * 1000
+        self.turn = math.ceil(passed_time_millis / period_time_millis)
+
+        # 少し待機(復元ターンと現在時刻のずれを修正する)
+        wait_millis = self.turn * period_time_millis - now_unix_time * 1000
+        time.sleep(max(0, wait_millis / 1000.0))
 
 
     def __do_action(self, action_detail):
