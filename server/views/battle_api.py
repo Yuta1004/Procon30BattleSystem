@@ -4,6 +4,7 @@ from server import base_route
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.battle.register import battle_register as battle_register_func
 from server.battle.battle_manager import BattleManager
+from server.api_func.battle import send_battle_finish_command
 
 route_battle = Blueprint(__name__, "battle")
 
@@ -40,6 +41,12 @@ def battle_view(battle_id):
     battle.pop("now_battle")
 
     return jsonify(battle_list[0]), 200
+
+
+@route_battle.route(base_route + "/battle/<battle_id>/finish")
+def battle_finish(battle_id):
+    send_battle_finish_command(int(battle_id))
+    return jsonify(status="OK"), 200
 
 
 @route_battle.route(base_route + "/battle/register", methods=["POST"])
