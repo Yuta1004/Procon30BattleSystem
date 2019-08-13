@@ -61,7 +61,7 @@ def generate_board(width, height, point_upper, point_lower,\
 
     if generate_type == POINT_SYMMETRY_HALF:
         points = _generate_point_symmetry(width, height, point_lower, point_upper)
-        tiled = _put_player_point_symmetry(width, height)
+        tiled = _put_player_point_symmetry(width, height, player_num)
 
     return Board(width, height, points, tiled)
 
@@ -131,7 +131,7 @@ def _generate_point_symmetry(width, height, point_lower, point_upper):
 
 def _put_player_line_symmetry(width, height, player_num):
     tiled = gen_2d_list(height, width)
-    base_width = int((width + 1) / 2)
+    base_width = int(width / 2)
 
     # 基準プレイヤー配置　
     for cnt in range(player_num):
@@ -161,7 +161,7 @@ def _put_player_line_symmetry_half_B(width, height, player_num):
 
 def _put_player_point_symmetry(width, height, player_num):
     tiled = gen_2d_list(height, width)
-    base_width = int((width + 1) / 2)
+    base_width = int(width / 2)
 
     # 基準プレイヤー配置　
     for cnt in range(player_num):
