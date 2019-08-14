@@ -3,7 +3,7 @@ import g4p_controls.*;
 
 /* Const Values */
 String TOKEN = "";
-String HOST = "http://localhost:16000/procon30-battle-api";
+String HOST = "https://nityc-nyuta.work/procon30-battle-api";
 
 /* Var Values */
 HashMap<String, Window> windows;
