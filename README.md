@@ -12,6 +12,10 @@
 - [競技ルール](http://www.procon.gr.jp/wp-content/uploads//2019/04/e3ca8e6e8c8d8ab1062729e66a711fea.pdf)
 - [システム仕様](https://procon30resources.s3-ap-northeast-1.amazonaws.com/index.html#null%2Fpaths%2F~1ping%2Fget)
 
+## ドキュメント
+
+[Github Page](https://yuta1004.github.io/Procon30BattleSystem/html/index.html)
+
 
 ## システム構成
 
