@@ -9,7 +9,7 @@ from cui_client.help import show_help
 from cui_client.manage_battle import start_battle, finish_battle
 
 
-host_url = "http://localhost:16000/procon30-battle-api"
+host_url = "https://nityc-nyuta.work/procon30-battle-api"
 
 
 def exec_command(command):
