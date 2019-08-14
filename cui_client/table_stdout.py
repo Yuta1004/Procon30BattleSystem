@@ -19,6 +19,7 @@ def get_data_and_output(api_url):
 def table_output(table_items_json):
     # 出力
     if len(table_items_json) == 0:
+        print("No data.")
         return
     headers = list(table_items_json[0].keys())
     table = []
