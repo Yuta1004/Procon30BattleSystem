@@ -72,7 +72,7 @@ class Game:
             mx, my = self.__cal_mx_my(agent)
             affected_positions.append((mx, my))
             if self.__can_action(agent) and agent.remove_panel:
-                affected_positions.append(agent.x, agent.y)
+                affected_positions.append((agent.x, agent.y))
 
         # 影響がないエージェントを行動させる
         safety_agents = []
