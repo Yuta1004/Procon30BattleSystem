@@ -1,3 +1,5 @@
+import urllib3
+from urllib3.exceptions import InsecureRequestWarning
 from cui_client.network import network_check, network_check_non_display
 from cui_client.show_battle import show_battle, show_battle_id
 from cui_client.show_team import show_team, show_team_id, show_team_token
@@ -139,6 +141,9 @@ def exec_command(command):
 
 
 def cui_client_main():
+    # urllib設定
+    urllib3.disable_warnings(InsecureRequestWarning)
+
     # バージョン表示とか
     print()
     print("Procon30 Battlle Syatem CUI Client ver0.0.1")
