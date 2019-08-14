@@ -11,3 +11,7 @@
 ## CUI Client
 
 [ドキュメント](cui.html)
+
+## How To Use
+
+[ページ](howtouse.html)
