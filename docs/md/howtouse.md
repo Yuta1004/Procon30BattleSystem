@@ -41,7 +41,7 @@ UNIX実行ファイルが動作する環境
 　CUI-Clientを起動します。
 
 ```
-> make cui-client
+> ./cui_client
 
 Procon30 Battlle Syatem CUI Client ver0.0.1
 Welcome user
@@ -117,7 +117,8 @@ battle started! ( battle_id: 22 }
 　GUI-Clientを起動します。
 
 ```
-> make gui-client
+// MacOS
+> open gui_client.app
 ===================================================
    G4P V4.2.1 created by Peter Lager
 ===================================================
