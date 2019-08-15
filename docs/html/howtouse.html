@@ -548,16 +548,47 @@ div.prism-show-language > div.prism-show-language-label {
 <h2 id="toc_1">目次</h2>
 
 <ol>
+<li>ダウンロード</li>
 <li>試合で遊ぶ</li>
 </ol>
 
-<h2 id="toc_2">1. 試合で遊ぶ</h2>
+<h2 id="toc_2">1. ダウンロード</h2>
 
-<h3 id="toc_3">1-1 CUI-Client起動</h3>
+<h3 id="toc_3">1-1 対応OS</h3>
+
+<h4 id="toc_4">CUI-Client</h4>
+
+<p>UNIX実行ファイルが動作する環境</p>
+
+<h4 id="toc_5">GUI-Client</h4>
+
+<ul>
+<li>MacOS</li>
+<li>Linux (64bit)</li>
+<li>Linux Arm (64bit)</li>
+</ul>
+
+<h3 id="toc_6">1-2 CUI-Clientダウンロード</h3>
+
+<p>　以下のURLよりCUI-Clientをダウンロードして下さい。<br>
+　ダウンロード後は、任意のパスに解凍して下さい。</p>
+
+<p><a href="https://drive.google.com/open?id=1wnW0QmY9T0STfH7zcyKvlcYKuyPaPuyu">CUI-Client(Google Drive</a></p>
+
+<h3 id="toc_7">1-3 GUI-Clientダウンロード</h3>
+
+<p>　以下のURLよりGUI-Clientをダウンロードして下さい。<br>
+　ダウンロード後は、任意のパスに解凍して下さい。</p>
+
+<p><a href="https://drive.google.com/open?id=149ygl5K_RXkOxxM8d54EAh2I7uDjUT5o">GUI-Client(Google Drive)</a></p>
+
+<h2 id="toc_8">2. 試合で遊ぶ</h2>
+
+<h3 id="toc_9">2-1 CUI-Client起動</h3>
 
 <p>　CUI-Clientを起動します。</p>
 
-<div><pre class="line-numbers"><code class="language-none">&gt; make cui-client
+<div><pre class="line-numbers"><code class="language-none">&gt; ./cui_client
 
 Procon30 Battlle Syatem CUI Client ver0.0.1
 Welcome user
@@ -567,7 +598,7 @@ Checking connection ... OK
 
 &gt;&gt;</code></pre></div>
 
-<h3 id="toc_4">1-2 チーム登録</h3>
+<h3 id="toc_10">2-2 チーム登録</h3>
 
 <p>CUI-Clientを使ってチームを登録します。
   既に登録を済ませている場合は必要ありません。1つのチームを同時に複数の試合に参加させることが出来ます。</p>
@@ -586,7 +617,7 @@ Token : TEAMB
 register ok? y/N : y
 register successed! ( TeamID: 8 )</code></pre></div>
 
-<h3 id="toc_5">1-3 試合を登録する</h3>
+<h3 id="toc_11">2-3 試合を登録する</h3>
 
 <p>　CUI-Clientを使って試合を登録します。</p>
 
@@ -613,7 +644,7 @@ GenerateBoardType (0) : 1
 register ok? y/N : y
 register successed! ( BattleID: 2 )</code></pre></div>
 
-<h3 id="toc_6">1-4 試合を起動する</h3>
+<h3 id="toc_12">2-4 試合を起動する</h3>
 
 <p>　試合を起動します。<br>
 　下コマンドでは、先ほど登録した試合「TestBattle」を起動しています。</p>
@@ -621,11 +652,12 @@ register successed! ( BattleID: 2 )</code></pre></div>
 <div><pre class="line-numbers"><code class="language-none">&gt;&gt; start 22
 battle started! ( battle_id: 22 }</code></pre></div>
 
-<h3 id="toc_7">1-5 GUI-Clientを起動する</h3>
+<h3 id="toc_13">2-5 GUI-Clientを起動する</h3>
 
 <p>　GUI-Clientを起動します。</p>
 
-<div><pre class="line-numbers"><code class="language-none">&gt; make gui-client
+<div><pre class="line-numbers"><code class="language-none">// MacOS
+&gt; open gui_client.app
 ===================================================
    G4P V4.2.1 created by Peter Lager
 ===================================================</code></pre></div>
@@ -634,21 +666,21 @@ battle started! ( battle_id: 22 }</code></pre></div>
 
 <p><img src="https://i.imgur.com/rmvDh9S.png" alt="Imgur"></p>
 
-<h3 id="toc_8">1-6 トークン入力</h3>
+<h3 id="toc_14">2-6 トークン入力</h3>
 
 <p>　トークンを入力します。<br>
 　画像では先ほど登録した「TestTeamA」のトークンを入力しています。</p>
 
 <p><img src="https://i.imgur.com/8wNfuI9.png" alt="Imgur"></p>
 
-<h3 id="toc_9">1-7 参加試合選択</h3>
+<h3 id="toc_15">2-7 参加試合選択</h3>
 
 <p>　参加する試合を選択します。<br>
 　画像では先ほど登録した「TestBattle」を選択しています。</p>
 
 <p><img src="https://i.imgur.com/5eIG6Oj.png" alt="Imgur"></p>
 
-<h3 id="toc_10">1-8 エージェントを操作する</h3>
+<h3 id="toc_16">2-8 エージェントを操作する</h3>
 
 <p>　エージェントをクリックして移動方向選択ボタンを表示させます。そして、方向を選択して行動情報をシステムに送信します。</p>
 
