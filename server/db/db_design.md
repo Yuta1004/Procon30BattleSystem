@@ -6,7 +6,7 @@ create table battle (id int auto_increment primary key, name text, start_at_unix
 
 ## team
 
-create table team (id int auto_increment, name text, token text, primary key(id));
+create table team (id int auto_increment, name varchar(255) unique, token text, primary key(id));
 
 ## action
 
