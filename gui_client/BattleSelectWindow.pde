@@ -93,10 +93,12 @@ class BattleSelectWindow implements Window{
     /* G4P functions */
     void handleButtonEvents(GButton button, GEvent event){
         int battleID = int(button.tag);
-        if(!windows.containsKey("Game" + button.tag)){
-            windows.put("Game" + button.tag, new GameWindow(this.parent, battleID));
+        if(isStartBattle(battleID)){
+            if(!windows.containsKey("Game" + button.tag)){
+                windows.put("Game" + button.tag, new GameWindow(this.parent, battleID));
+            }
+            switchWindow("Game" + button.tag);
         }
-        switchWindow("Game" + button.tag);
     }
 
     void handleTextEvents(GEditableTextControl textcontrol, GEvent event){}
