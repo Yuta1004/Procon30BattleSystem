@@ -53,6 +53,16 @@ void getBattleList(){
     }
 }
 
+boolean isStartBattle(int battleID){
+    // Get data from API
+    String apiURL = HOST + "/matches/" + str(battleID);
+    GetRequest get = new GetRequest(apiURL);
+    get.addHeader("Authorization", TOKEN);
+    get.send();
+    displayErrorDialog("The game has not started!<br>Please check CUI-Client.");
+    return get.getStatusCode() == 200;
+}
+
 GameState getGameState(int battleID){
     // Get data from API
     String apiURL = HOST + "/matches/" + str(battleID);
