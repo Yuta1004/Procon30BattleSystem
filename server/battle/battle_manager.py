@@ -99,12 +99,13 @@ class BattleManager(Thread):
 
 
     def __wait_for_start_battle(self):
-        unix_time = -1
+        now_datetime = datetime.datetime.now()
+        unix_time = int(time.mktime(now_datetime.timetuple()))
         battle_db_manager = BattleDBAccessManager()
         start_at_unix_time = battle_db_manager.get_data(battle_id=self.battle_id)[0]["start_at_unix_time"]
         del(battle_db_manager)
 
-        while unix_time > start_at_unix_time:
+        while unix_time < start_at_unix_time:
             now_datetime = datetime.datetime.now()
             unix_time = int(time.mktime(now_datetime.timetuple()))
 
@@ -135,7 +136,7 @@ class BattleManager(Thread):
         ## 1ターンに要する時間で割る = 現在時刻でのターン数
         period_time_millis = battle_info["turn_mills"] + battle_info["interval_mills"]
         self.turn = math.ceil(passed_time_millis / period_time_millis)
-        self.turn = min(battle_info["turn"] + 1, self.turn)
+        self.turn = max(0, min(battle_info["turn"] + 1, self.turn))
 
         ## 少し待機(復元ターンと現在時刻のずれを修正する)
         wait_millis = self.turn * period_time_millis - now_unix_time * 1000
