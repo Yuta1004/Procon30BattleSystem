@@ -137,17 +137,15 @@ def _put_player_line_symmetry(width, height, player_num):
     for cnt in range(player_num):
         x = randint(0, base_width - 1)
         y = randint(0, height - 1)
-        player = int(player_num % 2 == 0 and cnt % 2 == 0) + 1
-        while (tiled[y][x] != 0) and (tiled[y][x] == player):
+        while (tiled[y][x] != 0) and (tiled[y][x] == 1):
             x = randint(0, base_width - 1)
             y = randint(0, height - 1)
-        tiled[y][x] = player
+        tiled[y][x] = 1
 
     # 線対称に配置する
     for y in range(height):
         for x in range(base_width):
-            tiled[y][width - x - 1] = tiled[y][x]
-            if (tiled[y][width - x - 1] == 1) and (player_num % 2 == 1):
+            if tiled[y][x] == 1:
                 tiled[y][width - x - 1] = 2
 
     return deepcopy(tiled)
@@ -167,17 +165,15 @@ def _put_player_point_symmetry(width, height, player_num):
     for cnt in range(player_num):
         x = randint(0, base_width - 1)
         y = randint(0, height - 1)
-        player = int(player_num % 2 == 0 and cnt % 2 == 0) + 1
-        while (tiled[y][x] != 0) and (tiled[y][x] == player):
+        while (tiled[y][x] != 0) and (tiled[y][x] == 1):
             x = randint(0, base_width - 1)
             y = randint(0, height - 1)
-        tiled[y][x] = player
+        tiled[y][x] = 1
 
     # 点対称に配置する
     for y in range(height):
         for x in range(base_width):
-            tiled[height - y - 1][width - x - 1] = tiled[y][x]
-            if (tiled[height - y - 1][width - x - 1] == 1) and (player_num % 2 == 1):
+            if tiled[y][x] == 1:
                 tiled[height - y - 1][width - x - 1] = 2
 
     return deepcopy(tiled)
