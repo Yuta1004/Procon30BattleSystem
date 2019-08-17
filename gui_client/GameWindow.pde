@@ -58,6 +58,7 @@ class GameWindow implements Window{
             controller.start();
         }
         this.gameUpdate.setVisible(true);
+        updateBoard();
     }
 
     void finish(){
