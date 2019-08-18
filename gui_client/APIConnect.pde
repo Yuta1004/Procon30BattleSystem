@@ -59,8 +59,14 @@ boolean isStartBattle(int battleID){
     GetRequest get = new GetRequest(apiURL);
     get.addHeader("Authorization", TOKEN);
     get.send();
-    displayErrorDialog("The game has not started!<br>Please check CUI-Client.");
-    return get.getStatusCode() == 200;
+
+    // Return value
+    if(get.getStatusCode() == 200){
+        return true;
+    }else{
+        displayErrorDialog("The game has not started!<br>Please check CUI-Client.");
+        return false;
+    }
 }
 
 GameState getGameState(int battleID){

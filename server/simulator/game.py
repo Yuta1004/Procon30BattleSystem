@@ -1,5 +1,5 @@
 import json
-from server.common.functions import flatten_2d, gen_2d_list
+from server.common.functions import flatten_2d, gen_2d_list, search_result_process
 from server.db.action_db_manager import ActionDBAccessManager
 
 class Game:
@@ -124,8 +124,10 @@ class Game:
             self.rec_tiled = gen_2d_list(self.board.height, self.board.width)
             for y in range(self.board.height):
                 for x in range(self.board.width):
-                    if (self.rec_tiled[y][x] == 0) and (not self.__recursive_child(x, y, team_id)):
-                        self.rec_tiled[y][x] = 0
+                    if self.rec_tiled[y][x] == 0:
+                        search_result = self.__recursive_child(x, y, team_id)
+                        self.rec_tiled = search_result_process(self.rec_tiled, search_result)
+                        # ↑探索成功ならrec_tiledに結果を反映、そうでない場合は結果を破棄する
 
             # 領域ポイント : 囲みが有効である座標のスコアを合計する
             self.rec_tiled = flatten_2d(self.rec_tiled)
@@ -137,12 +139,12 @@ class Game:
 
     def __recursive_child(self, x, y, target):
         # 盤面の外周に来た = 囲み無効
-        if (x == 0) or (x == self.board.width - 1) or (y == 0) or (y == self.board.height - 1):
-            return False
-        elif self.board.tiled[y][x] == target:
+        if self.board.tiled[y][x] == target:
             return True
-        else:
-            self.rec_tiled[y][x] = 1
+        elif (x == 0) or (x == self.board.width - 1) or (y == 0) or (y == self.board.height - 1):
+            return False
+
+        self.rec_tiled[y][x] = 2
 
         # 4方向を調べる
         dx_list = [-1, 1, 0, 0]
@@ -150,10 +152,8 @@ class Game:
         for (dx, dy) in zip(dx_list, dy_list):
             mx = x + dx
             my = y + dy
-            if self.__is_safe_pos(mx, my) and (self.rec_tiled[my][mx] == 0)\
-                    and (self.board.tiled[my][mx] != target):
+            if self.__is_safe_pos(mx, my) and (self.rec_tiled[my][mx] == 0):
                 if not self.__recursive_child(mx, my, target):
-                    self.rec_tiled[my][mx] = 0
                     return False
         return True
 
