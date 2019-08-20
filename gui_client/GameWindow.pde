@@ -191,7 +191,20 @@ class GameWindow implements Window{
         if("GameUpdate".equals(button.tag)){
             updateBoard();
         }else{
-            int agentID = int(split(button.tag, ":")[0]);
+            String[] command = split(button.tag, ":");
+            int command_len = command.length;
+            int agentID = int(command[0]);
+
+            // AgentMoveSelectButton Control
+            AgentController selectedContoller = this.agentControllers.get(agentID);
+            for(Integer forAgentID : this.agentControllers.keySet()){
+                AgentController controller = this.agentControllers.get(forAgentID);
+                if(forAgentID != agentID){
+                    controller.setEnabled(command_len == 3 || selectedContoller.isMoveSelectVisible());
+                }
+            }
+
+            // Call Button Handle
             this.agentControllers.get(agentID).handleButtonEvents(button, event, this.ifShiftPressing);
         }
     }

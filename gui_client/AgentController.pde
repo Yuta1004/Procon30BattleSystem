@@ -89,7 +89,7 @@ class AgentController{
         this.agentSelectButton.setEnabled(bool);
         for(int idx = 0; idx < 8; ++ idx){
             this.agentMoveSetButtons.get(idx).setEnabled(bool);
-        }battleList.get(this.battleID).myTeamID != this.teamID;
+        }
     }
 
     public boolean isMoveSelectVisible(){
