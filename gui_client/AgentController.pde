@@ -83,6 +83,12 @@ class AgentController{
         }
     }
 
+    public void setEnabled(boolean bool){
+        for(int idx = 0; idx < 8; ++ idx){
+            this.agentMoveSetButtons.get(idx).setEnabled(bool);
+        }
+    }
+
     public void start(){
         this.agentSelectButton.setVisible(true);
     }
