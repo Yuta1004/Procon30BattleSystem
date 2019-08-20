@@ -18,6 +18,7 @@ class AgentController{
         this.isVisible = false;
         initButtons();
         setVisible(false);
+        setEnabled(battleList.get(this.battleID).myTeamID == this.teamID);
     }
 
     private void initButtons(){
@@ -83,12 +84,26 @@ class AgentController{
         }
     }
 
+    public void setEnabled(boolean bool){
+        bool = bool && battleList.get(this.battleID).myTeamID == this.teamID;
+        this.agentSelectButton.setEnabled(bool);
+        for(int idx = 0; idx < 8; ++ idx){
+            this.agentMoveSetButtons.get(idx).setEnabled(bool);
+        }
+    }
+
+    public boolean isMoveSelectVisible(){
+        return this.isVisible;
+    }
+
     public void start(){
         this.agentSelectButton.setVisible(true);
+        setEnabled(true);
     }
 
     public void finish(){
         this.agentSelectButton.setVisible(false);
+        setEnabled(true);
         setVisible(false);
     }
 
@@ -104,6 +119,7 @@ class AgentController{
         if(command.length == 1){
             this.isVisible = !this.isVisible;
             setVisible(this.isVisible);
+            setEnabled(true);
         }
 
         // Move Select
