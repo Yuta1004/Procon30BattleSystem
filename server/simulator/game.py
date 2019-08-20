@@ -74,12 +74,18 @@ class Game:
             if self.__can_action(agent) and agent.remove_panel:
                 affected_positions.append((agent.x, agent.y))
 
+        # 競合リストアップ
+        for agent in filter(lambda n: n.dx >= -1, self.agents):
+            mx, my = self.__cal_mx_my(agent)
+            if not self.__can_action(agent) or not affected_positions.count((mx, my)) == 1:
+                affected_positions.append((agent.x, agent.y))
+
         # 影響がないエージェントを行動させる
         safety_agents = []
         affected_agents = []
         for agent in filter(lambda n: n.dx >= -1, self.agents):
             mx, my = self.__cal_mx_my(agent)
-            if self.__can_action(agent) and (affected_positions.count((mx, my)) == 1):  # 競合確認
+            if self.__can_action(agent) and (affected_positions.count((mx, my)) <= 1):  # 競合確認
                 agent.move()    # 行動
                 safety_agents.append(agent.id)
                 if agent.remove_panel:
