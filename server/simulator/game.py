@@ -66,6 +66,15 @@ class Game:
             競合を起こしたエージェントのID
         """
 
+        # 相手陣地への移動を停留扱いに
+        for agent in filter(lambda n: n.dx >= -1, self.agents):
+            mx, my = self.__cal_mx_my(agent)
+            if (self.board.tiled[my][mx] != agent.team) and (self.board.tiled[my][mx] != 0)\
+                    and (not agent.remove_panel):
+                agent.remove_panel = False
+                agent.dx = 0
+                agent.dy = 0
+
         # エージェントの行動が影響する範囲をリストアップ
         affected_positions = []
         for agent in filter(lambda n: n.dx >= -1, self.agents):
