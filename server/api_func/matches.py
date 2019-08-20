@@ -101,8 +101,8 @@ def get_match_detail(token, battle_id):
                 "agents": list(map(lambda agent:
                     {
                         "agentID": agent.id,
-                        "x": agent.x,
-                        "y": agent.y
+                        "x": agent.x + 1,
+                        "y": agent.y + 1
                     }
                     , team_agents))
             }

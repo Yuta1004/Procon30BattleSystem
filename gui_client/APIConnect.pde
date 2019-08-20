@@ -130,8 +130,8 @@ GameState getGameState(int battleID){
         for(int agentIdx = 0; agentIdx < agents.size(); ++ agentIdx){
             JSONObject agent = agents.getJSONObject(agentIdx);
             int agentID = agent.getInt("agentID");
-            int x = agent.getInt("x");
-            int y = agent.getInt("y");
+            int x = agent.getInt("x") - 1;
+            int y = agent.getInt("y") - 1;
             agentsArray.add(
                 new Agent(agentID, x, y)
             );
