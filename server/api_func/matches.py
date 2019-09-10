@@ -85,7 +85,7 @@ def get_match_detail(token, battle_id):
     ret_dict["height"] = board.height
     ret_dict["points"] = board.points
     ret_dict["tiled"] = board.tiled
-    ret_dict["turn"] = battle_manager.turn
+    ret_dict["turn"] = battle_manager.turn + 1
     ret_dict["startedAtUnixTime"] = battle_manager.battle_info["start_at_unix_time"]
 
     # teams
@@ -122,7 +122,7 @@ def get_match_detail(token, battle_id):
                     "dy": x["dy"],
                     "type": x["type"],
                     "apply": x["apply"],
-                    "turn": x["turn"]
+                    "turn": x["turn"] + 1
                 }
             , action))
         )
