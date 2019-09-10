@@ -2,6 +2,7 @@ import math
 import json
 import time
 import datetime
+import threading
 from threading import Thread
 from server.simulator.board import Board
 from server.simulator.game import Game
@@ -21,7 +22,7 @@ class BattleManager(Thread):
         self.now_interval = False
         self.action_writing = False
         self.battle_info = BattleDBAccessManager().get_data(battle_id=self.battle_id)[0]
-        self.do_battle = True
+        self.finish_battle = threading.Event()
 
         self.__roll_forward()
         BattleDBAccessManager().update_battle_status(self.battle_id, 1)
@@ -71,12 +72,12 @@ class BattleManager(Thread):
             self.now_interval = False
 
             # 終了コマンドを受け取ったら
-            if not self.do_battle:
+            if self.finish_battle.is_set():
                 break
 
         # 3. 終了コマンド待機
-        while self.do_battle:
-            pass
+        while not self.finish_battle.is_set():
+            time.sleep(10)
         BattleDBAccessManager().update_battle_status(self.battle_id, 0)
 
 
@@ -95,7 +96,7 @@ class BattleManager(Thread):
 
 
     def finish(self):
-        self.do_battle = False
+        self.finish_battle.set()
 
 
     def __wait_for_start_battle(self):
