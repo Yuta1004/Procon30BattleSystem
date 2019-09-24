@@ -43,8 +43,8 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
     stage_db_manager = StageDBAccessManager()
     stage_db_manager.insert(
         battle_id,
-        board_width,
-        board_height,
+        board.width,
+        board.height,
         json.dumps({"points": board.points}),
         json.dumps({"tiled": board.tiled}),
         json.dumps({"agent_pos": agent_pos_dict})
