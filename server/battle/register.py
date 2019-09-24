@@ -2,7 +2,7 @@ import json
 from server.simulator.board import Board, generate_board, LINE_SYMMETRY_HALF
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.stage_db_manager import StageDBAccessManager
-from server.common.functions import read_existed_json
+from server.common.functions import read_exist_json
 
 
 def battle_register(name, start_at_unix_time, turn, board_width, board_height,
@@ -55,7 +55,7 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
 
 def _get_exist_board(battle_id, json_id, teamA, teamB):
     # JSONデータ読み込み
-    data = read_existed_json(json_id)
+    data = read_exist_json(json_id)
     if data == None:
         return None
     width = data["width"]

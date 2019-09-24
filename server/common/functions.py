@@ -57,7 +57,7 @@ def search_result_process(tiled, result):
     return tiled_np.tolist()
 
 
-def read_existed_json(name):
+def read_exist_json(name):
     file_path = "./public_json/" + name + ".json"
     try:
         with open(file_path, "r", encoding="utf-8") as f:
