@@ -77,6 +77,7 @@ class BattleManager(Thread):
                 break
 
         # 3. 終了コマンド待機
+        self.turn = self.max_turn + 1
         while not self.finish_battle.is_set():
             time.sleep(10)
         BattleDBAccessManager().update_battle_status(self.battle_id, 0)
@@ -138,7 +139,7 @@ class BattleManager(Thread):
         ## 1ターンに要する時間で割る = 現在時刻でのターン数
         period_time_millis = battle_info["turn_mills"] + battle_info["interval_mills"]
         self.turn = math.ceil(passed_time_millis / period_time_millis)
-        self.turn = max(0, min(battle_info["turn"] + 1, self.turn))
+        self.turn = max(1, min(battle_info["turn"] + 1, self.turn))
         self.max_turn = battle_info["turn"]
 
         ## 少し待機(復元ターンと現在時刻のずれを修正する)
