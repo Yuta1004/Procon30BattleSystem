@@ -86,6 +86,7 @@ StartDateTime (D) : 1
 StartDateTime (h) : 14
 StartDateTime (m) : 0
 StartDateTime (s) : 0
+UseExistBoard : None
 PlayerNum : 3
 Turn : 30
 TurnMillis (30000) : 30000
