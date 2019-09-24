@@ -21,7 +21,7 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
         teamB
     )
 
-    board = _get_exist_board(battle_id, use_exists_data, teamA, teamB)
+    board, agent_pos_dict = _get_exist_board(battle_id, use_exists_data, teamA, teamB)
     if board == None:
         board = generate_board(
             board_width,
@@ -62,18 +62,24 @@ def _get_exist_board(battle_id, json_id, teamA, teamB):
     height = data["height"]
 
     # チーム, エージェントID置換
+    agent_pos_dict = {teamA: {}, teamB: {}}
     teams = [teamA, teamB]
     for t_idx in range(2):
         data["teams"][t_idx]["team_id"] = teams[t_idx]
-        for a_idx in range(len(data["teams"][0])):
+        for a_idx in range(len(data["teams"][0]["agents"])):
             agent_id = int(
-                    str(battle_id % 2048) +\
-                    str(teams[t_idx] % 2048) +\
-                    str(a_idx)
+                str(battle_id % 2048) +\
+                str(teams[t_idx] % 2048) +\
+                str(a_idx)
             )
-            data["teams"][t_idx][a_idx]["agentID"] = agent_id
-            data["teams"][t_idx][a_idx]["x"] -= 1
-            data["teams"][t_idx][a_idx]["y"] -= 1
+            data["teams"][t_idx]["agents"][a_idx]["agentID"] = agent_id
+            data["teams"][t_idx]["agents"][a_idx]["x"] -= 1
+            data["teams"][t_idx]["agents"][a_idx]["y"] -= 1
+            x = data["teams"][t_idx]["agents"][a_idx]["x"]
+            y = data["teams"][t_idx]["agents"][a_idx]["y"]
+            agent_pos_dict[teams[t_idx]][agent_id] = {
+                "x": x, "y": y
+            }
 
     # tiled置換
     for y in range(height):
@@ -82,7 +88,7 @@ def _get_exist_board(battle_id, json_id, teamA, teamB):
                 team_id = data["tiled"][y][x]
                 data["tiled"][y][x] = teams[team_id-1]
 
-    return Board(data["width"], data["height"], data["points"], data["tiled"])
+    return Board(data["width"], data["height"], data["points"], data["tiled"]), agent_pos_dict
 
 
 def _get_agent_pos(battle_id, tiled, width, height, teamA, teamB):
