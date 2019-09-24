@@ -56,6 +56,7 @@ def battle_register():
         req_json["playerNum"],          # プレイヤー数(1チーム)
         req_json["teamA"],              # チームAのID
         req_json["teamB"],              # チームBのID
+        req_json["use_exist_board"],    # 既存の盤面を使用する場合、その名前
         req_json["generateBoardType"],  # 生成する盤面のタイプ(0~2)
         req_json["turnMillis"],         # 1ターンの秒数
         req_json["intervalMillis"]      # ターン切り替えの秒数
