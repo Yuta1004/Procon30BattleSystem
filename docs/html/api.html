@@ -662,6 +662,15 @@ div.prism-show-language > div.prism-show-language-label {
 
 <p>　以下の要素からなるJSONオブジェクトをPOSTして下さい。</p>
 
+<p>　(注意)公開盤面を使用する場合、以下の値は<strong>無視</strong>されます。</p>
+
+<div><pre class="line-numbers"><code class="language-none">- プレイヤー人数
+- 盤面サイズ(幅)
+- 盤面サイズ(縦)
+- 配置得点下限値
+- 配置得点上限値
+- 盤面生成パターン</code></pre></div>
+
 <ul>
 <li>試合名</li>
 <li>試合開始時刻(UNIX時間)</li>
@@ -679,6 +688,7 @@ div.prism-show-language > div.prism-show-language-label {
 <li>盤面サイズ(縦)</li>
 <li>配置得点下限値</li>
 <li>配置得点上限値</li>
+<li>公開盤面を使用する場合、その名前</li>
 <li>盤面生成パターン
 
 <ul>
@@ -706,6 +716,7 @@ div.prism-show-language > div.prism-show-language-label {
     &quot;height&quot;: 0,
     &quot;pointLower&quot;: 0,
     &quot;pointUpper&quot;: 0,
+    &quot;use_exist_board&quot;: &quot;&quot;,
     &quot;generateBoardType&quot;: 0
 }</code></pre></div>
 
