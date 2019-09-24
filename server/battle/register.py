@@ -7,17 +7,9 @@ from server.common.functions import read_existed_json
 
 def battle_register(name, start_at_unix_time, turn, board_width, board_height,
              point_lower, point_upper, player_num, teamA, teamB,
+             use_exists_data=None,
              generate_board_type=LINE_SYMMETRY_HALF,
              turn_mills=30000, interval_mills=3000):
-    board = generate_board(
-        board_width,
-        board_height,
-        point_upper,
-        point_lower,
-        player_num,
-        generate_board_type
-    )
-
     battle_db_manager = BattleDBAccessManager()
     battle_id = battle_db_manager.insert(
         name,
@@ -29,14 +21,24 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
         teamB
     )
 
-    board.tiled, agent_pos_dict = _get_agent_pos(
-        battle_id,
-        board.tiled,
-        board_width,
-        board_height,
-        teamA,
-        teamB
-    )
+    board = _get_exist_board(use_exists_data)
+    if board == None:
+        board = generate_board(
+            board_width,
+            board_height,
+            point_upper,
+            point_lower,
+            player_num,
+            generate_board_type
+        )
+        board.tiled, agent_pos_dict = _get_agent_pos(
+            battle_id,
+            board.tiled,
+            board_width,
+            board_height,
+            teamA,
+            teamB
+        )
 
     stage_db_manager = StageDBAccessManager()
     stage_db_manager.insert(
@@ -51,7 +53,7 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
     return battle_id
 
 
-def _get_existed_board(battle_id, json_id, teamA, teamB):
+def _get_exist_board(battle_id, json_id, teamA, teamB):
     # JSONデータ読み込み
     data = read_existed_json(json_id)
     if data == None:
