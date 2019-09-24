@@ -1,7 +1,8 @@
 import json
-from server.simulator.board import generate_board, LINE_SYMMETRY_HALF
+from server.simulator.board import Board, generate_board, LINE_SYMMETRY_HALF
 from server.db.battle_db_manager import BattleDBAccessManager
 from server.db.stage_db_manager import StageDBAccessManager
+from server.common.functions import read_existed_json
 
 
 def battle_register(name, start_at_unix_time, turn, board_width, board_height,
@@ -48,6 +49,38 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
     )
 
     return battle_id
+
+
+def _get_existed_board(battle_id, json_id, teamA, teamB):
+    # JSONデータ読み込み
+    data = read_existed_json(json_id)
+    if data == None:
+        return None
+    width = data["width"]
+    height = data["height"]
+
+    # チーム, エージェントID置換
+    teams = [teamA, teamB]
+    for t_idx in range(2):
+        data["teams"][t_idx]["team_id"] = teams[t_idx]
+        for a_idx in range(len(data["teams"][0])):
+            agent_id = int(
+                    str(battle_id % 2048) +\
+                    str(teams[t_idx] % 2048) +\
+                    str(a_idx)
+            )
+            data["teams"][t_idx][a_idx]["agentID"] = agent_id
+            data["teams"][t_idx][a_idx]["x"] -= 1
+            data["teams"][t_idx][a_idx]["y"] -= 1
+
+    # tiled置換
+    for y in range(height):
+        for x in range(width):
+            if data["tiled"][y][x] != 0:
+                team_id = data["tiled"][y][x]
+                data["tiled"][y][x] = teams[team_id-1]
+
+    return Board(data["width"], data["height"], data["points"], data["tiled"])
 
 
 def _get_agent_pos(battle_id, tiled, width, height, teamA, teamB):
