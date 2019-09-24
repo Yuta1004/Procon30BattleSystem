@@ -15,6 +15,7 @@ def register_battle(host_url):
         ["StartDateTime (h)", int, None],
         ["StartDateTime (m)", int, None],
         ["StartDateTime (s)", int, None],
+        ["UseExistBoard", str, "useExistBoard"],
         ["PlayerNum", int, "playerNum"],
         ["Turn", int, "turn"],
         ["TurnMillis (30000)", int, "turnMillis"],

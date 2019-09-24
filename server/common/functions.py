@@ -1,4 +1,5 @@
 import numpy as np
+import json
 
 def flatten_2d(target_list):
     return list(_flatten_2d(target_list))
@@ -54,3 +55,13 @@ def search_result_process(tiled, result):
 
     tiled_np = tiled_np.astype(np.int)
     return tiled_np.tolist()
+
+
+def read_exist_json(name):
+    file_path = "./public_json/" + name + ".json"
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            json_data = json.loads(f.read())
+    except Exception:
+        return None
+    return json_data
