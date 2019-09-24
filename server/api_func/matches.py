@@ -85,7 +85,7 @@ def get_match_detail(token, battle_id):
     ret_dict["height"] = board.height
     ret_dict["points"] = board.points
     ret_dict["tiled"] = board.tiled
-    ret_dict["turn"] = battle_manager.turn + 1
+    ret_dict["turn"] = battle_manager.turn
     ret_dict["startedAtUnixTime"] = battle_manager.battle_info["start_at_unix_time"]
 
     # teams
@@ -110,10 +110,13 @@ def get_match_detail(token, battle_id):
     ret_dict["teams"] = teams
 
     # actions
+    max_turn = battle_manager.max_turn;
     actions = []
     action_history = ActionDBAccessManager().get_data(battle_id)
     action_history = list(map(lambda action: json.loads(action["detail"])["actions"], action_history))
     for action in action_history:
+        if len(action) > 0 and action[0]["turn"] + 1 > max_turn:
+            continue
         actions.extend(
             list(map(lambda x:
                 {
