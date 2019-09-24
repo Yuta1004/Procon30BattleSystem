@@ -59,6 +59,9 @@ def search_result_process(tiled, result):
 
 def read_existed_json(name):
     file_path = "./public_json/" + name + ".json"
-    with open(file_path, "r", encoding="utf-8") as f:
-        json_data = json.loads(f.read())
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            json_data = json.loads(f.read())
+    except Exception:
+        return None
     return json_data
