@@ -21,7 +21,7 @@ def battle_register(name, start_at_unix_time, turn, board_width, board_height,
         teamB
     )
 
-    board = _get_exist_board(use_exists_data)
+    board = _get_exist_board(battle_id, use_exists_data, teamA, teamB)
     if board == None:
         board = generate_board(
             board_width,
