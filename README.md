@@ -55,7 +55,7 @@ make run
 make run-test
 ```
 
-ポート変更は `server/__init__.py`を編集して下さい。
+ポート変更は `run-server.py`を編集して下さい。
 
 
 ### CUIClient
