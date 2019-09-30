@@ -64,8 +64,8 @@ def get_match_detail(token, battle_id):
     if is_error:
         return status, response
 
-    # 試合開始チェック
-    is_error, status, response = battle_started_check(battle_id)
+    # 試合開始チェック(10秒早く判定する)
+    is_error, status, response = battle_started_check(battle_id, 10)
     if is_error:
         return status, response
 
