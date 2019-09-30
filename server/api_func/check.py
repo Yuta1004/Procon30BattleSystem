@@ -71,7 +71,7 @@ def battle_join_check(token, battle_id):
     return False, None, None
 
 
-def battle_started_check(battle_id):
+def battle_started_check(battle_id, delay=0):
     """
     試合が開始されているか確認
 
@@ -79,6 +79,10 @@ def battle_started_check(battle_id):
     ----------
     battle : int
         試合ID
+    delay : int
+        判定時間を delay 秒早くする
+        delay -> 2 = "< started_at_unix_time - 2 : error"
+        delay -> -3 = "< started_at_unix_time + 3 : error"
 
     Returns
     ----------
@@ -93,7 +97,7 @@ def battle_started_check(battle_id):
     battle = BattleDBAccessManager().get_data(battle_id=battle_id)[0]
     now_datetime = datetime.datetime.now()
     now_unix_time = int(time.mktime(now_datetime.timetuple()))
-    if now_unix_time < battle["start_at_unix_time"]:
+    if now_unix_time < battle["start_at_unix_time"] - delay:
         return True, 400, {
             "startAtUnixTime": battle["start_at_unix_time"],
             "status": "TooEarly"
